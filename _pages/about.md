@@ -27,8 +27,9 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
+Hello, I'm currently a second year student studying Computer Science and Mathematics/Applied Mathematics at Stony Brook University. I am very fortunate to be advised by Professor Jorge-Mendez Mendez and Professor Yi Liu.  
 
-Put your address / P.O. box / other info right below your picture. You can also disable any of these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically.
+My general research interests lay in combining Generative Models with Robot Learning, such as using Diffusion Models to assist with Task and Motion planning for continual learning, 3D Moleculuar Learning for drug design using Large Language Models (AI4Science).     
 
-Link to your social media connections, too. This theme is set up to use [Font Awesome icons](https://fontawesome.com/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
+ I plan to pursue a PhD in Computer Science to continue doing AI Research.  
+Outside of research, I work as a Resident Assistant and a College of Engineering and Applied Sciences mentor for first-year students. 
