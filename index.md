@@ -8,11 +8,8 @@ Hi there! I'm a 2nd year undergraduate student studying Computer Science and Mat
  
 Currently, I'm working in Generative Models such as using Large Language Models to assist drug discovery and Diffusion Models at generating action parameters to successfully execute long-shot plans for robots. I'm always exploring different interests and finding problems to solve. 
 
-I plan to pursue a Ph.D in Computer Science and continue AI research, because of my passion for technological innovations and interest in how the human mind works. This intersection leads me to expand AI models’ capabilities at solving complex problems across different domains and achieving different tasks close to humans do. More importantly, how to incorporate new technologies into people’s daily lives as products/tools to creative positive impacts. These ambitions guide my research interests! (Also because I'm partially influenced by my favorite TV show [Person of Interest](https://www.imdb.com/title/tt1839578/))
+I plan to pursue a Ph.D in Computer Science and continue AI research. 
 
-## Research Goals 
-- **Embodied Intelligence:** How machines perceive/understand/interact with the physical world? 
-- **Task and Motion Planning:** How can machines plan/reason to execute long horizon tasks? This is particularly for general robotics, but the problem of planning is what Machine Learning community also cares about
 
 ## News
 - **[Oct. 2025]** Accepted an offer from Capital One's Technology Internship Program (TIP) in summer 2026! Hope to meet more people there. 
