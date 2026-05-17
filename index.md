@@ -4,9 +4,8 @@ layout: homepage
 
 ## About Me
 
-Hi there! I'm a 2nd year undergraduate student studying Computer Science and Mathematics at Stony Brook University. I'm very fortunate to be advised by Professor [Jorge-Mendez Mendez](https://jorge-a-mendez.github.io/) in the Learning & Intelligence Lab, and Professor [Yi Liu](https://jacoblau0513.github.io/) in the AI Research for Science (AIRS) Lab.   
+Hi there! I'm a 3rd year undergraduate student studying Computer Science at Stony Brook University. Along my undergraduate time, I'm very fortunate to be advised by Professor [Paola Cascante-Bonilla](https://paolacascante.com/) at SPEL Lab, Professor [Jorge-Mendez Mendez](https://jorge-a-mendez.github.io/) in the Learning & Intelligence Lab, and Professor [Yi Liu](https://jacoblau0513.github.io/) in the AI Research for Science (AIRS) Lab.   
  
-Currently, I'm working in Generative Models such as using Large Language Models to assist drug discovery and Diffusion Models at generating action parameters to successfully execute long-shot plans for robots. I'm always exploring different interests and finding problems to solve. 
 
 I plan to pursue a Ph.D in Computer Science and continue AI research. 
 
@@ -23,7 +22,8 @@ I plan to pursue a Ph.D in Computer Science and continue AI research.
 - Outside of research, I'm quite involved on campus as a [College of Engineering and Applied Sciences Peer Mentor](https://www.stonybrook.edu/commcms/ceas-undergrad/current_students/peer_mentoring_program/meet_mentors.php) where I mentor 3 first-year students each year to help them adjust to college life and "figure out what to do their college lives". 
 - I am also a Resident Assistant (RA but not that research RA) at [H Community](https://www.instagram.com/hcommunitysbu/) where 1,300+ first-year students live in. I host large events like Halloween Celebration called Werewolfie, Lunar New Year Celebration, Friendsgiving ... that gained over 600 attendees with over $2k budget went into planning. My goal is to make college dorms home to students, and it's a truly enjoyable and collaborative experience!  
 
-## Advices 
+
+<!-- ## Advices 
   
 I am very grateful for all the amazing advices I have read/watched/learned online. Many of them are from people I look up to and have shaped my philosophy, how I do research, and how I want to live my life. I hope they might help you as well. 
 - [You and Your Research --Richard Hamming](https://www.youtube.com/watch?v=a1zDuOPkMSw)
@@ -34,7 +34,7 @@ I am very grateful for all the amazing advices I have read/watched/learned onlin
 - "Think as an amateur, execute as an expert" -- Book written by [Takeo Kanade](https://www.ri.cmu.edu/ri-faculty/takeo-kanade/) in Japanese. Translated to Chinese and Korean  
 - [Positive Psychology Course taught by Tal Ben-Shahar at Harvard 2008](https://www.youtube.com/playlist?list=PLg9esVacXkzYczOgcGpf5Iji38-BVQ1zs)  
 - [给中国学生的七封信 --李开复 (Seven Letters For Chinese Students --Kai-Fu Lee)](https://zhuanlan.zhihu.com/p/550591533)  
-- [The days are long but the decades are short --Sam Altman](https://blog.samaltman.com/the-days-are-long-but-the-decades-are-short)
+- [The days are long but the decades are short --Sam Altman](https://blog.samaltman.com/the-days-are-long-but-the-decades-are-short) -->
  
 
-Last Updated: May 27, 2025. This site is new and still under construction. 
+Last Updated: May 17, 2026. 
