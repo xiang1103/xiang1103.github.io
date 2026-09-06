@@ -703,4 +703,10 @@ The planned `nav-active.js` (IntersectionObserver highlighting the in-view secti
   as text below the icons (`email` in `_config.yml`). That is deliberate — personal vs
   academic — but flagged so it is not mistaken for a duplicate. Unlike the obfuscated one,
   `email_link` appears in the page source in plain text and is scrapable.
+- **2026-09-06** — Removed the duplicate **Resume** link from the sidebar's bottom link row
+  (`.sidebar__links`); it is already a nav item in `_data/nav.yml`. That row is now just
+  "Source", and the `a:not(:last-child)::after` separator correctly renders nothing.
+  Side effect: `cv_link` in `_config.yml` is now **unused** — the nav entry carries its own
+  URL-encoded path, since data files cannot read Liquid variables. Left in place rather than
+  deleted because `_config.yml` had uncommitted user edits at the time; safe to remove.
 

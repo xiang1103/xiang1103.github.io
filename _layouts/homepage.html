@@ -113,8 +113,10 @@
           <p class="sidebar__email">{{ site.email }}</p>
           {% endif %}
 
+          {%- comment -%}
+            Resume is not repeated here: it is already a nav item (_data/nav.yml).
+          {%- endcomment -%}
           <div class="sidebar__links">
-            {% if site.cv_link %}<a href="{{ site.cv_link | uri_escape | relative_url }}">Resume</a>{% endif %}
             {% if site.github_link %}<a href="{{ site.github_link }}/{{ site.github_repo }}" target="_blank" rel="noopener">Source</a>{% endif %}
           </div>
         </div>
