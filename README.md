@@ -30,16 +30,3 @@ export PATH="/opt/homebrew/opt/ruby/bin:$PATH"   # macOS system Ruby is too old
 bundle install
 bundle exec jekyll serve      # http://127.0.0.1:4000
 ```
-
-## Deploying
-
-`git push origin main`. GitHub Pages builds and publishes it, usually within a
-minute or two. CLAUDE.md §4.5 covers how to check build status and why a fresh
-push can look like nothing changed.
-
-## Credit
-
-Originally started from the [minimal-light](https://github.com/yaoyao-liu/minimal-light)
-theme by Yaoyao Liu (CC0). Nothing of that theme's markup or styling remains —
-the layout, stylesheet, and page architecture were rewritten from scratch — but
-credit where it started.
