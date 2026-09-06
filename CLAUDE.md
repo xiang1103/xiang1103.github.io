@@ -34,49 +34,62 @@ Do not rewrite, summarize, reorder, or "improve" the user's words unless explici
 
 **Hard requirement: the page must not be limited to what markdown can express.** The
 homepage is expected to grow graphics, diagrams, richer components, and possibly light
-animation. The original `index.md` prose is the *initial* content, not the ceiling. Anything
+animation. The original `index.md` prose was the *initial* content, not the ceiling. Anything
 that can only be done by hand-writing HTML into a prose file is a design failure — see §6.3
 for the section architecture that replaced it.
 
 ---
 
-## 2. What this site is today
+## 2. What this repo is
 
-- Static site built with **Jekyll**, deployed by **GitHub Pages** from the `main` branch of
-  `git@github.com:xiang1103/xiang1103.github.io.git`.
-- User page (`<user>.github.io`), so the site lives at the **domain root** — `baseurl` is
-  empty and there is no path prefix.
-- Based on the **[minimal-light](https://github.com/yaoyao-liu/minimal-light)** theme
-  (`remote_theme: yaoyao-liu/minimal-light` in `_config.yml`), but the important files are
-  vendored locally and **local files win over the remote theme**.
+- Static site built with **Jekyll**, deployed by **GitHub Pages** from `main` of
+  `github.com/xiang1103/xiang1103.github.io`.
+- User page, so it serves from the **domain root**: `baseurl` is empty, no path prefix,
+  no custom domain (`cname: null`).
+- **Nothing of the original [minimal-light](https://github.com/yaoyao-liu/minimal-light)
+  theme remains.** Layout, stylesheet, page architecture, icons, and favicons were all
+  rewritten; `remote_theme` is gone. The theme is CC0, credited in the README.
 
 ### File map
 
-| Path | Role | Redesign status |
-|---|---|---|
-| `index.md` | **All homepage content** (About Me, News, Miscellaneous, commented-out Advices). Front matter: `layout: homepage`. | **Keep content. Do not edit prose.** |
-| `_config.yml` | Site metadata: title, position, affiliation, email, motto, SEO keywords, avatar, favicons, social links (`cv_link`, `github_link`, `linkedin`, `twitter`), `font`, `auto_dark_mode`, `remote_theme`. | Keep keys that still feed the new design; add new ones as needed. |
-| `_layouts/homepage.html` | The only layout. Renders `<head>`, sidebar header (avatar, name, position, affiliation, email, motto, social icons), then `{{ content }}`, then footer. | **Rewrite** — this is the main redesign target. |
-| `_includes/publications.md` | Publication list markup, loops `site.data.publications.main`. Not currently included by `index.md`. | Rewrite or drop (see open questions). |
-| `_includes/services.md` | Reviewer-services block. Not included by `index.md`; content is the theme author's, not Xiang's. | Likely delete. |
-| `_data/publications.yml` | **Theme demo data (Yaoyao Liu's papers), not Xiang's.** | Empty or replace; never ship as-is. |
-| `_sass/minimal-light.scss` (596 lines) | Theme styles incl. dark mode. | **Replace** with new stylesheet. |
-| `_sass/minimal-light-no-dark-mode.scss` | Light-only variant. | Replace or delete with the dark-mode strategy. |
-| `assets/css/style.scss` | Front-matter stub that just `@import "minimal-light"` → compiled by Jekyll to `/assets/css/style.css`. | Keep the pattern, change the import. |
-| `assets/css/style-no-dark-mode.scss` | Same for the no-dark-mode variant. | Same. |
-| `assets/css/publications.css`, `publications-no-dark-mode.css` | Plain CSS for publication rows. | Fold into the new stylesheet. |
-| `assets/css/font.css`, `font_sans_serif.css` | Google Fonts import + base `body` font. Serif = Crimson Pro; sans variant exists. | Replace with new type system. |
-| `assets/js/scale.fix.js` | Old mobile zoom fix. | Probably unnecessary; verify before deleting. |
-| `assets/js/favicon-switcher.js` | Swaps favicon for dark mode in browsers that ignore `media` on `<link rel=icon>`. | Keep. |
-| `assets/img/` | `IMG_4275.jpeg` (current avatar), `avatar.png`, `favicon.png`, `favicon-dark.png`, `teaser_example*.png` (theme demo images). | Keep avatar + favicons; delete teaser demos when publications go. |
-| `assets/files/` | `Xiang Liu_Resume (4).pdf` (linked as `cv_link`), `curriculum_vitae.pdf` (theme demo), `CSE_487_Report...pdf` (linked from News). | **Keep the two linked PDFs — filenames are live URLs.** |
-| `html_source_file/` | Snapshot of the theme's rendered HTML. Excluded from the build in `_config.yml`. | Reference only; safe to ignore or delete. |
-| `main/` | Empty directory. | Ignore. |
-| `mkdocs.yml` | Leftover from a MkDocs experiment; unused by Jekyll. | Ignore / delete. |
-| `CNAME` | **Contains only a newline** — no custom domain. Site serves at `https://xiang1103.github.io/`. | Leave empty unless a domain is being set up. |
-| `README.md`, `LICENSE` | Upstream theme's README (CC-BY-SA-4.0-ish, see LICENSE). Excluded from build. | Rewrite README eventually; keep LICENSE attribution. |
+| Path | Role |
+|---|---|
+| `index.html` | Root entry point. **Front matter only, no content.** Jekyll requires a page at the root, so this file must exist; its body is an optional free-form slot rendered between the hero and the first section. (Was `index.md` until the content moved into `_sections/`.) |
+| `_config.yml` | Site metadata and all hero/sidebar copy: `greeting`, `tagline`, `wordmark`, `blurb`, `motto`, `last_updated`, social links, image paths, the `sections` collection, and `exclude`. |
+| `_sections/*.md` | **One file per page section.** Ordered by `order`. Front matter decides how it renders — see §6.3. |
+| `_data/news.yml` | Timeline entries: date, body, optional tag/image/links. |
+| `_data/nav.yml` | Nav items that are *not* sections (external links, downloads). Section links generate themselves. |
+| `_layouts/homepage.html` | The only layout: head, sidebar, hero, sections loop, closing lines. |
+| `_includes/section.html` | Renders one section from its front matter; dispatches on `variant`. |
+| `_includes/sections/timeline.html`, `cards.html` | Variant renderers. |
+| `_includes/figure.html` | Figure with optional caption and float side. |
+| `_includes/icons/*.svg` | Ten inline SVG icons, `currentColor`. |
+| `_sass/tokens.scss` | Every color, type, spacing, and layout token. Nothing else declares a hex. |
+| `_sass/base.scss` | Reset and element defaults; styles markdown output. |
+| `_sass/layout.scss` | Page shell only: `.page`, `.sidebar`, `.main`. |
+| `_sass/components.scss` | Every component **and its own breakpoints** (§6.4.1). |
+| `assets/css/style.scss` | Front-matter stub importing the four partials in order. |
+| `assets/js/theme-toggle.js` | The only JavaScript on the site. |
+| `assets/img/xiang-hero.jpg` | 480x640, the full uncropped photo shown beside the h1. |
+| `assets/img/avatar-xiang.jpg` | 96px square crop, the 34px sidebar mark. |
+| `assets/img/IMG_4275.jpeg` | 1.2 MB original. Kept as the source for re-cropping, **excluded from the build** so it is never published. |
+| `assets/img/favicon.png`, `favicon-dark.png` | Teal "x" mark, light and dark. |
+| `assets/files/*.pdf` | Resume and the CSE 487 report. **Filenames with spaces/parens are live URLs** — see §3.6. |
+| `Gemfile` | Local preview only; GitHub Pages ignores it (§4). |
+| `README.md` | Short orientation for a human: where to edit what. |
+| `LICENSE` | CC0, inherited from minimal-light. Harmless to keep; nothing obliges it. |
 
----
+### Removed from the original design
+
+`html_source_file/` (the theme's rendered demo), `mkdocs.yml` (a dead MkDocs experiment),
+`CNAME` (empty, and Pages reports `cname: null`, so it configured nothing), the theme's
+`m`-logo favicons, `_sass/minimal-light*.scss`, `publications*.css`, `font*.css`,
+`style-no-dark-mode.scss`, `scale.fix.js`, `favicon-switcher.js`,
+`_includes/publications.md`, `_includes/services.md`, `_data/publications.yml`,
+`teaser_example*.png`, `avatar.png`, `curriculum_vitae.pdf`, and the empty `main/`.
+
+**Before deleting anything else**: grep for it, and check whether it is a live URL
+(`assets/files/`) or a Jekyll requirement (a root page file).
 
 ## 3. GitHub Pages constraints (non-negotiable)
 
@@ -287,7 +300,13 @@ are ours to choose**. Ships as a **single long page** (nav links are on-page anc
   -0.03em`, tight `line-height: 1.05`. This is the single most distinctive element of the
   reference; do not shrink it.
 - **Lead / tagline** — directly under h1, `1.25rem`, regular weight, normal text color,
-  ~`0.5rem` gap. Comes from `_config.yml` (`position` + `affiliation`, or a new `tagline`).
+  ~`0.5rem` gap. Comes from `_config.yml` (`tagline`).
+- **Hero photo** — sits to the right of the h1, from `_config.yml`'s `hero_image`. It shows
+  the **whole frame, uncropped**: fixed width (`clamp(112px, 14vw, 168px)`), `height: auto`,
+  6px corners. No `object-fit: cover` and no circular mask — the first version used both and
+  cut the top of the head off. Keep the `width`/`height` attributes matching the file's real
+  pixel dimensions (480x640) so nothing shifts as it loads. Below 560px it moves above the
+  heading, left-aligned.
 - **h2 section headings** — `1.3rem`, weight 700, `margin-top: 3rem`, sits noticeably closer
   to its own content than to the section above.
 - **Body** — `1.0625rem`/`1.7`. Comfortable, not cramped.
@@ -296,8 +315,8 @@ are ours to choose**. Ships as a **single long page** (nav links are on-page anc
   - right: the text, which may start with an accent **bold link** ("Professional chef:")
     followed by prose;
   - `row-gap: 1.5rem` between entries.
-  This maps directly onto the existing `## News` list in `index.md` — see §6.4 for how to get
-  the grid out of plain markdown without editing the prose.
+  Data-driven from `_data/news.yml`, so an entry can also carry a tag, a thumbnail, and
+  link buttons — see §6.4.
 - **Links** — accent color, `text-decoration: underline` with `text-underline-offset: 2px`
   and a thin `text-decoration-thickness`. Bold when the link is a "title" inside a timeline
   row (that's just how the markdown is authored). Hover: darker accent + thicker underline.
@@ -382,7 +401,7 @@ for the h1 against a plain mono for the timeline labels — keep that contrast.
 
 ### 5.7 Constraints that hold regardless of visual direction
 
-- **Content parity.** Everything currently rendered from `index.md` must still render:
+- **Content parity.** Everything that was in the original `index.md` must still render:
   About Me, News (with links), Miscellaneous, "Last Updated" line. The commented-out
   **Advices** block stays commented unless the user says otherwise.
 - **Markdown-driven.** Design must style plain markdown output (`h2/ul/li/a/strong/p`).
@@ -405,7 +424,7 @@ for the h1 against a plain mono for the timeline labels — keep that contrast.
 
 | Path | Role |
 |---|---|
-| `index.md` | Thin entry point. Front matter only; its body is an optional free-form slot rendered between the hero and the first section. **Content no longer lives here.** |
+| `index.html` | Thin entry point. Front matter only; its body is an optional free-form slot rendered between the hero and the first section. **Content no longer lives here.** Jekyll needs a root page, so it cannot simply be deleted. |
 | `_sections/*.md` | One file per page section. See §6.3 for the front matter contract. |
 | `_data/news.yml` | Timeline entries (date, body, optional tag/image/links). |
 | `_data/nav.yml` | Nav items that are **not** sections (external links, downloads). Section links generate themselves. |
@@ -441,7 +460,7 @@ properties (runtime, not Sass variables) so the dark-mode swap is a single block
 
 ### 6.3 Page architecture: the `_sections` collection  **[BUILT]**
 
-The homepage is **composed**, not rendered from one markdown file. `index.md` no longer
+The homepage is **composed**, not rendered from one markdown file. `index.html` no longer
 holds the content; it is a thin entry point whose body is an optional free-form slot.
 
 ```
@@ -508,7 +527,7 @@ entry is real markup: a date in the left gutter (`.timeline__date`), and a body 
 carry a tag, a thumbnail, markdown prose, and link buttons.
 
 **Historical note, so nobody reinvents it:** the first version styled the plain markdown list
-straight out of `index.md`, using the leading `<strong>` as the date label. Two approaches
+straight out of the old `index.md`, using the leading `<strong>` as the date label. Two approaches
 were tried and both were bad:
 
 1. `display: grid` on the `<li>` — **broken**. Grid promotes *every* inline child to its own
@@ -567,7 +586,8 @@ The planned `nav-active.js` (IntersectionObserver highlighting the in-view secti
 - [ ] Desktop ≥1280px, tablet ~900px, phone 375px — no horizontal scroll
 - [ ] Light + dark, both automatic and via the toggle; no flash on load
 - [ ] Sidebar stays put while main scrolls; nav anchors land correctly
-- [ ] Every link in `index.md` resolves, including both PDFs (spaces/parens URL-encoded)
+- [ ] Every link in `_sections/` and `_data/news.yml` resolves, including both PDFs
+      (spaces/parens URL-encoded)
 - [ ] Avatar + favicons load (case-sensitive filenames!)
 - [ ] Keyboard-only pass: visible focus on every link, nav, and the toggle
 - [ ] View source: `<title>`, description, canonical, OG tags present
@@ -658,4 +678,20 @@ The planned `nav-active.js` (IntersectionObserver highlighting the in-view secti
   Contributing factor: Pages serves assets with `cache-control: max-age=600`, so a stale
   stylesheet can survive ten minutes in the browser after a successful deploy.
   No code was wrong; the hero photo was already committed in `e2bdc09`.
+- **2026-09-06** — **Cleanup and hero fix.** Hero photo now shows the full uncropped frame
+  (480x640, `height: auto`, 6px corners) instead of a 400px square center-crop masked into
+  a circle, which cut off the top of the head.
+  `index.md` renamed to `index.html` — it holds no content any more, but **a root page file
+  is mandatory**, so it could not simply be deleted; deleting it outright would 404 the site.
+  Deleted: `html_source_file/`, `mkdocs.yml`, and `CNAME` (empty, and the Pages API reports
+  `cname: null`, confirming it configured nothing — checked *before* deleting, since a
+  populated CNAME is how a custom domain is stored).
+  Replaced the favicons: they were still minimal-light's "m" logo. Now a teal "x" mark,
+  light and dark variants.
+  `README.md` rewritten — it was the upstream theme's README, describing files this repo no
+  longer has.
+  `IMG_4275.jpeg` (1.2 MB) added to `exclude`: kept in the repo as the crop source but no
+  longer published. The built site is now 9 files.
+  `LICENSE` (CC0, from minimal-light) deliberately kept — deleting it would leave the repo
+  unlicensed, which is a separate decision for the user to make.
 

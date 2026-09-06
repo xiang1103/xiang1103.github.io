@@ -1,6 +1,0 @@
-site_name: Xiang Liu personal website 
-docs_dir: 
-nav: 
-  - Home: index.md 
-plugins: 
-  - open-in-new-tab  

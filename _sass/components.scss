@@ -208,12 +208,13 @@
   min-width: 0;
 }
 
+// The whole frame, uncropped: width is fixed, height follows the photo's own
+// aspect ratio. No object-fit, no circular mask — both cut the picture off.
 .hero__photo {
   flex: none;
-  width: clamp(96px, 12vw, 132px);
-  height: clamp(96px, 12vw, 132px);
-  border-radius: 50%;
-  object-fit: cover;
+  width: clamp(112px, 14vw, 168px);
+  height: auto;
+  border-radius: 6px;
 }
 
 .lead {

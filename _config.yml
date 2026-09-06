@@ -40,8 +40,10 @@ linkedin: https://www.linkedin.com/in/xiang-liu-3792251b2/
 twitter: https://x.com/XL49788107
 
 # --- Images ------------------------------------------------------------------
-# Both are square crops of assets/img/IMG_4275.jpeg, which stays as the original.
-# hero_image sits beside the big heading; avatar_small is the 34px sidebar mark.
+# hero_image is the full uncropped photo (480x640) beside the big heading.
+# avatar_small is a 96px square crop used as the 34px sidebar mark.
+# Both derive from assets/img/IMG_4275.jpeg, kept as the source for re-cropping
+# but excluded from the build below so the 1.2 MB original is never published.
 hero_image: ./assets/img/xiang-hero.jpg
 avatar_small: ./assets/img/avatar-xiang.jpg
 favicon: ./assets/img/favicon.png
@@ -60,11 +62,9 @@ collections:
 exclude:
   - vendor/          # local gem install; must be listed since a custom
   - .bundle/         # exclude list replaces Jekyll's defaults
+  - assets/img/IMG_4275.jpeg   # 1.2 MB source photo; only its crops are published
   - Gemfile
   - Gemfile.lock
   - README.md
   - LICENSE
   - CLAUDE.md
-  - minimal-light.gemspec
-  - mkdocs.yml
-  - html_source_file/
