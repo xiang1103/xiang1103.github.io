@@ -147,6 +147,74 @@ and screenshot the copy.
 
 ---
 
+## 4.5 Deployment — how this site actually ships
+
+`git push origin main` is the whole deploy. GitHub Pages does the rest, but the feedback is
+easy to misread, so:
+
+### What happens on push
+
+1. GitHub queues a **`pages build and deployment`** workflow run (`build_type: legacy` — the
+   classic "deploy from a branch" builder; there is no workflow file in this repo, GitHub
+   supplies it).
+2. It builds with its own pinned Jekyll and ignores the `Gemfile` entirely.
+3. It publishes and creates a `github-pages` deployment.
+
+Typical time: the build itself takes **~35-40 seconds**, but it can sit **queued for many
+minutes** before starting. A push is not "done" the moment it lands.
+
+### The check mark
+
+The ✓ next to a commit comes from that workflow's **check runs** (`build`, `deploy`,
+`report-build-status`). They do not exist until the run starts, so a freshly pushed commit
+legitimately shows **no mark at all** for a while. No mark ≠ failure.
+
+Note it is check *runs*, not commit *statuses*: `/commits/<sha>/status` returns
+`{state: pending, statuses: 0}` even for a fully successful build. Use `/check-runs`.
+
+### Checking it from here
+
+```bash
+# Did the push actually land?
+gh api repos/xiang1103/xiang1103.github.io/commits/main --jq '.sha[0:7] + "  " + .commit.message'
+
+# Build state for the newest commit
+gh api repos/xiang1103/xiang1103.github.io/pages/builds/latest \
+  --jq '{status, commit: .commit[0:7], error: .error.message}'
+
+# Recent build history
+gh api "repos/xiang1103/xiang1103.github.io/pages/builds?per_page=5" \
+  --jq '.[] | .created_at + "  " + .status + "  " + .commit[0:7]'
+
+# Check runs (this is what draws the ✓)
+gh api repos/xiang1103/xiang1103.github.io/commits/<sha>/check-runs \
+  --jq '.check_runs[] | .name + "  " + .status + "  " + (.conclusion // "-")'
+
+# Block until the build finishes
+until [ "$(gh api repos/xiang1103/xiang1103.github.io/pages/builds/latest --jq .status)" != "building" ]; do sleep 10; done
+```
+
+### "I pushed but the site looks the same"
+
+Check in this order — the answer has never been "the push failed":
+
+1. **Is the build still queued or running?** `pages/builds/latest`. Most common cause.
+2. **Browser cache.** Pages serves assets with `cache-control: max-age=600`, so a stale
+   `style.css` can persist for ten minutes. Hard-reload (Cmd-Shift-R) or check with
+   `curl -s https://xiang1103.github.io/ | grep hero__photo` — curl bypasses the cache.
+3. **Confirm what is actually deployed**, not what you expect:
+   `curl -sI https://xiang1103.github.io/assets/css/style.css | grep last-modified`.
+4. Only then suspect the build. `pages/builds/latest` carries `.error.message` when it fails.
+
+### git note
+
+The local `origin/main` ref goes stale if nothing fetches it, so `git status` can claim
+"up to date" without proving anything about the remote. `git ls-remote` needs the SSH key,
+which is not available to the agent's shell — use `gh api .../commits/main` instead, which
+goes over HTTPS with the `gh` token.
+
+---
+
 ## 5. Design direction
 
 **Reference:** [tania.dev](https://tania.dev) homepage screenshot supplied 2026-09-06.
@@ -525,11 +593,11 @@ The planned `nav-active.js` (IntersectionObserver highlighting the in-view secti
 - [x] ~~Font direction~~ → Space Grotesk + JetBrains Mono (§5.5).
 - [x] ~~Nav icons~~ → inline SVG (§5.5).
 - [ ] Palette — **defaulted** to warm paper + deep teal (§5.4); confirm or pick another.
+- [ ] Hero photo size: currently `clamp(96px, 12vw, 132px)`, circular. Bigger? Square?
 - [ ] Decorative graphic bottom-right of main — include one, and if so what?
-- [ ] Sidebar nav sections: About / News / Research / Campus life — is "Research" a new
-      section, or does the current content stay as-is (About / News / Miscellaneous)?
+- [ ] A separate **Research** or **Projects** section? The `cards` variant is built and
+      unused — this is now a `_data/projects.yml` plus a six-line `_sections/` file.
 - [ ] Keep the Grateful Dead motto and the obfuscated email in the sidebar?
-- [ ] Keep the current avatar photo (`IMG_4275.jpeg`)?
 - [ ] Custom domain planned (needs `CNAME` + DNS), or stay on `xiang1103.github.io`?
 
 ## 9. Decisions log
@@ -580,3 +648,14 @@ The planned `nav-active.js` (IntersectionObserver highlighting the in-view secti
   Jekyll's own document `id` (use `anchor`), and the mobile hero rule hit the
   §6.4.1 import-order trap again.
   **Not committed** — working tree only.
+- **2026-09-06** — **Deploy pipeline understood and documented (§4.5).** User reported "I
+  pushed but nothing changed and there is no check mark." Investigation: both commits were
+  committed *and* pushed (remote `main` = `e2bdc09`), the earlier build (`24b69d6`) had
+  already deployed successfully, and the live site was serving the redesign. The missing
+  check mark was simply a build that had not started yet — check *runs* do not exist until
+  the workflow begins, and `/commits/<sha>/status` always reports `pending` with zero
+  statuses for this repo because Pages reports via check runs, not commit statuses.
+  Contributing factor: Pages serves assets with `cache-control: max-age=600`, so a stale
+  stylesheet can survive ten minutes in the browser after a successful deploy.
+  No code was wrong; the hero photo was already committed in `e2bdc09`.
+
