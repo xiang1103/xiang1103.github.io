@@ -14,12 +14,11 @@ email_link: xlxiangliu.13@gmail.com
 # --- Front page copy ---------------------------------------------------------
 # The big heading and the line under it in the main column.
 greeting: Hey, I'm Xiang!
-tagline: CS undergrad at Stony Brook, AI researcher, aspiring Ph.D. student.
+tagline: CS Undergrad, Builder, Software Engineer, AI Researcher, Leader 
 
 # The wordmark at the top of the sidebar, and the short bio under it.
 wordmark: xiang liu
-blurb: Third-year CS undergrad at Stony Brook University, doing AI research and
-  planning to pursue a Ph.D.
+blurb: Senior CS student who likes building projects, doing Computer Vision Research, looking to create more technologies through personal projects, internships and full time positions.
 
 # Shown at the very bottom of the page. Leave blank to omit either one.
 last_updated: May 17, 2026

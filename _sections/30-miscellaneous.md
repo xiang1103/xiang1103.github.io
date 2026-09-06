@@ -1,7 +1,7 @@
 ---
 order: 30
-title: Miscellaneous
-nav: Miscellaneous
+title: Leadership
+nav: Leadership
 icon: sparkle
 ---
 
