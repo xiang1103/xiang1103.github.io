@@ -289,8 +289,9 @@ are ours to choose**. Ships as a **single long page** (nav links are on-page anc
    currently in view gets an "active" style (see §6.6).
    Nav is data-driven from `_data/nav.yml` so items can be added without touching the layout.
 6. `flex: 1` spacer.
-7. **Social icon row** — 4–5 monochrome inline SVG icons (email, GitHub, LinkedIn, X, RSS?),
-   ~20px, muted; hover → accent. Driven by the existing `_config.yml` link keys.
+7. **Social icon row** — monochrome inline SVG icons, ~20px, muted; hover → accent. Driven
+   by `_config.yml` link keys, each wrapped in an `{% if %}` so deleting a key removes the
+   icon. Currently email (`mailto:`), GitHub, LinkedIn.
 8. **Footer link row** — small text links separated by `|` (e.g. `Resume | Source`),
    ~`0.85rem`, muted.
 
@@ -694,4 +695,12 @@ The planned `nav-active.js` (IntersectionObserver highlighting the in-view secti
   longer published. The built site is now 9 files.
   `LICENSE` (CC0, from minimal-light) deliberately kept — deleting it would leave the repo
   unlicensed, which is a separate decision for the user to make.
+- **2026-09-06** — X/Twitter icon replaced with a `mailto:` email icon
+  (`xlxiangliu.13@gmail.com`) at the user's request. Set `email_link` in `_config.yml`;
+  removed the `twitter` key and `_includes/icons/twitter.svg`.
+  Note there are now **two addresses in the sidebar**: the mail icon opens a draft to the
+  personal Gmail, while the obfuscated `xiang(dot)liu(dot)1(at)stonybrook.edu` still renders
+  as text below the icons (`email` in `_config.yml`). That is deliberate — personal vs
+  academic — but flagged so it is not mistaken for a duplicate. Unlike the obfuscated one,
+  `email_link` appears in the page source in plain text and is scrapable.
 

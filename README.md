@@ -30,3 +30,5 @@ export PATH="/opt/homebrew/opt/ruby/bin:$PATH"   # macOS system Ruby is too old
 bundle install
 bundle exec jekyll serve      # http://127.0.0.1:4000
 ```
+## Credits 
+The website is inspired by https://www.taniarascia.com/ 

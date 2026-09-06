@@ -6,9 +6,10 @@ affiliation_link: https://www.stonybrook.edu/
 
 # Shown in the sidebar as plain text, deliberately obfuscated against scrapers.
 email: xiang(dot)liu(dot)1(at)stonybrook.edu
-# Set this to the real address to turn on the mail icon in the sidebar
-# (this puts the address in the page source in plain text). Leave blank to hide it.
-email_link:
+# The mail icon in the sidebar links to this address with mailto:, so clicking it
+# opens a new draft. NOTE: unlike `email` above, this appears in the page source in
+# plain text and is readable by scrapers. Leave blank to hide the icon.
+email_link: xlxiangliu.13@gmail.com
 
 # --- Front page copy ---------------------------------------------------------
 # The big heading and the line under it in the main column.
@@ -37,7 +38,6 @@ cv_link: assets/files/Xiang Liu_Resume (4).pdf
 github_link: https://github.com/xiang1103
 github_repo: xiang1103.github.io
 linkedin: https://www.linkedin.com/in/xiang-liu-3792251b2/
-twitter: https://x.com/XL49788107
 
 # --- Images ------------------------------------------------------------------
 # hero_image is the full uncropped photo (480x640) beside the big heading.
