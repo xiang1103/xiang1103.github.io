@@ -1,0 +1,15 @@
+{% comment %}
+  A figure with an optional caption. `side: right` (or `left`) floats it beside
+  the prose on wide screens and stacks it on narrow ones.
+
+  media: { src, alt, caption, side, width, height }
+{% endcomment %}
+
+<figure class="figure{% if include.media.side %} figure--{{ include.media.side }}{% endif %}">
+  <img src="{{ include.media.src | relative_url }}"
+       alt="{{ include.media.alt }}"
+       {% if include.media.width %}width="{{ include.media.width }}"{% endif %}
+       {% if include.media.height %}height="{{ include.media.height }}"{% endif %}
+       loading="lazy">
+  {% if include.media.caption %}<figcaption>{{ include.media.caption | markdownify | remove: "<p>" | remove: "</p>" }}</figcaption>{% endif %}
+</figure>

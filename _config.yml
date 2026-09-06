@@ -20,6 +20,8 @@ wordmark: xiang liu
 blurb: Third-year CS undergrad at Stony Brook University, doing AI research and
   planning to pursue a Ph.D.
 
+# Shown at the very bottom of the page. Leave blank to omit either one.
+last_updated: May 17, 2026
 # A quiet closing line at the bottom of the page. Leave blank to omit.
 motto: "Sometimes the lights are shining on me. Other times I can barely see.
   Lately it occurs to me what a long strange trip it's been."
@@ -38,11 +40,20 @@ linkedin: https://www.linkedin.com/in/xiang-liu-3792251b2/
 twitter: https://x.com/XL49788107
 
 # --- Images ------------------------------------------------------------------
-# avatar_small is a 320px version of the photo, used at 34px in the sidebar.
-# The full-size original stays in assets/img/IMG_4275.jpeg.
+# Both are square crops of assets/img/IMG_4275.jpeg, which stays as the original.
+# hero_image sits beside the big heading; avatar_small is the 34px sidebar mark.
+hero_image: ./assets/img/xiang-hero.jpg
 avatar_small: ./assets/img/avatar-xiang.jpg
 favicon: ./assets/img/favicon.png
 favicon_dark: ./assets/img/favicon-dark.png
+
+# --- Page structure ----------------------------------------------------------
+# The homepage is composed from _sections/*.md rather than one markdown file, so
+# a section can hold arbitrary HTML, SVG, graphics, or its own include.
+# `output: false` keeps sections from becoming standalone pages of their own.
+collections:
+  sections:
+    output: false
 
 # --- Build -------------------------------------------------------------------
 # No remote_theme: every layout, include, and stylesheet is local to this repo.

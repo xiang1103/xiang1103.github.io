@@ -1,20 +1,11 @@
-# Sidebar navigation. Single-page site, so these are on-page anchors.
-# Kramdown generates heading ids from the `## ...` headings in index.md:
-#   "## About Me" -> #about-me,  "## News" -> #news,  "## Miscellaneous" -> #miscellaneous
-# `icon` matches a filename in _includes/icons/ (without .svg).
-main:
-  - label: About
-    href: "#about-me"
-    icon: user
-
-  - label: News
-    href: "#news"
-    icon: news
-
-  - label: Miscellaneous
-    href: "#miscellaneous"
-    icon: sparkle
-
+# Sidebar nav.
+#
+# On-page section links are generated from _sections/*.md (any section with a
+# `nav:` label) — do not list them here, or they'll appear twice.
+#
+# This file is only for links that are NOT sections: external destinations,
+# other pages, downloads.
+extra:
   - label: Resume
     href: "assets/files/Xiang%20Liu_Resume%20(4).pdf"
     icon: file

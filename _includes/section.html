@@ -1,0 +1,68 @@
+{% comment %}
+  Renders one section of the homepage from a file in _sections/.
+
+  Front matter contract (all optional except `order`):
+
+    order    number   sort position on the page (10, 20, 30 ...)
+    title    string   heading text; also the source of the anchor id
+    anchor   string   override the anchor id (defaults to the slugified title).
+                      NOTE: do not use `id` for this — Jekyll already sets `id`
+                      on every collection document (e.g. "/sections/10-about"),
+                      so an `id` key here is silently ignored.
+    nav      string   nav label; omit to keep the section out of the sidebar nav
+    icon     string   nav icon, matching a file in _includes/icons/
+    heading  bool     set false to render the section without a visible <h2>
+    variant  string   prose (default) | timeline | cards
+    data     string   name of a file in _data/ supplying entries for the variant
+    include  string   path under _includes/ rendered after the body — the escape
+                      hatch for a custom graphic, chart, or interactive component
+    media    map      { src, alt, caption, side } floating figure
+    class    string   extra class names on the <section> element
+    reveal   bool     opt in to the CSS-only fade-in (see _sass/components.scss)
+
+  The body of the file is markdown, and markdown may contain raw HTML and SVG.
+  Kramdown does not parse markdown inside a block-level HTML tag unless that tag
+  carries markdown="1".
+{% endcomment %}
+
+{% assign section_id = include.section.anchor | default: include.section.title | slugify %}
+{% assign variant = include.section.variant | default: "prose" %}
+
+<section
+  id="{{ section_id }}"
+  class="section section--{{ variant }}{% if include.section.reveal %} reveal{% endif %}{% if include.section.class %} {{ include.section.class }}{% endif %}"
+  {% if include.section.title %}aria-labelledby="{{ section_id }}-heading"{% endif %}>
+
+  {% if include.section.title and include.section.heading != false %}
+  <h2 id="{{ section_id }}-heading">{{ include.section.title }}</h2>
+  {% endif %}
+
+  {% if include.section.media %}
+  {% include figure.html media=include.section.media %}
+  {% endif %}
+
+  {% if include.section.content and include.section.content != "" %}
+  <div class="prose">
+    {{ include.section.content | markdownify }}
+  </div>
+  {% endif %}
+
+  {%- comment -%}
+    Jekyll 3.x cannot parse a bracket lookup (site.data[...]) or a variable
+    include name inside an include tag's parameters — both have to be resolved
+    into a plain variable with `assign` first.
+  {%- endcomment -%}
+  {% assign entries = site.data[include.section.data].main %}
+
+  {% case variant %}
+    {% when "timeline" %}
+      {% include sections/timeline.html entries=entries %}
+    {% when "cards" %}
+      {% include sections/cards.html entries=entries %}
+  {% endcase %}
+
+  {% if include.section.include %}
+  {% assign custom_include = include.section.include %}
+  {% include {{ custom_include }} %}
+  {% endif %}
+</section>

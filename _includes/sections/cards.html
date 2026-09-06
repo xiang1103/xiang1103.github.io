@@ -1,0 +1,31 @@
+{% comment %}
+  Cards: a responsive grid for things with a picture and a blurb — projects,
+  publications, talks. Nothing uses this yet; it is here so adding a "Projects"
+  section is a data file plus a five-line _sections/ file.
+
+  Per entry: title, body (markdown), image, alt, tag, links: [{ label, href }]
+{% endcomment %}
+
+<div class="cards">
+  {% for entry in include.entries %}
+  <article class="card">
+    {% if entry.image %}
+    <img class="card__image" src="{{ entry.image | relative_url }}" alt="{{ entry.alt }}" loading="lazy">
+    {% endif %}
+
+    <div class="card__body">
+      {% if entry.tag %}<span class="tag">{{ entry.tag }}</span>{% endif %}
+      {% if entry.title %}<h3 class="card__title">{{ entry.title }}</h3>{% endif %}
+      {{ entry.body | markdownify }}
+
+      {% if entry.links %}
+      <p class="btn-row">
+        {% for link in entry.links %}
+        <a class="btn" href="{{ link.href }}"{% if link.href contains "://" %} target="_blank" rel="noopener"{% endif %}>{{ link.label }}</a>
+        {% endfor %}
+      </p>
+      {% endif %}
+    </div>
+  </article>
+  {% endfor %}
+</div>

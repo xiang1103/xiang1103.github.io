@@ -29,9 +29,14 @@ When in doubt between "clever" and "boring but instant", pick boring.
 Rebuild the **entire front end** (layout, CSS, page structure, visual design) of this site
 based on reference images + instructions supplied by the user.
 
-**Hard requirement: content is preserved.** `index.md` and the other content files stay the
-source of truth for text. The redesign changes *presentation*, not *prose*. Do not rewrite,
-summarize, reorder, or "improve" the user's words unless explicitly asked.
+**Hard requirement: content is preserved.** The redesign changes *presentation*, not *prose*.
+Do not rewrite, summarize, reorder, or "improve" the user's words unless explicitly asked.
+
+**Hard requirement: the page must not be limited to what markdown can express.** The
+homepage is expected to grow graphics, diagrams, richer components, and possibly light
+animation. The original `index.md` prose is the *initial* content, not the ceiling. Anything
+that can only be done by hand-writing HTML into a prose file is a design failure — see §6.3
+for the section architecture that replaced it.
 
 ---
 
@@ -328,24 +333,26 @@ for the h1 against a plain mono for the timeline labels — keep that contrast.
 
 ## 6. Implementation details
 
-### 6.1 Files to create / change
+### 6.1 Where things live
 
-| File | Action |
+| Path | Role |
 |---|---|
-| `_layouts/homepage.html` | **Rewrite.** New `<head>`, sidebar `<aside>`, `<main>{{ content }}</main>`. |
-| `_sass/tokens.scss` | **New.** CSS custom properties: color tokens (light + dark), type scale, spacing scale, layout widths. |
-| `_sass/base.scss` | **New.** Reset, `html/body`, typography defaults, link/heading/list styles, focus rings. |
-| `_sass/layout.scss` | **New.** Two-column shell, sidebar, main column, responsive breakpoints. |
-| `_sass/components.scss` | **New.** Nav list, social row, timeline rows, dividers, theme toggle, decorative slot. |
-| `assets/css/style.scss` | Keep the `---\n---` front matter; change body to import the four partials above instead of `minimal-light`. |
-| `_data/nav.yml` | **New.** Sidebar nav items: `label`, `href`, `icon`, optional `external: true`. |
-| `_includes/icons/*.svg` | **New (optional).** One file per inline SVG icon; included with `{% include icons/github.svg %}`. |
-| `assets/js/theme-toggle.js` | **New.** Manual light/dark toggle + `localStorage`. |
-| ~~`assets/js/nav-active.js`~~ | **Dropped** — active-section highlighting is JS that does not earn its place under §0. |
-| `_config.yml` | Add `blurb`, `tagline`, `wordmark`; keep existing metadata + social keys. |
-| `index.md` | **Content untouched.** Only permitted change: adding `{: #id }` anchors to headings if Kramdown's auto-ids aren't sufficient (they are — see §6.3). |
-| `_sass/minimal-light*.scss`, `assets/css/publications*.css`, `font*.css`, `scale.fix.js` | Delete **after** the new styles are in and nothing references them. |
-| `remote_theme:` in `_config.yml` | **Remove.** Once every layout/include/style is local, the remote theme is dead weight and a surprise-upgrade risk. |
+| `index.md` | Thin entry point. Front matter only; its body is an optional free-form slot rendered between the hero and the first section. **Content no longer lives here.** |
+| `_sections/*.md` | One file per page section. See §6.3 for the front matter contract. |
+| `_data/news.yml` | Timeline entries (date, body, optional tag/image/links). |
+| `_data/nav.yml` | Nav items that are **not** sections (external links, downloads). Section links generate themselves. |
+| `_layouts/homepage.html` | Head, sidebar, hero, sections loop, closing lines. |
+| `_includes/section.html` | Renders one section from its front matter; dispatches on `variant`. |
+| `_includes/sections/timeline.html`, `cards.html` | Variant renderers. |
+| `_includes/figure.html` | Figure with optional caption and float side. |
+| `_includes/icons/*.svg` | Inline SVG icons, `fill`/`stroke: currentColor`. |
+| `_sass/tokens.scss` | All color, type, spacing, and layout tokens. Nothing else declares a hex. |
+| `_sass/base.scss` | Reset and element defaults (styles markdown output). |
+| `_sass/layout.scss` | Page shell only: `.page`, `.sidebar`, `.main`. |
+| `_sass/components.scss` | Every component **and its own breakpoints** (§6.4.1). |
+| `assets/css/style.scss` | Front-matter stub that imports the four partials in order. |
+| `assets/js/theme-toggle.js` | The only JavaScript file. |
+| `assets/img/xiang-hero.jpg` | 400px square hero photo. `avatar-xiang.jpg` is the 96px sidebar mark. Both cropped from `IMG_4275.jpeg`, which stays as the original. |
 
 ### 6.2 Sass entry point
 
@@ -364,56 +371,86 @@ Ruby-Sass-compatible syntax only: `@import`, nesting, `$variables`, `@mixin`/`@i
 **No `@use`, no `@forward`, no `math.div`.** Color tokens live in `:root` as CSS custom
 properties (runtime, not Sass variables) so the dark-mode swap is a single block.
 
-### 6.3 Section anchors from markdown
+### 6.3 Page architecture: the `_sections` collection  **[BUILT]**
 
-Kramdown (GitHub Pages' markdown engine) auto-generates heading ids: `## About Me` →
-`id="about-me"`, `## News` → `id="news"`, `## Miscellaneous` → `id="miscellaneous"`.
-So `_data/nav.yml` can point at `#about-me` etc. with **zero changes to `index.md`**.
-Verify the generated ids in the built HTML before wiring nav hrefs; if a heading is renamed
-later, the nav yml must be updated to match.
+The homepage is **composed**, not rendered from one markdown file. `index.md` no longer
+holds the content; it is a thin entry point whose body is an optional free-form slot.
 
-Add `scroll-behavior: smooth` on `html` (inside a `prefers-reduced-motion: no-preference`
-guard) and `scroll-margin-top` on `h2` so anchored sections don't land flush against the
-viewport edge.
-
-### 6.4 Timeline rows from plain markdown  ← the one tricky bit  **[BUILT]**
-
-`index.md` authors News as:
-
-```markdown
-- **[Oct. 2025]** Accepted an offer from Capital One's ...
+```
+_config.yml         collections: { sections: { output: false } }
+_sections/*.md      one file per section, ordered by `order` (10, 20, 30 ...)
+_layouts/homepage.html   hero, then loops the sorted collection
+_includes/section.html   renders ONE section from its front matter
+_includes/sections/*.html  variant renderers (timeline, cards, ...)
+_data/*.yml         entries for data-driven variants
 ```
 
-which renders as `<li><strong>[Oct. 2025]</strong> Accepted an offer …</li>`. The date has
-to sit in a left gutter without editing the prose.
+`output: false` keeps sections from becoming standalone pages. Collections are core Jekyll,
+so this all works on GitHub Pages with no plugin.
 
-**The grid approach was tried and does not work — do not reintroduce it.** Making the `<li>`
-a grid container promotes *every inline child* to its own grid item, not just the
-`<strong>`: only bare text runs get wrapped into anonymous items. So any entry containing a
-link had its `<a>` elements scattered into the date column. Three of five News entries broke.
+**Why:** a section can be prose, a data-driven component, a hand-authored graphic, a custom
+include, or any mix — without touching the layout, and without hand-writing HTML into
+someone's prose. Adding a "Projects" section is a `_data/projects.yml` plus a six-line
+`_sections/40-projects.md`; its nav entry appears automatically.
 
-**What ships instead:** the label is lifted out of the flow and parked in the gutter, which
-is indifferent to whatever the entry contains.
+#### Section front matter contract
 
-```scss
-h2#news + ul {
-  list-style: none;
-  padding-left: 0;
+| Key | Meaning |
+|---|---|
+| `order` | Sort position on the page. Leave gaps (10, 20, 30) so sections can be inserted. |
+| `title` | The `<h2>`, and the source of the anchor id. |
+| `anchor` | Override the anchor id. **Never use `id`** — Jekyll already sets `id` on every collection document (`/sections/10-about`), so an `id` key here is silently ignored. This cost a debugging cycle. |
+| `nav` | Sidebar nav label. Omit to keep the section off the nav. |
+| `icon` | Nav icon; matches a file in `_includes/icons/`. |
+| `heading` | `false` renders the section with no visible `<h2>`. |
+| `variant` | `prose` (default) · `timeline` · `cards`. |
+| `data` | Name of a `_data/*.yml` file supplying entries to the variant. |
+| `include` | Path under `_includes/` rendered after the body — the escape hatch for a chart, diagram, or interactive component. |
+| `media` | `{ src, alt, caption, side }` floating figure. |
+| `class` | Extra classes on the `<section>`; `section--wide` opts out of the reading measure. |
+| `reveal` | `true` opts the section into the CSS-only fade-in (§6.6). |
 
-  li { position: relative; padding-left: 9rem; }
-  li > strong:first-child { position: absolute; top: 0; left: 0; width: 7.5rem; }
-}
-```
+The file body is markdown and **may contain raw HTML and inline SVG**. Kramdown does not
+parse markdown *inside* a block-level HTML tag unless that tag carries `markdown="1"`.
 
-Caveats:
-- Assumes `<strong>` is the **first child** of the `<li>`. An entry starting with plain text
-  renders with an empty gutter. Keep authoring entries as `- **[Mon. Year]** text`.
-- Scoped off the Kramdown heading id (`h2#news + ul`), so `index.md` needs no class. If the
-  `## News` heading is renamed, update this selector **and** `_data/nav.yml` together.
-- Below 480px the label reverts to `position: static; display: block` so the text gets the
-  full width. That override lives in `components.scss` — see §6.4.1.
-- **Escape hatch:** if this ever proves fragile, move News into `_data/news.yml` +
-  `_includes/news.html` and have `index.md` call `{% include news.html %}`.
+#### Adding things later
+
+- **A new section**: drop a file in `_sections/` with an `order`. Nav updates itself.
+- **A graphic in a section**: `media:` for a figure, or inline `<svg>` in the body.
+- **A repeating component** (projects, talks, publications): a `_data/*.yml` plus
+  `variant: cards`, or a new variant include if the shape is different.
+- **Something bespoke** (chart, canvas, widget): write `_includes/whatever.html` and point
+  `include:` at it. Jekyll 3.x cannot take a variable include name *with* parameters, so a
+  custom include receives no params — read from `site.*` or `site.data.*` instead.
+- **Animation**: `reveal: true`, or scoped CSS. Keep §0 in mind: no JS unless it earns its
+  place, and always honor `prefers-reduced-motion`.
+
+#### Liquid gotchas hit while building this
+
+- `site.data[section.data].main` **cannot** appear inside an `{% include %}` parameter on
+  Jekyll 3.x — resolve it with `{% assign %}` first. Same for a variable include name.
+- Anchors come from `title | slugify`, and the nav is generated from the same collection, so
+  a section and its nav link cannot drift apart. Renaming a `title` silently changes its
+  URL fragment — deliberate, but worth knowing if a link is shared.
+
+### 6.4 Timeline: how it works now, and the trap that is gone  **[BUILT]**
+
+News lives in `_data/news.yml` and is rendered by `_includes/sections/timeline.html`, so each
+entry is real markup: a date in the left gutter (`.timeline__date`), and a body that can
+carry a tag, a thumbnail, markdown prose, and link buttons.
+
+**Historical note, so nobody reinvents it:** the first version styled the plain markdown list
+straight out of `index.md`, using the leading `<strong>` as the date label. Two approaches
+were tried and both were bad:
+
+1. `display: grid` on the `<li>` — **broken**. Grid promotes *every* inline child to its own
+   grid item; only bare text runs are merged into anonymous items. Entries containing links
+   scattered their `<a>` elements into the date column. Three of five entries broke.
+2. Absolute-positioning the `<strong>` into a gutter — worked, but silently depended on
+   every entry starting with `**bold**`, and could never hold a thumbnail or a button.
+
+The data file removes the constraint instead of working around it. **Do not reintroduce
+either hack.**
 
 ### 6.4.1 Sass import order  ← bit me once
 
@@ -438,11 +475,23 @@ originally written in `layout.scss` and silently did nothing.
   `localStorage`, updates `aria-label`/icon.
 - Wrap every `localStorage` access in `try/catch` (private mode / blocked storage throws).
 
-### 6.6 Active nav highlight (progressive enhancement)
+### 6.6 Motion policy  **[BUILT]**
 
-`assets/js/nav-active.js`: IntersectionObserver over the `h2` section headings; when one
-enters the top band of the viewport, add `.is-active` to the matching nav link. Must degrade
-to "nothing happens" with JS off. Skip entirely if it fights the sticky sidebar.
+Animation is allowed but must stay cheap and optional. The one built-in is `.reveal`: a
+fade-and-rise driven by `animation-timeline: view()`. It costs **zero JavaScript**, is
+wrapped in `@supports` so unsupporting browsers simply show the content, and sits inside
+`@media (prefers-reduced-motion: no-preference)`.
+
+Opt a section in with `reveal: true`. Before adding any *other* animation:
+
+- CSS first. Scroll-driven timelines and transitions need no JS.
+- If it truly needs JS, it goes in its own file loaded `defer`, and the page must be
+  complete and correct without it.
+- Always guard with `prefers-reduced-motion`.
+- Nothing that blocks reading, moves text while it is being read, or delays first paint.
+
+The planned `nav-active.js` (IntersectionObserver highlighting the in-view section) was
+**dropped**: JS that doesn't earn its place on a page this short.
 
 ### 6.7 Verification checklist (before every push)
 
@@ -515,3 +564,19 @@ to "nothing happens" with JS off. Skip entirely if it fights the sticky sidebar.
   pair on its own in current browsers, and §0 allows only one JS file.
   Page weight: one 8 KB stylesheet, one ~1 KB script, two webfont families, one 30 KB image.
   **Not committed** — working tree only, awaiting review.
+- **2026-09-06** — **Page rearchitected for extensibility** at the user's request: the
+  homepage must be able to grow graphics and animation, which one markdown file cannot
+  support. Content moved out of `index.md` (verbatim) into the `_sections` collection;
+  News moved into `_data/news.yml`. Added `_includes/section.html` (front-matter-driven
+  renderer), `timeline.html` and `cards.html` variants, `figure.html`, a `.reveal`
+  CSS-only motion utility, and section building blocks (`.tag`, `.btn`, `.cards`,
+  `.figure`, `section--wide`). Sidebar nav now generates from the section list.
+  Hero photo added beside the h1 (`hero_image`, 400px square crop; stacks above the
+  heading below 560px).
+  All capabilities were smoke-tested with a temporary section exercising cards + figure +
+  custom include + reveal, and a news entry with tag/thumbnail/buttons; fixtures removed
+  after verification.
+  Two bugs found and fixed in the process: `id` in section front matter is shadowed by
+  Jekyll's own document `id` (use `anchor`), and the mobile hero rule hit the
+  §6.4.1 import-order trap again.
+  **Not committed** — working tree only.

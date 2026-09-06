@@ -1,0 +1,45 @@
+# News / timeline entries, newest first. Rendered by _includes/sections/timeline.html.
+#
+# Per entry:
+#   date   required. The label in the left gutter.
+#   body   required. Markdown — links, emphasis, and inline HTML all work.
+#   image  optional. Path to a thumbnail shown beside the entry.
+#   alt    optional. Alt text for that image (required if image is meaningful).
+#   tag    optional. Small label above the entry, e.g. "Internship".
+#   links  optional. List of { label, href } rendered as small buttons.
+
+main:
+  - date: Oct. 2025
+    body: >-
+      Accepted an offer from Capital One's Technology Internship Program (TIP)
+      in summer 2026! Hope to meet more people there.
+
+  - date: May. 2025
+    body: >-
+      Completed my research class with Prof. Yi Liu and Prof. Mendez. Check out my
+      [final project report](assets/files/CSE_487_Report__Improved_Molecule_Generation_Using_Large_Language_Models_In_Genetic_Algorithms%20(1).pdf)
+      combining Genetic Algorithms with Large Language Models to for molecule
+      optimization tasks.
+
+  - date: Apr. 2025
+    body: >-
+      I was accepted into the
+      [URECA Summer Research Program](https://www.stonybrook.edu/commcms/ureca/summer/on-campusopportunities.php)
+      at Stony Brook University for Summer of 2025. I will receive funding for my
+      project on using Diffusion Models to assist plan execution of Robots in
+      simulator environments and will be presenting this in the April 2026 Symposium!
+
+  - date: Apr. 2025
+    body: >-
+      I was invited as a student presenter at the
+      [2nd Annual SUNY AI Symposium](https://www.buffalo.edu/research/landing-pages/suny-ai-symposium.html)
+      hosted in University of Buffalo! I presented by summer research poster and met
+      many professors and PhD students.
+
+  - date: Aug. 2024
+    body: >-
+      Completed my first Summer Research Program
+      [SOAR](https://www.stonybrook.edu/commcms/cie/suny-soar/index.php)
+      at Stony Brook University funded by SUNY. My project utilized Neural Operators
+      for weather forecasting in the United States.
+      [Check out here!](https://github.com/xiang1103/Climate-Forecasting-with-Deep-Learning_SOAR-Research/blob/main/Xiang%20Liu%20SOAR%20Poster.pdf)

@@ -14,7 +14,7 @@
     <meta property="og:title" content="{{ site.title }} | {{ site.affiliation }}">
     <meta property="og:description" content="{{ site.description }}">
     {% if site.canonical %}<meta property="og:url" content="{{ site.canonical }}">{% endif %}
-    <meta property="og:image" content="{{ site.canonical }}{{ site.avatar_small | remove_first: './' }}">
+    <meta property="og:image" content="{{ site.canonical }}{{ site.hero_image | remove_first: './' }}">
     <meta name="twitter:card" content="summary">
 
     <link rel="icon" media="(prefers-color-scheme:dark)" href="{{ site.favicon_dark }}" type="image/png">
@@ -42,11 +42,18 @@
   </head>
 
   <body>
+    {%- comment -%}
+      Page sections come from the _sections collection, ordered by `order`.
+      The sidebar nav is generated from the same list, so a section and its nav
+      entry can never drift apart. See _includes/section.html for the contract.
+    {%- endcomment -%}
+    {% assign sections = site.sections | sort: "order" %}
+
     <div class="page">
       <aside class="sidebar">
         <div class="brand">
           {% if site.avatar_small %}
-          <img class="brand__avatar" src="{{ site.avatar_small | relative_url }}" width="34" height="34" alt="{{ site.title }}">
+          <img class="brand__avatar" src="{{ site.avatar_small | relative_url }}" width="34" height="34" alt="">
           {% endif %}
           <a class="brand__name" href="{{ '/' | relative_url }}">{{ site.wordmark | default: site.title }}</a>
           <button class="theme-toggle" type="button" aria-label="Switch color theme">
@@ -64,7 +71,18 @@
 
         <nav aria-label="Sections">
           <ul class="nav__list">
-            {% for item in site.data.nav.main %}
+            {% for section in sections %}
+            {% if section.nav %}
+            <li>
+              <a class="nav__link" href="#{{ section.anchor | default: section.title | slugify }}">
+                {% if section.icon %}{% include icons/{{ section.icon }}.svg %}{% endif %}
+                <span>{{ section.nav }}</span>
+              </a>
+            </li>
+            {% endif %}
+            {% endfor %}
+
+            {% for item in site.data.nav.extra %}
             <li>
               <a class="nav__link" href="{{ item.href }}"{% if item.external %} target="_blank" rel="noopener"{% endif %}>
                 {% if item.icon %}{% include icons/{{ item.icon }}.svg %}{% endif %}
@@ -100,21 +118,44 @@
 
           <div class="sidebar__links">
             {% if site.cv_link %}<a href="{{ site.cv_link | uri_escape | relative_url }}">Resume</a>{% endif %}
-            {% if site.github_link %}<a href="{{ site.github_link }}/{{ site.github_repo | default: 'xiang1103.github.io' }}" target="_blank" rel="noopener">Source</a>{% endif %}
+            {% if site.github_link %}<a href="{{ site.github_link }}/{{ site.github_repo }}" target="_blank" rel="noopener">Source</a>{% endif %}
           </div>
         </div>
       </aside>
 
       <main class="main">
-        <h1>{{ site.greeting | default: site.title }}</h1>
-        {% if site.tagline %}<p class="lead">{{ site.tagline }}</p>{% endif %}
+        <header class="hero">
+          <div class="hero__text">
+            <h1>{{ site.greeting | default: site.title }}</h1>
+            {% if site.tagline %}<p class="lead">{{ site.tagline }}</p>{% endif %}
+          </div>
 
-        <div class="content">
-          {{ content }}
-        </div>
+          {% if site.hero_image %}
+          <img class="hero__photo"
+               src="{{ site.hero_image | relative_url }}"
+               width="400" height="400"
+               alt="{{ site.title }}">
+          {% endif %}
+        </header>
+
+        {%- comment -%}
+          index.md's own body, if it has one. Kept as a free-form slot above the
+          sections for anything that isn't worth making a section.
+        {%- endcomment -%}
+        {% if content != "" %}
+        <div class="prose intro">{{ content }}</div>
+        {% endif %}
+
+        {% for section in sections %}
+        {% include section.html section=section %}
+        {% endfor %}
 
         {% if site.motto %}
         <p class="motto">{{ site.motto }}</p>
+        {% endif %}
+
+        {% if site.last_updated %}
+        <p class="updated">Last Updated: {{ site.last_updated }}</p>
         {% endif %}
       </main>
     </div>

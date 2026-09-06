@@ -1,0 +1,32 @@
+{% comment %}
+  Timeline: a date label in the left gutter, entry content beside it.
+  Entries come from a _data file — see _data/news.yml for the field contract.
+  Each entry can carry a thumbnail, a tag, and link buttons, so this is no
+  longer limited to a line of text.
+{% endcomment %}
+
+<ol class="timeline">
+  {% for entry in include.entries %}
+  <li class="timeline__item">
+    <div class="timeline__date">{{ entry.date }}</div>
+
+    <div class="timeline__body">
+      {% if entry.tag %}<span class="tag">{{ entry.tag }}</span>{% endif %}
+
+      {% if entry.image %}
+      <img class="timeline__thumb" src="{{ entry.image | relative_url }}" alt="{{ entry.alt }}" loading="lazy">
+      {% endif %}
+
+      {{ entry.body | markdownify }}
+
+      {% if entry.links %}
+      <p class="btn-row">
+        {% for link in entry.links %}
+        <a class="btn" href="{{ link.href }}"{% if link.href contains "://" %} target="_blank" rel="noopener"{% endif %}>{{ link.label }}</a>
+        {% endfor %}
+      </p>
+      {% endif %}
+    </div>
+  </li>
+  {% endfor %}
+</ol>
