@@ -1,0 +1,129 @@
+// ---------------------------------------------------------------------------
+// Reset + element defaults. Styles plain markdown output, since all page
+// content comes from index.md and is never hand-written as HTML.
+// ---------------------------------------------------------------------------
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+// Anchored sections shouldn't land flush against the viewport edge.
+:target {
+  scroll-margin-top: var(--sp-4);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--text);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+h1 {
+  margin: 0;
+  font-size: var(--text-h1);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+// Section headings, rendered from `## ...` in index.md. The top margin is
+// large and the bottom margin small so each heading binds to its own content.
+h2 {
+  margin: var(--sp-6) 0 var(--sp-3);
+  font-size: var(--text-h2);
+  font-weight: 700;
+  scroll-margin-top: var(--sp-5);
+}
+
+h3 {
+  margin: var(--sp-5) 0 var(--sp-2);
+  font-size: 1.0625rem;
+  font-weight: 700;
+}
+
+p {
+  margin: 0 0 var(--sp-3);
+}
+
+a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: color 120ms ease;
+
+  &:hover {
+    color: var(--accent-hover);
+    text-decoration-thickness: 2px;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+ul,
+ol {
+  margin: 0 0 var(--sp-3);
+  padding-left: 1.25rem;
+}
+
+li {
+  margin-bottom: var(--sp-2);
+}
+
+strong {
+  font-weight: 700;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+hr {
+  height: 1px;
+  margin: var(--sp-5) 0;
+  border: 0;
+  background: var(--border);
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+// Wide content must scroll inside itself; the page never scrolls sideways.
+pre,
+table {
+  max-width: 100%;
+  overflow-x: auto;
+}

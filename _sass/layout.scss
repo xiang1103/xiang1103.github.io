@@ -1,0 +1,58 @@
+// ---------------------------------------------------------------------------
+// The two-column shell: a fixed sidebar and a scrolling main column,
+// separated by a single hairline. No cards, no shadows, no containers.
+// ---------------------------------------------------------------------------
+
+.page {
+  display: grid;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  align-items: start;
+  min-height: 100vh;
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: var(--sp-5) var(--sp-4);
+  overflow-y: auto;
+  background: var(--bg-subtle);
+  border-right: 1px solid var(--border);
+}
+
+.main {
+  max-width: calc(var(--measure) + var(--sp-7) * 2);
+  padding: var(--sp-7) var(--sp-5) var(--sp-7) var(--sp-7);
+}
+
+// ---------------------------------------------------------------------------
+// Responsive — page shell only. Each component's own breakpoint rules live in
+// components.scss, which is imported after this file: a rule here would lose
+// to the component's default on equal specificity.
+// ---------------------------------------------------------------------------
+
+// Below 900px the sidebar stops being a column and becomes a header block.
+@media (max-width: 900px) {
+  .page {
+    display: block;
+  }
+
+  .sidebar {
+    position: static;
+    height: auto;
+    padding: var(--sp-4) var(--sp-4) var(--sp-3);
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .main {
+    max-width: none;
+    padding: var(--sp-6) var(--sp-4) var(--sp-7);
+  }
+
+  .lead {
+    max-width: none;
+  }
+}

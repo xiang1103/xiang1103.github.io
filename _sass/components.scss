@@ -1,0 +1,335 @@
+// ---------------------------------------------------------------------------
+// Components. Everything here is flat: hierarchy comes from type, color, and
+// whitespace. The only transitions are color changes.
+// ---------------------------------------------------------------------------
+
+// --- sidebar: brand row ----------------------------------------------------
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.brand__avatar {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.brand__name {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--accent);
+  }
+}
+
+.theme-toggle {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  color: var(--text-muted);
+  background: none;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: color 120ms ease;
+
+  &:hover {
+    color: var(--accent);
+  }
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+// Show the icon for the theme you'd switch *to*: moon in light, sun in dark.
+.theme-toggle .icon-sun {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-toggle {
+    .icon-sun {
+      display: block;
+    }
+
+    .icon-moon {
+      display: none;
+    }
+  }
+}
+
+:root[data-theme="dark"] .theme-toggle {
+  .icon-sun {
+    display: block;
+  }
+
+  .icon-moon {
+    display: none;
+  }
+}
+
+// --- sidebar: blurb, dividers, nav -----------------------------------------
+
+.divider {
+  height: 1px;
+  margin: var(--sp-4) 0;
+  background: var(--border);
+}
+
+.blurb {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.nav__list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav__list li {
+  margin: 0;
+}
+
+.nav__link {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: var(--text-sm);
+  color: var(--text);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--accent);
+  }
+
+  svg {
+    flex: none;
+    width: 17px;
+    height: 17px;
+    color: var(--text-muted);
+  }
+
+  &:hover svg {
+    color: var(--accent);
+  }
+}
+
+.nav__ext {
+  font-size: 0.75em;
+  color: var(--text-muted);
+}
+
+.sidebar__spacer {
+  flex: 1;
+  min-height: var(--sp-5);
+}
+
+// --- sidebar: socials + footer links ---------------------------------------
+
+.socials {
+  display: flex;
+  gap: var(--sp-3);
+  align-items: center;
+}
+
+.socials a {
+  display: inline-flex;
+  color: var(--text-muted);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--accent);
+  }
+
+  svg {
+    width: 19px;
+    height: 19px;
+  }
+}
+
+.sidebar__links {
+  display: flex;
+  gap: var(--sp-2);
+  align-items: center;
+  margin-top: var(--sp-3);
+  font-size: var(--text-xs);
+}
+
+.sidebar__links a {
+  color: var(--text-muted);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+}
+
+.sidebar__links a:not(:last-child)::after {
+  content: "|";
+  margin-left: var(--sp-2);
+  color: var(--border);
+}
+
+// --- main: hero ------------------------------------------------------------
+
+.lead {
+  max-width: var(--measure);
+  margin: var(--sp-2) 0 0;
+  font-size: var(--text-lead);
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.content {
+  max-width: var(--measure);
+}
+
+// The final paragraph of index.md is the "Last Updated" line — quiet it down.
+.content > p:last-child {
+  margin-top: var(--sp-6);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
+
+// --- main: timeline --------------------------------------------------------
+//
+// Renders the plain markdown News list as two columns without touching the
+// prose. Each entry is authored as:
+//
+//     - **[Oct. 2025]** Accepted an offer from ...
+//
+// giving <li><strong>[Oct. 2025]</strong> Accepted an offer ...</li>. The date
+// label is lifted out of the text flow and parked in the left gutter.
+//
+// Do NOT use `display: grid` on the <li> here. Grid promotes every inline
+// child to its own grid item, so an entry containing a link would scatter its
+// <a> elements into the date column. Absolute positioning is indifferent to
+// what the entry contains.
+//
+// NOTE: assumes <strong> is the first child of the <li>. An entry that starts
+// with plain text will render without a label in the gutter.
+//
+// Scoped off the heading id so index.md needs no class attribute. Kramdown
+// generates `id="news"` from `## News`; if that heading is renamed, update
+// this selector and _data/nav.yml together.
+
+.timeline,
+h2#news + ul {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+
+  li {
+    position: relative;
+    margin-bottom: var(--sp-4);
+    padding-left: 9rem;
+  }
+
+  li > strong:first-child {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 7.5rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 400;
+    line-height: 1.9;
+    color: var(--text-muted);
+    letter-spacing: -0.03em;
+  }
+}
+
+// --- sidebar: obfuscated email + closing motto -----------------------------
+
+.sidebar__email {
+  margin: var(--sp-3) 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: -0.03em;
+  line-height: 1.5;
+  color: var(--text-muted);
+  // One long unbroken token; break it rather than overflow the sidebar.
+  overflow-wrap: break-word;
+}
+
+.motto {
+  max-width: var(--measure);
+  margin: var(--sp-6) 0 0;
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--border);
+  font-size: var(--text-sm);
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+// ---------------------------------------------------------------------------
+// Responsive — component overrides. Must live after the defaults above.
+// ---------------------------------------------------------------------------
+
+@media (max-width: 900px) {
+  // The sidebar is a header now: nav runs across, footer bits sit on one line.
+  .nav__list {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--sp-2) var(--sp-4);
+  }
+
+  .sidebar__spacer {
+    display: none;
+  }
+
+  .sidebar__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--sp-2) var(--sp-4);
+    margin-top: var(--sp-4);
+  }
+
+  .sidebar__email,
+  .sidebar__links {
+    margin-top: 0;
+  }
+}
+
+// Below 480px the timeline date labels move onto their own line, so the entry
+// text gets the full width instead of a narrow column beside the gutter.
+@media (max-width: 480px) {
+  .timeline li,
+  h2#news + ul li {
+    padding-left: 0;
+  }
+
+  .timeline li > strong:first-child,
+  h2#news + ul li > strong:first-child {
+    position: static;
+    display: block;
+    width: auto;
+    line-height: 1.6;
+  }
+}

@@ -1,0 +1,76 @@
+// ---------------------------------------------------------------------------
+// Design tokens. Every color, size, and spacing value in the site comes from
+// here. Do not hardcode a hex value anywhere else.
+//
+// Theme resolution (three declarations, in this order):
+//   1. :root                        -> light, the default
+//   2. prefers-color-scheme: dark   -> dark, unless the user forced light
+//   3. [data-theme="dark"]          -> dark, forced by the toggle
+// This way an explicit choice wins in both directions.
+// ---------------------------------------------------------------------------
+
+:root {
+  // --- color: warm paper + deep teal ---------------------------------------
+  --bg: #fbf7f0;
+  --bg-subtle: #f6f1e7;
+  --text: #1c1a17;
+  --text-muted: #6b655c;
+  --accent: #0f6e63;
+  --accent-hover: #0a544b;
+  --border: #e4ddd1;
+  --focus: #0f6e63;
+
+  // --- type ----------------------------------------------------------------
+  --font-sans: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-base: 1.0625rem;
+  --text-lead: 1.25rem;
+  --text-h2: 1.3rem;
+  --text-h1: clamp(2.75rem, 6vw, 4rem);
+
+  // --- spacing -------------------------------------------------------------
+  --sp-1: 0.5rem;
+  --sp-2: 0.75rem;
+  --sp-3: 1rem;
+  --sp-4: 1.5rem;
+  --sp-5: 2rem;
+  --sp-6: 3rem;
+  --sp-7: 4rem;
+
+  // --- layout --------------------------------------------------------------
+  --sidebar-w: clamp(240px, 24vw, 300px);
+  --measure: 46rem;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #16150f;
+    --bg-subtle: #1b1a13;
+    --text: #ede8de;
+    --text-muted: #9a938a;
+    --accent: #4fc7b4;
+    --accent-hover: #6fdcc9;
+    --border: #2e2b24;
+    --focus: #4fc7b4;
+
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #16150f;
+  --bg-subtle: #1b1a13;
+  --text: #ede8de;
+  --text-muted: #9a938a;
+  --accent: #4fc7b4;
+  --accent-hover: #6fdcc9;
+  --border: #2e2b24;
+  --focus: #4fc7b4;
+
+  color-scheme: dark;
+}

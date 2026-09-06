@@ -5,3 +5,7 @@ Gemfile.lock
 .DS_Store
 .jekyll-cache
 git-update.sh
+
+# Local Jekyll install (bundle install --path vendor/bundle)
+vendor/
+.bundle/
