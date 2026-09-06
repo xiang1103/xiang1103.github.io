@@ -5,7 +5,7 @@ affiliation: Stony Brook University
 affiliation_link: https://www.stonybrook.edu/
 
 # Shown in the sidebar as plain text, deliberately obfuscated against scrapers.
-email: xiang(dot)liu(dot)1(at)stonybrook.edu
+email: xlxiangliu.13@gmail.com
 # The mail icon in the sidebar links to this address with mailto:, so clicking it
 # opens a new draft. NOTE: unlike `email` above, this appears in the page source in
 # plain text and is readable by scrapers. Leave blank to hide the icon.
