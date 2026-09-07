@@ -61,8 +61,9 @@ main:
     org_url: https://jorge-a-mendez.github.io/
     points:
       - Using image-generation models to generate action parameters accurately and efficiently for robots
-      - Robots could execute home-tasks like putting books onto shelves 
-      - Presented at the April 2026 URECA Symposium, Fall 2026 MIT Undergraduate Technology Conference
+      - Robots could execute home-tasks like putting books onto shelves without human intervention
+      - Presented at the [April 2026 URECA Symposium](https://www.stonybrook.edu/ureca/present-your-work/summer-symposium.html), October 2025 [MIT Undergraduate Technology Conference](https://urtc.mit.edu/)
+      - Advised by Professor Jorge-Mendez Mendez in the Electrical and Computer Engineering Department
     skills:
       - PyTorch 
       - Diffusion Models
@@ -79,7 +80,8 @@ main:
     org_url: https://www.stonybrook.edu/commcms/cie/suny-soar/
     points:
       - Trained Deep Learning models like Fourier Neural Operators, U-Net and CNN for weather forecast in the United States 
-      - Working towards fast efficient weather forecasting without the computation from supercomputers 
+      - Working towards fast and accurate weather forecasting without the computation from supercomputers 
+      - Advised by Professor [Yi Liu](https://jacoblau0513.github.io/) in the Applied Mathematics & Statistics Department at Stony Brook
     skills:
       - PyTorch 
       - Neural Networks 
