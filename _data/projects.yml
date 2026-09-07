@@ -70,7 +70,6 @@
 
 main:
   - title: Diffusion Models for Robot Plan Execution
-    tag: URECA 2025
     image: /assets/img/projects/stanford-cars.jpg
     alt: A grid of car photographs from the Stanford Cars dataset, labelled by class
     size: 640x363

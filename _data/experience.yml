@@ -56,7 +56,7 @@ main:
     org: Capital One
     org_url: https://www.capitalonecareers.com/students
     points:
-      - Built a data lineage scoring system from scratch for Capital One's Card Tech Data Team
+      - Built a data lineage scoring system from scratch for Capital One's Card Tech Data Engineering and Analytics Team
       - Automatically traced how data moves between datasets, mapping upstream and downstream dependencies without manual input
       - Scored each dataset on lineage accuracy, giving teams a clear signal of which datasets they could trust, saving manual Analysts' review time
     skills: 
