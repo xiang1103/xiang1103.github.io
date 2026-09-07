@@ -385,8 +385,10 @@
 
 .timeline__item {
   display: grid;
-  grid-template-columns: 7.5rem 1fr;
-  column-gap: var(--sp-4);
+  // The gutter holds a date range, and the gap is wide so the date reads as a
+  // separate column rather than as part of the entry.
+  grid-template-columns: 9rem 1fr;
+  column-gap: var(--sp-6);
   margin-bottom: var(--sp-4);
 }
 
@@ -537,10 +539,11 @@
 //
 // Labelled rows of pills, from _data/skills.yml via sections/skills.html.
 
+// Matches the timeline's gutter so labels and content line up across sections.
 .skills__group {
   display: grid;
-  grid-template-columns: 7.5rem 1fr;
-  column-gap: var(--sp-4);
+  grid-template-columns: 9rem 1fr;
+  column-gap: var(--sp-6);
   margin-bottom: var(--sp-3);
 }
 
@@ -563,12 +566,6 @@
 
 .skills__items .tag {
   margin-bottom: 0;
-}
-
-// The date gutter needs more room now that entries carry a role heading.
-.timeline__item,
-.skills__group {
-  grid-template-columns: 9rem 1fr;
 }
 
 // An experience entry leads with "Role · Organisation", the organisation

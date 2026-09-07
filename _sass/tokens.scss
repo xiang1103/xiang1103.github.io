@@ -48,12 +48,12 @@
   // Content width. Fluid rather than fixed, so a wide window gets used instead
   // of sitting empty — but capped, because line length past roughly 100
   // characters is measurably harder to read.
-  //   1440px viewport -> ~835px  (~97 chars per line)
-  //   1920px and up   -> 928px   (~108 chars, the cap)
+  //   1440px viewport -> ~893px  (~104 chars per line)
+  //   1920px and up   -> 1056px  (~123 chars, the cap)
   // The whole page follows this one value: sections, hero, timeline, cards.
-  // Raise the 58rem ceiling to fill more of a large screen, at the cost of
+  // Raise the 66rem ceiling to fill more of a large screen, at the cost of
   // longer lines; remove it entirely to fill the window completely.
-  --measure: clamp(46rem, 58vw, 58rem);
+  --measure: clamp(46rem, 62vw, 66rem);
 
   color-scheme: light;
 }

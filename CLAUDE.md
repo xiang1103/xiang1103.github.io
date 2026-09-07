@@ -844,4 +844,14 @@ The planned `nav-active.js` (IntersectionObserver highlighting the in-view secti
   read, and the alternative (no cap) reaches ~255 characters on a 2560px display. Raise the
   58rem ceiling to fill more; delete it to fill the window entirely. The comment on the
   token records these numbers.
+- **2026-09-06** — Measure widened again at the user's request: `clamp(46rem, 58vw, 58rem)`
+  -> `clamp(46rem, 62vw, 66rem)` (+8rem of ceiling). 1440px now gives ~893px (~104 chars per
+  line), capping at 1056px (~123 chars) from 1920px up — past the comfortable reading range,
+  chosen deliberately to use the space.
+  With the extra room, the timeline gutter gap went `--sp-4` (1.5rem) -> `--sp-6` (3rem), so
+  the date reads as its own column rather than as part of the entry. `.skills__group` got
+  the same gutter and gap so its labels line up with the experience dates across sections.
+  Also folded away a redundant override: `.timeline__item` and `.skills__group` each declared
+  `grid-template-columns: 7.5rem 1fr` and were then overridden to `9rem 1fr` further down the
+  file. The 9rem is now declared once, in each base rule.
 
