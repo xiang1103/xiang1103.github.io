@@ -318,6 +318,10 @@ are ours to choose**. Ships as a **single long page** (nav links are on-page anc
   - `row-gap: 1.5rem` between entries.
   Data-driven from `_data/news.yml`, so an entry can also carry a tag, a thumbnail, and
   link buttons — see §6.4.
+- **Pills (`.tag`)** — the shared "bubble": fully rounded, mono, accent text on
+  `--accent-soft` (the accent tinted into the page background). Used by Skills groups,
+  Project tags, and Experience entry skills, so they read as one system. A wrapping row of
+  them is `.pills`. Contrast verified: 5.1:1 light, 7.2:1 dark.
 - **Links** — accent color, `text-decoration: underline` with `text-underline-offset: 2px`
   and a thin `text-decoration-thickness`. Bold when the link is a "title" inside a timeline
   row (that's just how the markdown is authored). Hover: darker accent + thicker underline.
@@ -541,24 +545,51 @@ external items appended last.
   a section and its nav link cannot drift apart. Renaming a `title` silently changes its
   URL fragment — deliberate, but worth knowing if a link is shared.
 
-### 6.4 Timeline: how it works now, and the trap that is gone  **[BUILT]**
+### 6.4 Timeline / Experience entries  **[BUILT]**
 
-News lives in `_data/news.yml` and is rendered by `_includes/sections/timeline.html`, so each
-entry is real markup: a date in the left gutter (`.timeline__date`), and a body that can
-carry a tag, a thumbnail, markdown prose, and link buttons.
+`_includes/sections/timeline.html` renders `_data/experience.yml`. The layout follows
+[brittanychiang.com](https://brittanychiang.com)'s experience list — **its structure only;
+the palette and type stay ours**:
 
-**Historical note, so nobody reinvents it:** the first version styled the plain markdown list
-straight out of the old `index.md`, using the leading `<strong>` as the date label. Two approaches
-were tried and both were bad:
+```
+SUMMER 2025   Undergraduate Researcher · URECA, Stony Brook University ↗
+              Accepted into the URECA Summer Research Program with funding
+              for my project on using Diffusion Models ...
+              (Diffusion Models) (Robotics) (Simulation)     <- pills
+              [ Report ]                                     <- link buttons
+```
+
+Every part except `date` is optional, so an entry works as a bare line of text *or* a full
+role listing:
+
+| Field | Renders as |
+|---|---|
+| `date` | the gutter label, uppercased in CSS (`2024 — Present`, `Summer 2025`) |
+| `role` | bold `<h3>` heading line |
+| `org` | appended after a `·` |
+| `org_url` | makes the org a link with an outbound arrow |
+| `previous_roles` | list of earlier titles at the same org, muted, under the heading |
+| `body` | markdown description |
+| `skills` | list of strings → a wrapping row of `.tag` pills |
+| `links` | list of `{label, href}` → small `.btn` buttons |
+| `tag`, `image`/`alt` | small label above the heading; thumbnail |
+
+The gutter is `9rem` wide (was `7.5rem`) to fit date *ranges*. Below 480px the whole item
+becomes a block and the date sits on its own line above the role.
+
+**Historical note, so nobody reinvents it:** the first version styled a plain markdown list
+straight out of the old `index.md`, using the leading `<strong>` as the date label. Two
+approaches were tried and both were bad:
 
 1. `display: grid` on the `<li>` — **broken**. Grid promotes *every* inline child to its own
    grid item; only bare text runs are merged into anonymous items. Entries containing links
-   scattered their `<a>` elements into the date column. Three of five entries broke.
+   scattered their `<a>` elements into the date column.
 2. Absolute-positioning the `<strong>` into a gutter — worked, but silently depended on
    every entry starting with `**bold**`, and could never hold a thumbnail or a button.
 
-The data file removes the constraint instead of working around it. **Do not reintroduce
-either hack.**
+The data file removed the constraint instead of working around it, which is exactly what
+made the role/pill layout above a template change rather than a rewrite. **Do not
+reintroduce either hack.**
 
 ### 6.4.1 Sass import order  ← bit me once
 
@@ -755,4 +786,18 @@ The planned `nav-active.js` (IntersectionObserver highlighting the in-view secti
     `experience` (briefcase), `projects` (layers), `skills` (sliders). `news.svg` deleted.
   Anchors and nav labels all derive from `title:`, so the five sections and their nav links
   regenerated themselves; nothing needed hand-syncing.
+- **2026-09-06** — **Experience section restyled after brittanychiang.com** (layout only,
+  palette and type unchanged). Each entry is now `date gutter | Role · Org ↗ / description /
+  skill pills / link buttons`, via new optional `role`, `org`, `org_url`, `previous_roles`,
+  and `skills` fields in `_data/experience.yml`. No layout or CSS architecture changed — the
+  data-driven timeline absorbed it as a template edit.
+  `.tag` became a proper pill (fully rounded, `--accent-soft` background) and gained a
+  `.pills` row wrapper; Skills and Projects inherit the same bubble, so all three sections
+  match. New `--accent-soft` token in both themes; contrast checked at 5.1:1 / 7.2:1.
+  Date gutter widened 7.5rem -> 9rem for date ranges, and the labels are uppercased in CSS.
+  **Content caveat:** the five entries were rewritten from news phrasing into role listings
+  using only what the site already said — "Capital One's Technology Internship Program"
+  became "Technology Intern · Capital One", and each entry's `skills` are the techniques its
+  own description named. Titles and date ranges are restatements, not verified facts; the
+  data file says so at the top.
 

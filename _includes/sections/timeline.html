@@ -1,8 +1,20 @@
 {% comment %}
   Timeline: a date label in the left gutter, entry content beside it.
   Entries come from a _data file — see _data/experience.yml for the contract.
-  An entry can carry a role/org heading, a tag, a thumbnail, markdown body, and
-  link buttons, so this is not limited to a line of text.
+
+  An entry is built from optional parts, so it works as a bare line of text or
+  as a full role listing:
+
+    date            the gutter label (required)
+    role            bold heading line
+    org             organisation, appended after "·"
+    org_url         makes the org a link with an outbound arrow
+    previous_roles  earlier titles at the same org, listed under the heading
+    tag             small label above the heading
+    image / alt     thumbnail
+    body            markdown description
+    skills          list of strings, rendered as pills
+    links           list of { label, href }, rendered as small buttons
 {% endcomment %}
 
 <ol class="timeline">
@@ -14,14 +26,36 @@
       {% if entry.tag %}<span class="tag">{{ entry.tag }}</span>{% endif %}
 
       {% if entry.role %}
-      <div class="timeline__role">{{ entry.role }}{% if entry.org %} <span class="timeline__org">· {{ entry.org }}</span>{% endif %}</div>
+      <h3 class="timeline__role">
+        {{ entry.role }}{% if entry.org %}
+        <span class="timeline__org">·
+          {%- if entry.org_url %}
+          <a href="{{ entry.org_url }}" target="_blank" rel="noopener">{{ entry.org }} <span class="timeline__ext" aria-hidden="true">&#8599;</span></a>
+          {%- else %}
+          {{ entry.org }}
+          {%- endif %}
+        </span>
+        {%- endif %}
+      </h3>
       {% endif %}
+
+      {% for previous in entry.previous_roles %}
+      <div class="timeline__previous">{{ previous }}</div>
+      {% endfor %}
 
       {% if entry.image %}
       <img class="timeline__thumb" src="{{ entry.image | relative_url }}" alt="{{ entry.alt }}" loading="lazy">
       {% endif %}
 
       {{ entry.body | markdownify }}
+
+      {% if entry.skills %}
+      <ul class="pills">
+        {% for skill in entry.skills %}
+        <li class="tag">{{ skill }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
 
       {% if entry.links %}
       <p class="btn-row">

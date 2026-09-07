@@ -1,45 +1,78 @@
-# News / timeline entries, newest first. Rendered by _includes/sections/timeline.html.
+# Experience entries, newest first. Rendered by _includes/sections/timeline.html.
 #
-# Per entry:
-#   date   required. The label in the left gutter.
-#   body   required. Markdown — links, emphasis, and inline HTML all work.
-#   image  optional. Path to a thumbnail shown beside the entry.
-#   alt    optional. Alt text for that image (required if image is meaningful).
-#   tag    optional. Small label above the entry, e.g. "Internship".
-#   links  optional. List of { label, href } rendered as small buttons.
+# Per entry — only `date` is required, so an entry can be a bare line of text or
+# a full role listing:
+#
+#   date            the label in the left gutter, e.g. "2024 — Present"
+#   role            bold heading line, e.g. "Undergraduate Researcher"
+#   org             organisation, shown after "·"
+#   org_url         makes the org a link with an outbound arrow
+#   previous_roles  list of earlier titles at the same org, shown under the heading
+#   body            markdown description
+#   skills          list of strings, rendered as pills
+#   links           list of { label, href }, rendered as small buttons
+#   tag             small label above the heading
+#   image / alt     thumbnail
+#
+# HEADS UP: the role titles below are restatements of what the site already said
+# (e.g. "Capital One's Technology Internship Program" -> "Technology Intern"), and
+# the skills are the techniques each description already named. Check them against
+# your actual titles and dates before relying on them.
 
 main:
-  - date: Oct. 2025
+  - date: Summer 2026
+    role: Technology Intern
+    org: Capital One
+    org_url: https://www.capitalone.com/
+    tag: Incoming
     body: >-
-      Accepted an offer from Capital One's Technology Internship Program (TIP)
-      in summer 2026! Hope to meet more people there.
+      Joining Capital One's Technology Internship Program (TIP) in summer 2026.
+      Hoping to meet more people there.
 
-  - date: May. 2025
+  - date: Summer 2025
+    role: Undergraduate Researcher
+    org: URECA, Stony Brook University
+    org_url: https://www.stonybrook.edu/commcms/ureca/summer/on-campusopportunities.php
     body: >-
-      Completed my research class with Prof. Yi Liu and Prof. Mendez. Check out my
-      [final project report](assets/files/CSE_487_Report__Improved_Molecule_Generation_Using_Large_Language_Models_In_Genetic_Algorithms%20(1).pdf)
-      combining Genetic Algorithms with Large Language Models to for molecule
-      optimization tasks.
+      Accepted into the URECA Summer Research Program with funding for my project on
+      using Diffusion Models to assist plan execution of robots in simulator
+      environments. Presenting at the April 2026 Symposium.
+    skills:
+      - Diffusion Models
+      - Robotics
+      - Simulation
+
+  - date: Spring 2025
+    role: Undergraduate Researcher
+    org: CSE 487, Stony Brook University
+    body: >-
+      Research class with Prof. Yi Liu and Prof. Mendez, combining Genetic Algorithms
+      with Large Language Models for molecule optimization tasks.
+    skills:
+      - Large Language Models
+      - Genetic Algorithms
+    links:
+      - label: Report
+        href: "assets/files/CSE_487_Report__Improved_Molecule_Generation_Using_Large_Language_Models_In_Genetic_Algorithms%20(1).pdf"
 
   - date: Apr. 2025
+    role: Student Presenter
+    org: 2nd Annual SUNY AI Symposium
+    org_url: https://www.buffalo.edu/research/landing-pages/suny-ai-symposium.html
     body: >-
-      I was accepted into the
-      [URECA Summer Research Program](https://www.stonybrook.edu/commcms/ureca/summer/on-campusopportunities.php)
-      at Stony Brook University for Summer of 2025. I will receive funding for my
-      project on using Diffusion Models to assist plan execution of Robots in
-      simulator environments and will be presenting this in the April 2026 Symposium!
+      Invited to present my summer research poster at the University at Buffalo, where
+      I met many professors and PhD students.
 
-  - date: Apr. 2025
+  - date: Summer 2024
+    role: Undergraduate Researcher
+    org: SUNY SOAR, Stony Brook University
+    org_url: https://www.stonybrook.edu/commcms/cie/suny-soar/index.php
     body: >-
-      I was invited as a student presenter at the
-      [2nd Annual SUNY AI Symposium](https://www.buffalo.edu/research/landing-pages/suny-ai-symposium.html)
-      hosted in University of Buffalo! I presented by summer research poster and met
-      many professors and PhD students.
-
-  - date: Aug. 2024
-    body: >-
-      Completed my first Summer Research Program
-      [SOAR](https://www.stonybrook.edu/commcms/cie/suny-soar/index.php)
-      at Stony Brook University funded by SUNY. My project utilized Neural Operators
-      for weather forecasting in the United States.
-      [Check out here!](https://github.com/xiang1103/Climate-Forecasting-with-Deep-Learning_SOAR-Research/blob/main/Xiang%20Liu%20SOAR%20Poster.pdf)
+      My first summer research program, funded by SUNY. The project used Neural
+      Operators for weather forecasting in the United States.
+    skills:
+      - Neural Operators
+      - Deep Learning
+    links:
+      - label: Poster
+        href: https://github.com/xiang1103/Climate-Forecasting-with-Deep-Learning_SOAR-Research/blob/main/Xiang%20Liu%20SOAR%20Poster.pdf

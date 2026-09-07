@@ -291,15 +291,31 @@
 
 // --- tags and buttons -------------------------------------------------------
 
+// The pill/bubble used for skills, project tags, and entry labels.
 .tag {
   display: inline-block;
   margin-bottom: var(--sp-1);
-  padding: 0.1rem 0.45rem;
+  padding: 0.15rem 0.6rem;
   font-family: var(--font-mono);
   font-size: 0.6875rem;
+  line-height: 1.6;
   color: var(--accent);
-  border: 1px solid var(--border);
-  border-radius: 3px;
+  background: var(--accent-soft);
+  border-radius: 999px;
+}
+
+// A wrapping row of pills, as a list.
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-1);
+  margin: var(--sp-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pills .tag {
+  margin-bottom: 0;
 }
 
 .btn-row {
@@ -376,7 +392,8 @@
   font-size: var(--text-xs);
   line-height: 1.9;
   color: var(--text-muted);
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
 }
 
 .timeline__body > :first-child {
@@ -545,13 +562,38 @@
   margin-bottom: 0;
 }
 
-// An experience entry can lead with a role and organisation.
-.timeline__role {
-  font-weight: 700;
+// The date gutter needs more room now that entries carry a role heading.
+.timeline__item,
+.skills__group {
+  grid-template-columns: 9rem 1fr;
 }
 
-.timeline__org {
-  font-weight: 400;
+// An experience entry leads with "Role · Organisation", the organisation
+// optionally linking out. Earlier titles at the same org list underneath.
+.timeline__role {
+  margin: 0 0 var(--sp-2);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.timeline__org a {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    color: var(--accent);
+  }
+}
+
+.timeline__ext {
+  font-size: 0.75em;
+  color: var(--text-muted);
+}
+
+.timeline__previous {
+  margin-top: calc(var(--sp-2) * -1);
+  margin-bottom: var(--sp-2);
   color: var(--text-muted);
 }
 
