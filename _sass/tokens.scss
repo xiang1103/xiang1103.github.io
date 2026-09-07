@@ -19,6 +19,10 @@
   --accent-hover: #0a544b;
   --accent-soft: #e3ede9;   // pill background: accent tinted into the page
   --border: #e4ddd1;
+  // A heavier, browner hairline for the one place a hairline has to be *found*
+  // rather than just felt: the outline of a link button. ~1.8:1 against --bg,
+  // where plain --border is ~1.15:1.
+  --border-strong: #cdbb9f;
   --focus: #0f6e63;
 
   // --- type ----------------------------------------------------------------
@@ -79,6 +83,7 @@
     --accent-hover: #6fdcc9;
     --accent-soft: #1d2a23;
     --border: #2e2b24;
+    --border-strong: #4a4339;
     --focus: #4fc7b4;
 
     color-scheme: dark;
@@ -94,6 +99,7 @@
   --accent-hover: #6fdcc9;
   --accent-soft: #1d2a23;
   --border: #2e2b24;
+  --border-strong: #4a4339;
   --focus: #4fc7b4;
 
   color-scheme: dark;

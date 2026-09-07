@@ -18,14 +18,25 @@
 #   tag             small label above the heading
 #   image / alt     thumbnail
 #
-# HEADS UP: the role titles below are restatements of what the site already said
-# (e.g. "Capital One's Technology Internship Program" -> "Technology Intern"), and
-# the skills are the techniques each description already named. Check them against
-# your actual titles and dates before relying on them.
+# LINKS INSIDE A BULLET — `points` and `body` are markdown, so use [text](url):
 #
-# The bullets were split out of the original paragraphs, so a couple of sentences
-# were re-cut at the seam to stand alone. The facts are unchanged; the wording is
-# worth a read.
+#   points:
+#     - Presented at the [April 2026 URECA Symposium](https://www.stonybrook.edu/ureca/)
+#     - "[Fall 2026 MIT Undergraduate Technology Conference](https://mutc.mit.edu/) —
+#        quote the line whenever it *starts* with a bracket, or YAML reads it as a list"
+#
+# Three things to watch:
+#   1. A line starting with "[" must be quoted, as above — otherwise YAML parses
+#      it as a nested sequence and the build fails or eats the text.
+#   2. A line containing ": " must also be quoted (same reason, YAML sees a map);
+#      the CSE 214 bullet below already is.
+#   3. In a local file path, encode spaces as %20 and parens as %28 %29, or the
+#      markdown link stops at the first space. `links:` hrefs do NOT need this —
+#      they are plain YAML strings, not markdown.
+#
+# A bare URL is not auto-linked; wrap it: [github.com/me](https://github.com/me).
+# External links get target="_blank" added by nothing at all right now — they
+# open in the same tab. Say the word if they should open in a new one.
 
 main:
   - date: June 2026 - August 2026

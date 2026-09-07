@@ -346,6 +346,8 @@ re-declares the token values. Never hardcode a hex outside the token block.
 --accent        links, hover, active nav
 --accent-hover  darker accent for :hover
 --border        hairlines (sidebar rule, dividers)
+--border-strong a heavier, browner hairline for the one place an outline has to
+                be *found* rather than felt: the link buttons
 --focus         focus ring (can equal accent)
 ```
 
@@ -991,3 +993,14 @@ The planned `nav-active.js` (IntersectionObserver highlighting the in-view secti
   Program with funding for my project on using Diffusion Models ..." became two
   lines). No facts changed, but the wording is worth a read — flagged at the top of
   the data file too.
+
+- **2026-09-07** — Link buttons (`.btn`, e.g. "Poster") got their own hairline:
+  a new `--border-strong` token, warmer and browner than `--border`
+  (`#cdbb9f` light / `#4a4339` dark), about 1.8:1 against the page where the
+  plain border is ~1.15:1. Kept at 1px — thickening a button that small reads as
+  heavy rather than legible; the color does the work.
+  Also documented in `_data/experience.yml`: `points` and `body` are markdown, so
+  `[text](url)` links work inside a bullet. The YAML traps are written out there —
+  a line starting with `[` or containing `: ` has to be quoted, and a local file
+  path needs `%20`/`%28`/`%29` inside a markdown link (but not in a `links:` href).
+  Verified all three forms through a real build, including the bracket-first case.
