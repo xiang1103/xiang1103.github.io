@@ -709,4 +709,12 @@ The planned `nav-active.js` (IntersectionObserver highlighting the in-view secti
   Side effect: `cv_link` in `_config.yml` is now **unused** — the nav entry carries its own
   URL-encoded path, since data files cannot read Liquid variables. Left in place rather than
   deleted because `_config.yml` had uncommitted user edits at the time; safe to remove.
+- **2026-09-06** — Sidebar footer is now a single row: `email | Source`. The email moved from
+  its own `<p>` into `.sidebar__links` as a `<span>`, and the separator selector widened from
+  `a:not(:last-child)` to `> *:not(:last-child)` so it works between any two children.
+  Two supporting changes were needed to keep it on one line at the narrowest sidebar: the
+  separator spacing dropped from `--sp-2` to `--sp-1`, and `--sidebar-w`'s minimum went from
+  240px to **260px** (240 minus 48px of padding left the row ~12px short, so it wrapped and
+  stranded a dangling "|"). The email carries `white-space: nowrap` so it can never break
+  mid-address; the row still wraps as whole items if a longer address ever overflows.
 

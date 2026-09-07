@@ -41,7 +41,9 @@
   --sp-7: 4rem;
 
   // --- layout --------------------------------------------------------------
-  --sidebar-w: clamp(240px, 24vw, 300px);
+  // Min is 260, not 240: the footer row (email | Source) needs ~205px of content
+  // width to stay on one line, and 240 - 48 of padding left it 12px short.
+  --sidebar-w: clamp(260px, 24vw, 300px);
   --measure: 46rem;
 
   color-scheme: light;

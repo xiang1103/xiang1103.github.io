@@ -170,10 +170,13 @@
   }
 }
 
+// email | Source on one line. Spacing is tight on purpose — at the narrowest
+// sidebar this row has ~205px to work with.
 .sidebar__links {
   display: flex;
-  gap: var(--sp-2);
-  align-items: center;
+  flex-wrap: wrap;
+  gap: 0 var(--sp-1);
+  align-items: baseline;
   margin-top: var(--sp-3);
   font-size: var(--text-xs);
 }
@@ -188,9 +191,9 @@
   }
 }
 
-.sidebar__links a:not(:last-child)::after {
+.sidebar__links > *:not(:last-child)::after {
   content: "|";
-  margin-left: var(--sp-2);
+  margin-left: var(--sp-1);
   color: var(--border);
 }
 
@@ -404,14 +407,13 @@
 // --- sidebar: obfuscated email + closing motto -----------------------------
 
 .sidebar__email {
-  margin: var(--sp-3) 0 0;
+  margin: 0;
   font-family: var(--font-mono);
   font-size: 0.625rem;
   letter-spacing: -0.03em;
   line-height: 1.5;
   color: var(--text-muted);
-  // One long unbroken token; break it rather than overflow the sidebar.
-  overflow-wrap: break-word;
+  white-space: nowrap;
 }
 
 .motto {

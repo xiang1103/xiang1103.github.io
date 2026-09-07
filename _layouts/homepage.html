@@ -109,14 +109,12 @@
             {% endif %}
           </div>
 
-          {% if site.email %}
-          <p class="sidebar__email">{{ site.email }}</p>
-          {% endif %}
-
           {%- comment -%}
-            Resume is not repeated here: it is already a nav item (_data/nav.yml).
+            One row, items separated by a "|" drawn in CSS. Resume is not repeated
+            here: it is already a nav item (_data/nav.yml).
           {%- endcomment -%}
           <div class="sidebar__links">
+            {% if site.email %}<span class="sidebar__email">{{ site.email }}</span>{% endif %}
             {% if site.github_link %}<a href="{{ site.github_link }}/{{ site.github_repo }}" target="_blank" rel="noopener">Source</a>{% endif %}
           </div>
         </div>
