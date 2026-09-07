@@ -948,4 +948,11 @@ The planned `nav-active.js` (IntersectionObserver highlighting the in-view secti
   AWS, Next.js and MySQL were illegible on the dark theme. 32 logos are now vendored.
   Four entries (Docker, PostgreSQL, React, JavaScript) still come from the original
   placeholder set and were never explicitly confirmed — flagged in the data file.
+- **2026-09-07** — Skills logos enlarged again, 16px -> 20px, with `.tag` padding nudged
+  `0.15rem` -> `0.25rem` vertically so the pill grows with them instead of clamping. The
+  `width`/`height` attributes on the `<img>` were updated to match the CSS, keeping the
+  intrinsic size honest and avoiding layout shift as they load.
+  Note the label text is still `0.6875rem`, so the logo is now nearly twice the cap height
+  of its own text. That reads fine as a badge, but if the balance ever looks off, the pill
+  font size is the thing to raise — not the logo.
 
