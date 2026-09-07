@@ -74,7 +74,7 @@ for the section architecture that replaced it.
 | `assets/img/mars-mark.png` | 96px copy of `mars_icon.png`, the 34px mark next to the wordmark. |
 | `assets/img/mars_icon.png` | Full-size source for the mark. |
 | `assets/img/IMG_4275.jpeg` | 1.2 MB original. Kept as the source for re-cropping, **excluded from the build** so it is never published. |
-| `assets/img/favicon.png`, `favicon-dark.png` | Teal "x" mark, light and dark. |
+| `assets/img/favicon.png` | The Mars mark at 64px. One icon for both themes — the layout only emits a light/dark pair if `favicon_dark` is set. |
 | `assets/files/*.pdf` | Resume and the CSE 487 report. **Filenames with spaces/parens are live URLs** — see §3.6. |
 | `Gemfile` | Local preview only; GitHub Pages ignores it (§4). |
 | `README.md` | Short orientation for a human: where to edit what. |
@@ -811,4 +811,13 @@ The planned `nav-active.js` (IntersectionObserver highlighting the in-view secti
   still on the page, just not in the sidebar.
   Note the icon's red sits against a teal accent. It reads as a deliberate brand mark rather
   than a palette clash, but the favicon is still the teal "x" — those two marks now differ.
+- **2026-09-06** — Brand lockup tightened: `.brand` gap `--sp-2` (12px) -> `0.2rem`, so the
+  Mars mark and "xiang.dev" read as one unit, plus `padding-left: var(--sp-2)` to sit the
+  lockup off the sidebar's left edge. The theme toggle still pins right.
+  Favicon is now the Mars mark too (64px), replacing the teal "x", so the tab and the
+  sidebar match. `favicon-dark.png` deleted and `favicon_dark` removed from `_config.yml`:
+  the mark carries its own color and reads on light and dark tab bars, so the per-theme pair
+  was redundant. The layout keeps the pair path — set `favicon_dark` again to restore it.
+  (Checked first: the artwork has only 8px of transparent margin on a 512px canvas, so the
+  visible gap really was the CSS gap, not padding baked into the image.)
 

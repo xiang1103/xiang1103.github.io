@@ -46,8 +46,8 @@ linkedin: https://www.linkedin.com/in/xiang-liu-3792251b2/
 # of assets/img/mars_icon.png (kept at full size as the source).
 hero_image: ./assets/img/xiang-hero.jpg
 avatar_small: ./assets/img/mars-mark.png
+# The Mars mark, 64px. One icon serves both themes; add favicon_dark to split them.
 favicon: ./assets/img/favicon.png
-favicon_dark: ./assets/img/favicon-dark.png
 
 # --- Page structure ----------------------------------------------------------
 # The homepage is composed from _sections/*.md rather than one markdown file, so

@@ -17,8 +17,17 @@
     <meta property="og:image" content="{{ site.canonical }}{{ site.hero_image | remove_first: './' }}">
     <meta name="twitter:card" content="summary">
 
+    {%- comment -%}
+      One icon for both themes: the Mars mark carries its own color and reads on
+      light and dark tab bars alike. Set `favicon_dark` in _config.yml to go back
+      to a per-theme pair.
+    {%- endcomment -%}
+    {% if site.favicon_dark %}
     <link rel="icon" media="(prefers-color-scheme:dark)" href="{{ site.favicon_dark }}" type="image/png">
     <link rel="icon" media="(prefers-color-scheme:light)" href="{{ site.favicon }}" type="image/png">
+    {% else %}
+    <link rel="icon" href="{{ site.favicon }}" type="image/png">
+    {% endif %}
 
     <!--
       Resolve the theme before first paint so a dark-mode visitor never sees a

@@ -8,7 +8,10 @@
 .brand {
   display: flex;
   align-items: center;
-  gap: var(--sp-2);
+  // Small gap on purpose: the mark and the wordmark read as one lockup.
+  gap: 0.2rem;
+  // Indented so the lockup sits off the sidebar's left edge.
+  padding-left: var(--sp-2);
 }
 
 .brand__avatar {
