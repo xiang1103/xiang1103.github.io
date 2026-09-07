@@ -10,13 +10,18 @@
 #   points   optional. List of markdown lines -> chevron bullets, as in
 #            _data/experience.yml. Use body or points or both.
 #   image    optional. A still. `alt:` describes it.
-#   shape    optional. The frame's proportions — see IMAGE CONVENTIONS below.
+#   size     optional but recommended. "WIDTHxHEIGHT" of the file, e.g.
+#            "640x363" — stops the text below jumping as the picture loads.
 #   video    optional. A video file (mp4/webm). `poster:` is the still shown
 #            before play. Takes precedence over `image` if both are given.
 #   skills   optional. List of strings -> pills.
 #   links    optional. List of { label, href } -> small buttons. New tab.
 #
-# IMAGE CONVENTIONS — worth following so the section stays tidy as it grows.
+# IMAGE CONVENTIONS
+#
+# NOTHING IS CROPPED. A picture fills the width of the media column and keeps
+# its own proportions, so a tall image makes a taller row than a wide one. That
+# is expected — the column is a column, not a grid of matching tiles.
 #
 #   WHERE   assets/img/projects/
 #   NAME    kebab-case, matching the project: stanford-cars.jpg
@@ -28,35 +33,32 @@
 #           picture came out 367 KB as PNG and 69 KB as JPEG.
 #   WIDTH   640px. The column displays it around 184px, so 640 covers a 3x
 #           screen with room to spare; anything larger is bytes nobody sees.
+#           Export at 640 wide and let the height fall where it falls.
+#   SHAPE   roughly landscape. Nothing needs to match anything else, but an
+#           image taller than it is wide makes a row much taller than its own
+#           text, which leaves an odd gap. If a picture is portrait, crop it to
+#           landscape yourself before exporting — that way you choose what goes,
+#           rather than the CSS choosing for you.
 #   WEIGHT  aim under 150 KB, and treat 300 KB as the line not to cross. The
 #           whole point of this site is that it loads instantly.
-#
-#   SHAPE   `shape:` picks the frame, and the image is cropped to fill it
-#           (centered), so the column stays even down the page:
-#
-#             wide    16:9, the default. Demos, stills, screenshots, plots.
-#             square  1:1.  Logos, single photos, anything roughly square.
-#             tall    3:4.  A portrait shot or a phone screenshot.
-#             full    no crop at all — the picture keeps its own proportions.
-#                     Use it when the edges carry meaning: a diagram, a poster,
-#                     a figure with axis labels. The tradeoff is that the row's
-#                     height is unknown until the file loads, so text below it
-#                     shifts slightly on a first visit. Fine occasionally, wrong
-#                     as a habit.
-#
-#           Pick the shape closest to the picture's real proportions and let it
-#           crop a little, rather than reaching for `full` every time. An image
-#           already near its frame's ratio loses nothing: stanford-cars is
-#           640x363 (~16:9) in a `wide` frame, so the crop is a few pixels.
-#
+#   SIZE    put the file's real pixel dimensions in `size:`. It is optional, but
+#           without it the browser does not know how tall the row will be until
+#           the picture arrives, and the text below shifts when it does. On a
+#           Mac:  sips -g pixelWidth -g pixelHeight assets/img/projects/thing.jpg
 #   ALT     always. One sentence describing what the picture shows, not "image
 #           of ..." — screen readers already say it is an image.
+#
+# A one-liner that does the resize, the format and the quality at once:
+#
+#   magick source.png -resize 640x -strip -quality 86 \
+#     assets/img/projects/my-project.jpg
 #
 # VIDEO
 #   Same folder, .mp4 (H.264). `poster:` is required in practice — the frame is
 #   blank without one, because the video is preload="none" and downloads nothing
 #   until the reader presses play. That is what keeps a clip free on page load.
-#   No autoplay: it would move the page while it is being read.
+#   No autoplay: it would move the page while it is being read. `size:` applies
+#   to video too.
 #
 # MISSING MEDIA
 #   An entry with no image or video spans the full width. Once ANY entry in the
@@ -71,6 +73,7 @@ main:
     tag: URECA 2025
     image: /assets/img/projects/stanford-cars.jpg
     alt: A grid of car photographs from the Stanford Cars dataset, labelled by class
+    size: 640x363
     body: >-
       Using Diffusion Models to assist plan execution of robots in simulator
       environments. Funded by the URECA Summer Research Program; presenting at the

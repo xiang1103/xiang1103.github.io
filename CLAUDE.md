@@ -645,31 +645,28 @@ Change `--gutter` in `tokens.scss` and all three move together.
 ```
 
 Entry fields: `title` (required), `href`, `tag`, `body`, `points`, `image`/`alt`,
-`video`/`poster`, `skills`, `links`. `points` renders with the same `.bullets`
+`video`/`poster`, `size`, `skills`, `links`. `points` renders with the same `.bullets`
 chevrons as Experience, so the two sections describe work the same way.
 
 Two details worth keeping:
 
-- **The frame has a declared ratio and `object-fit: cover`.** The row's height is
-  therefore known before the image arrives, so the section does not jump as it
-  loads. The cost is that a picture is cropped to fit — put the subject near the
-  middle. `shape:` picks the frame per entry: `wide` (16:9, the default),
-  `square`, `tall` (3:4), or `full`.
-  **`full` is the deliberate exception**: it crops nothing and keeps the
-  picture's own proportions, for a diagram or a plot whose edges carry meaning.
-  It gives up the known row height, so text below shifts a little on a cold
-  cache — fine occasionally, wrong as a habit. Prefer picking the closest shape
-  and letting it crop a few pixels.
+- **Nothing is cropped.** A picture fills the column's width and keeps its own
+  proportions, so rows vary in height — that is the intended behaviour, not a
+  gap to close. Cropping was tried first (a fixed `aspect-ratio` with
+  `object-fit: cover`, plus a `shape:` field offering 16:9 / square / 3:4 / no
+  crop) and rejected by the user: a project picture is usually a figure, a plot,
+  or a screenshot whose edges carry meaning, and losing them to keep the column
+  even is a bad trade. **Do not reintroduce it.**
+- **The cost of not cropping is a possible layout shift**, since the row's height
+  is unknown until the file arrives. That is what `size: "640x363"` is for: the
+  include turns it into `width`/`height` attributes, the browser reserves the
+  right box, and nothing jumps. Optional, but §0 asks for it.
 - **Image conventions live at the top of `_data/projects.yml`**, next to where
   someone adding a project will be typing: `assets/img/projects/`, kebab-case
   names, `.jpg` for photographic content and `.png` only for flat color or crisp
-  text, 640px wide, under 150 KB, always an `alt`. The first real image made the
-  format rule concrete — the same picture was 367 KB as a PNG and 69 KB as a JPEG
-  at the same width.
-- **Video is `preload="none"` with real controls.** Only the poster is fetched
-  until the reader presses play, so a clip costs the page nothing on load. No
-  autoplay: §0, and it would move text while it is being read. A `poster:` is
-  effectively required — without one the frame sits blank.
+  text, 640px wide, roughly landscape, under 150 KB, `size:` filled in, always an
+  `alt`. The first real image made the format rule concrete — the same picture
+  was 367 KB as a PNG and 69 KB as a JPEG at the same width.
 
 **Missing media does not leave a hole.** If no entry in the section has a picture,
 every entry spans the full width and the section looks exactly as it did before
@@ -1150,3 +1147,17 @@ the user's explicit call, made deliberately.
   ~184px wide, which is a thumbnail. Raising `--gutter` (16rem, say) enlarges it,
   but Experience's date column and Skills' labels move with it — that is the
   price of the shared alignment, and it is the user's call.
+
+- **2026-09-07** — **Project images are never cropped.** The `shape:` field and
+  the fixed-ratio `object-fit: cover` frame added earlier the same day were
+  removed at the user's direction: a picture now fills the column's width, keeps
+  its own proportions, and rows are simply different heights. The reasoning is
+  sound and worth not relitigating — these pictures are figures and screenshots,
+  and their edges are part of the content.
+  The layout shift that cropping was buying is bought instead by `size:
+  "640x363"` in the data file, which the include emits as `width`/`height`
+  attributes. Cheaper, and it does not cost any pixels.
+  What remains a convention rather than a mechanism: 640px wide, roughly
+  landscape, `.jpg` for photographic content, under 150 KB. All of it is written
+  at the top of `_data/projects.yml`, including a one-line `magick` command that
+  produces a conforming file.

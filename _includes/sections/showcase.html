@@ -12,8 +12,12 @@
     points    list of markdown lines, rendered as chevron bullets
     image     path to a still; `alt` describes it
     video     path to a video file; `poster` is the still shown before play
-    shape     frame proportions: wide (16:9, default) | square | tall (3:4) |
-              full (keep the picture's own shape and crop nothing)
+    size      "WIDTHxHEIGHT" of that file, e.g. "640x363". Optional but worth
+              filling in: it reserves the right box before the file arrives, so
+              the text below does not jump when the picture loads.
+
+  Nothing is cropped. A picture fills the column's width and keeps its own
+  proportions, so rows vary in height — that is expected, not a bug.
     skills    list of strings, rendered as pills
     links     list of { label, href }, rendered as small buttons
 
@@ -39,17 +43,20 @@
 
   <li class="showcase__item{% unless has_media %} showcase__item--nomedia{% endunless %}">
     {% if has_media %}
-    {% assign shape = entry.shape | default: "wide" %}
-    <div class="showcase__media showcase__media--{{ shape }}">
+    {%- assign dims = entry.size | split: "x" -%}
+    <div class="showcase__media">
       {% if entry.href %}<a href="{{ entry.href }}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">{% endif %}
 
       {% if entry.video %}
       <video controls preload="none" playsinline
+             {% if dims.size == 2 %}width="{{ dims[0] }}" height="{{ dims[1] }}"{% endif %}
              {% if entry.poster %}poster="{{ entry.poster | relative_url }}"{% endif %}>
         <source src="{{ entry.video | relative_url }}">
       </video>
       {% else %}
-      <img src="{{ entry.image | relative_url }}" alt="{{ entry.alt }}" loading="lazy">
+      <img src="{{ entry.image | relative_url }}" alt="{{ entry.alt }}"
+           {% if dims.size == 2 %}width="{{ dims[0] }}" height="{{ dims[1] }}"{% endif %}
+           loading="lazy">
       {% endif %}
 
       {% if entry.href %}</a>{% endif %}
