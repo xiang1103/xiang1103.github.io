@@ -63,6 +63,8 @@ exclude:
   - vendor/          # local gem install; must be listed since a custom
   - .bundle/         # exclude list replaces Jekyll's defaults
   - assets/img/IMG_4275.jpeg   # 1.2 MB source photo; only its crops are published
+  - assets/img/stanford_cars.png   # 410 KB original; published as the 69 KB
+                                   # assets/img/projects/stanford-cars.jpg
   - Gemfile
   - Gemfile.lock
   - README.md

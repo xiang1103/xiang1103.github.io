@@ -12,6 +12,8 @@
     points    list of markdown lines, rendered as chevron bullets
     image     path to a still; `alt` describes it
     video     path to a video file; `poster` is the still shown before play
+    shape     frame proportions: wide (16:9, default) | square | tall (3:4) |
+              full (keep the picture's own shape and crop nothing)
     skills    list of strings, rendered as pills
     links     list of { label, href }, rendered as small buttons
 
@@ -37,7 +39,8 @@
 
   <li class="showcase__item{% unless has_media %} showcase__item--nomedia{% endunless %}">
     {% if has_media %}
-    <div class="showcase__media">
+    {% assign shape = entry.shape | default: "wide" %}
+    <div class="showcase__media showcase__media--{{ shape }}">
       {% if entry.href %}<a href="{{ entry.href }}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">{% endif %}
 
       {% if entry.video %}

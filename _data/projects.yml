@@ -10,23 +10,58 @@
 #   points   optional. List of markdown lines -> chevron bullets, as in
 #            _data/experience.yml. Use body or points or both.
 #   image    optional. A still. `alt:` describes it.
+#   shape    optional. The frame's proportions — see IMAGE CONVENTIONS below.
 #   video    optional. A video file (mp4/webm). `poster:` is the still shown
 #            before play. Takes precedence over `image` if both are given.
 #   skills   optional. List of strings -> pills.
 #   links    optional. List of { label, href } -> small buttons. New tab.
 #
-# MEDIA NOTES
-#   - The frame is 4:3 and the file is cropped to fill it (object-fit: cover),
-#     so anything important should sit near the middle. The ratio is fixed so
-#     the row's height is known before the image loads and nothing jumps.
-#   - Put files in assets/img/projects/ (or assets/video/) and write the path
-#     from the site root: /assets/img/projects/thing.png
-#   - Videos are preload="none" with a visible control bar: nothing downloads
-#     until the reader presses play, so a clip costs the page nothing on load.
-#     Always give a `poster:` — without one the frame is blank until then.
-#   - An entry with NO image or video spans the full width instead of leaving
-#     the gutter empty, which is why the three below still look like the old
-#     layout. Add an `image:` to any one of them to see the two-column form.
+# IMAGE CONVENTIONS — worth following so the section stays tidy as it grows.
+#
+#   WHERE   assets/img/projects/
+#   NAME    kebab-case, matching the project: stanford-cars.jpg
+#   FORMAT  .jpg for anything photographic (screenshots of the real world,
+#           dataset samples, plots of photos) — quality 85 or so.
+#           .png only when the picture is mostly flat color or crisp text (a UI
+#           screenshot, a diagram, an architecture drawing) — PNG keeps those
+#           sharp, and JPEG smears them. PNG on a photo is a trap: the same
+#           picture came out 367 KB as PNG and 69 KB as JPEG.
+#   WIDTH   640px. The column displays it around 184px, so 640 covers a 3x
+#           screen with room to spare; anything larger is bytes nobody sees.
+#   WEIGHT  aim under 150 KB, and treat 300 KB as the line not to cross. The
+#           whole point of this site is that it loads instantly.
+#
+#   SHAPE   `shape:` picks the frame, and the image is cropped to fill it
+#           (centered), so the column stays even down the page:
+#
+#             wide    16:9, the default. Demos, stills, screenshots, plots.
+#             square  1:1.  Logos, single photos, anything roughly square.
+#             tall    3:4.  A portrait shot or a phone screenshot.
+#             full    no crop at all — the picture keeps its own proportions.
+#                     Use it when the edges carry meaning: a diagram, a poster,
+#                     a figure with axis labels. The tradeoff is that the row's
+#                     height is unknown until the file loads, so text below it
+#                     shifts slightly on a first visit. Fine occasionally, wrong
+#                     as a habit.
+#
+#           Pick the shape closest to the picture's real proportions and let it
+#           crop a little, rather than reaching for `full` every time. An image
+#           already near its frame's ratio loses nothing: stanford-cars is
+#           640x363 (~16:9) in a `wide` frame, so the crop is a few pixels.
+#
+#   ALT     always. One sentence describing what the picture shows, not "image
+#           of ..." — screen readers already say it is an image.
+#
+# VIDEO
+#   Same folder, .mp4 (H.264). `poster:` is required in practice — the frame is
+#   blank without one, because the video is preload="none" and downloads nothing
+#   until the reader presses play. That is what keeps a clip free on page load.
+#   No autoplay: it would move the page while it is being read.
+#
+# MISSING MEDIA
+#   An entry with no image or video spans the full width. Once ANY entry in the
+#   section has media, the ones without it keep the gutter empty instead, so
+#   every title still starts in the same column.
 #
 # Seeded from work already described elsewhere on the site — expand these with
 # real descriptions, screenshots, and repo links.
@@ -34,6 +69,8 @@
 main:
   - title: Diffusion Models for Robot Plan Execution
     tag: URECA 2025
+    image: /assets/img/projects/stanford-cars.jpg
+    alt: A grid of car photographs from the Stanford Cars dataset, labelled by class
     body: >-
       Using Diffusion Models to assist plan execution of robots in simulator
       environments. Funded by the URECA Summer Research Program; presenting at the

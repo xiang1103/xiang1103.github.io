@@ -379,10 +379,11 @@
   }
 }
 
+// The frame. A declared ratio means the row's height is known before the image
+// arrives, so the section does not jump as it loads — which is why `wide` is the
+// default and `full` (below) is the deliberate exception.
 .showcase__media {
-  // A fixed ratio means the row's height is known before the image arrives, so
-  // nothing jumps as the section loads.
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   border: 1px solid var(--border);
   border-radius: 4px;
@@ -392,12 +393,32 @@
     display: block;
     width: 100%;
     height: 100%;
+    // Fill the frame and crop the overflow, so mixed source sizes still line up.
     object-fit: cover;
   }
 
   a {
     display: block;
     height: 100%;
+  }
+}
+
+// `shape:` in the data file. One knob, four values — see _data/projects.yml.
+.showcase__media--square { aspect-ratio: 1 / 1; }
+.showcase__media--tall   { aspect-ratio: 3 / 4; }
+
+// `full` keeps the picture's own proportions and crops nothing: the frame for a
+// diagram, a poster, or a plot whose edges carry meaning. The cost is that the
+// row's height is unknown until the file loads, so the text below it shifts a
+// little on a cold cache. Worth it for an image that must not be cut; not worth
+// it as a default.
+.showcase__media--full {
+  aspect-ratio: auto;
+
+  img,
+  video {
+    height: auto;
+    object-fit: fill;
   }
 }
 

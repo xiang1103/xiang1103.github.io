@@ -73,6 +73,7 @@ for the section architecture that replaced it.
 | `assets/js/theme-toggle.js` | The only JavaScript on the site. |
 | `assets/img/xiang-hero.jpg` | 480x640, the full uncropped photo shown beside the h1. |
 | `assets/img/mars-mark.png` | 96px copy of `mars_icon.png`, the 34px mark next to the wordmark. |
+| `assets/img/projects/*` | Project media for the Projects showcase. Conventions — folder, format, width, weight, `shape:` — are documented at the top of `_data/projects.yml`; §6.4.2 has the short version. |
 | `assets/img/tech/*.svg` | Vendor logos for Skills pills, from [Devicon](https://devicon.dev) (MIT). Referenced as `<img>`, never inlined — see §6.5.1. |
 | `assets/img/mars_icon.png` | Full-size source for the mark. |
 | `assets/img/IMG_4275.jpeg` | 1.2 MB original. Kept as the source for re-cropping, **excluded from the build** so it is never published. |
@@ -649,10 +650,22 @@ chevrons as Experience, so the two sections describe work the same way.
 
 Two details worth keeping:
 
-- **The frame is `aspect-ratio: 4/3` with `object-fit: cover`.** The row's height
-  is therefore known before the image arrives, so the section does not jump as it
+- **The frame has a declared ratio and `object-fit: cover`.** The row's height is
+  therefore known before the image arrives, so the section does not jump as it
   loads. The cost is that a picture is cropped to fit — put the subject near the
-  middle.
+  middle. `shape:` picks the frame per entry: `wide` (16:9, the default),
+  `square`, `tall` (3:4), or `full`.
+  **`full` is the deliberate exception**: it crops nothing and keeps the
+  picture's own proportions, for a diagram or a plot whose edges carry meaning.
+  It gives up the known row height, so text below shifts a little on a cold
+  cache — fine occasionally, wrong as a habit. Prefer picking the closest shape
+  and letting it crop a few pixels.
+- **Image conventions live at the top of `_data/projects.yml`**, next to where
+  someone adding a project will be typing: `assets/img/projects/`, kebab-case
+  names, `.jpg` for photographic content and `.png` only for flat color or crisp
+  text, 640px wide, under 150 KB, always an `alt`. The first real image made the
+  format rule concrete — the same picture was 367 KB as a PNG and 69 KB as a JPEG
+  at the same width.
 - **Video is `preload="none"` with real controls.** Only the poster is fetched
   until the reader presses play, so a clip costs the page nothing on load. No
   autoplay: §0, and it would move text while it is being read. A `poster:` is
@@ -1120,3 +1133,20 @@ the user's explicit call, made deliberately.
   Verified in a browser with test images in two of the three entries — including
   the mixed case, which is what `showcase--aligned` exists for — then reverted;
   no project has real media yet.
+
+- **2026-09-07** — First real project image attached (Stanford Cars, on the URECA
+  entry), and the media frame gained a **`shape:` convention** so future images of
+  different proportions do not each need a CSS change: `wide` (16:9, default),
+  `square`, `tall` (3:4), `full` (no crop). Written up in full at the top of
+  `_data/projects.yml` — that is the file someone edits when adding a project, so
+  the conventions live there rather than only here.
+  The source PNG (685x388, 410 KB) was resized to 640px and re-encoded as JPEG at
+  69 KB — an 83% saving on a picture that displays at ~184px. The original is kept
+  and added to `exclude`, the same treatment `IMG_4275.jpeg` gets.
+  **The layout order did not change**: media has been in the left gutter since the
+  showcase variant was built. The user asked for left/right and that is what it
+  already was.
+  Open question the image raises: at `--gutter: 11.5rem` the picture displays
+  ~184px wide, which is a thumbnail. Raising `--gutter` (16rem, say) enlarges it,
+  but Experience's date column and Skills' labels move with it — that is the
+  price of the shared alignment, and it is the user's call.
