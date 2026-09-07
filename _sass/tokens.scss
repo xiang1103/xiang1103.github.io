@@ -48,12 +48,16 @@
   // Content width. Fluid rather than fixed, so a wide window gets used instead
   // of sitting empty — but capped, because line length past roughly 100
   // characters is measurably harder to read.
-  //   1440px viewport -> ~893px  (~104 chars per line)
-  //   1920px and up   -> 1056px  (~123 chars, the cap)
+  // Measured rendered content width (see the table in the decisions log):
+  //   1440px viewport -> ~1044px  (fills; the grid column bounds it, not the clamp)
+  //   1920px          -> ~1524px
+  //   2560px          -> ~2099px
+  // The 132rem ceiling only engages past ~3200px, so in practice the column
+  // fills the space left by the sidebar at every normal screen size.
   // The whole page follows this one value: sections, hero, timeline, cards.
-  // Raise the 66rem ceiling to fill more of a large screen, at the cost of
-  // longer lines; remove it entirely to fill the window completely.
-  --measure: clamp(46rem, 62vw, 66rem);
+  // Lower the 82vw factor to pull the column back in; that is the knob that
+  // matters, not the ceiling.
+  --measure: clamp(46rem, 82vw, 132rem);
 
   color-scheme: light;
 }

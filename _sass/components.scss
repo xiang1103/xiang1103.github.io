@@ -209,8 +209,10 @@
   margin-bottom: var(--sp-6);
 }
 
+// Basis rather than grow: the photo sits just after the heading instead of
+// being pushed to the far edge once the column is wide.
 .hero__text {
-  flex: 1 1 auto;
+  flex: 0 1 46rem;
   min-width: 0;
 }
 

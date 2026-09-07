@@ -854,4 +854,21 @@ The planned `nav-active.js` (IntersectionObserver highlighting the in-view secti
   Also folded away a redundant override: `.timeline__item` and `.skills__group` each declared
   `grid-template-columns: 7.5rem 1fr` and were then overridden to `9rem 1fr` further down the
   file. The 9rem is now declared once, in each base rule.
+- **2026-09-06** — **Content now fills the window.** The previous widening was real but
+  looked like nothing had changed, because on a 1440-1512px laptop the column was already
+  close to full; the empty space only showed at 1920px and up, where the *cap* was binding.
+  Measured before (`clamp(46rem, 62vw, 66rem)`): 1440 -> 893px content, 119px unused;
+  1920 -> 1056px, **436px unused**; 2560 -> 1056px, **1076px unused**.
+  Now `clamp(46rem, 82vw, 132rem)`: 1440 -> 1044px, 1920 -> 1524px, 2560 -> 2099px, with
+  **0px unused** up to 1920 and 33px at 2560. The 132rem ceiling only engages past ~3200px,
+  so in practice the vw factor governs — that is the knob to turn, not the ceiling.
+  Lines are long by typographic standards at this width (~175 chars at 1920). That is the
+  user's explicit call, made twice; the tradeoff is recorded on the token.
+  `.hero__text` changed from `flex: 1 1 auto` to `flex: 0 1 46rem`, because a growing hero
+  pushed the photo to the far right edge and stranded it ~1300px from the heading. With a
+  basis instead of grow, the photo sits just after the text at any width.
+  **Method note:** measured rendered widths in a real browser (a same-origin page that loads
+  the site in iframes at six viewport widths and reports `getBoundingClientRect`) rather than
+  reasoning about the clamp. That is what caught both the "no visible change" cause and the
+  hero problem.
 
