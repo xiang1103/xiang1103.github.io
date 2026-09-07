@@ -54,7 +54,7 @@
       {% include markdownify.html text=entry.body %}
 
       {% if entry.points %}
-      <ul class="timeline__points">
+      <ul class="bullets">
         {% for point in entry.points %}
         <li>{% include markdownify.html text=point inline=true %}</li>
         {% endfor %}

@@ -1,0 +1,95 @@
+{% comment %}
+  Showcase: a two-column list — media in the left gutter, the write-up beside it.
+  The mirror image of the timeline, which puts a date there instead, so the two
+  sections share a gutter width (--gutter) and line up down the page.
+
+  Entries come from a _data file — see _data/projects.yml for the contract.
+
+    title     required. The heading.
+    href      makes the title (and the media) a link, with an outbound arrow.
+    tag       small label above the title
+    body      markdown paragraph
+    points    list of markdown lines, rendered as chevron bullets
+    image     path to a still; `alt` describes it
+    video     path to a video file; `poster` is the still shown before play
+    skills    list of strings, rendered as pills
+    links     list of { label, href }, rendered as small buttons
+
+  Media is optional, and the section adapts rather than leaving holes:
+    - no entry has media  -> every entry spans the full width, so the section
+                             looks exactly as it did before pictures existed
+    - some entries have it -> the ones that don't keep the gutter empty, so all
+                             the titles still line up in the same column
+
+  The video is `preload="none"`: nothing but the poster is fetched until the
+  reader presses play, so adding a clip costs the page nothing on load.
+{% endcomment %}
+
+{%- assign any_media = false -%}
+{%- for entry in include.entries -%}
+  {%- if entry.image or entry.video -%}{%- assign any_media = true -%}{%- endif -%}
+{%- endfor -%}
+
+<ul class="showcase{% if any_media %} showcase--aligned{% endif %}">
+  {% for entry in include.entries %}
+  {% assign has_media = false %}
+  {% if entry.image or entry.video %}{% assign has_media = true %}{% endif %}
+
+  <li class="showcase__item{% unless has_media %} showcase__item--nomedia{% endunless %}">
+    {% if has_media %}
+    <div class="showcase__media">
+      {% if entry.href %}<a href="{{ entry.href }}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">{% endif %}
+
+      {% if entry.video %}
+      <video controls preload="none" playsinline
+             {% if entry.poster %}poster="{{ entry.poster | relative_url }}"{% endif %}>
+        <source src="{{ entry.video | relative_url }}">
+      </video>
+      {% else %}
+      <img src="{{ entry.image | relative_url }}" alt="{{ entry.alt }}" loading="lazy">
+      {% endif %}
+
+      {% if entry.href %}</a>{% endif %}
+    </div>
+    {% endif %}
+
+    <div class="showcase__body">
+      {% if entry.tag %}<span class="tag">{{ entry.tag }}</span>{% endif %}
+
+      <h3 class="showcase__title">
+        {%- if entry.href -%}
+        <a href="{{ entry.href }}" target="_blank" rel="noopener">{{ entry.title }} <span class="showcase__ext" aria-hidden="true">&#8599;</span></a>
+        {%- else -%}
+        {{ entry.title }}
+        {%- endif -%}
+      </h3>
+
+      {% if entry.body %}{% include markdownify.html text=entry.body %}{% endif %}
+
+      {% if entry.points %}
+      <ul class="bullets">
+        {% for point in entry.points %}
+        <li>{% include markdownify.html text=point inline=true %}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+
+      {% if entry.skills %}
+      <ul class="pills">
+        {% for skill in entry.skills %}
+        <li class="tag">{{ skill }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+
+      {% if entry.links %}
+      <p class="btn-row">
+        {% for link in entry.links %}
+        <a class="btn" href="{{ link.href }}" target="_blank" rel="noopener">{{ link.label }}</a>
+        {% endfor %}
+      </p>
+      {% endif %}
+    </div>
+  </li>
+  {% endfor %}
+</ul>

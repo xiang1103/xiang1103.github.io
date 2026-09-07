@@ -344,6 +344,106 @@
   }
 }
 
+// --- showcase ---------------------------------------------------------------
+//
+// Projects: media in the left gutter, write-up beside it. The timeline's mirror
+// image, sharing --gutter so the two sections line up down the page.
+// Rendered by _includes/sections/showcase.html.
+
+.showcase {
+  margin: 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.showcase__item {
+  display: grid;
+  grid-template-columns: var(--gutter) 1fr;
+  column-gap: var(--sp-6);
+  margin-bottom: var(--sp-5);
+}
+
+// A media-less entry uses the whole width, so a section with no pictures in it
+// yet reads as a plain list rather than as a column of empty frames.
+.showcase__item--nomedia {
+  grid-template-columns: 1fr;
+}
+
+// ...but once *any* entry in the section has media, the ones without it keep the
+// gutter empty instead, so every title still starts in the same column.
+.showcase--aligned .showcase__item--nomedia {
+  grid-template-columns: var(--gutter) 1fr;
+
+  .showcase__body {
+    grid-column: 2;
+  }
+}
+
+.showcase__media {
+  // A fixed ratio means the row's height is known before the image arrives, so
+  // nothing jumps as the section loads.
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+
+  img,
+  video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  a {
+    display: block;
+    height: 100%;
+  }
+}
+
+.showcase__title {
+  margin: 0 0 var(--sp-2);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.4;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover {
+      color: var(--accent);
+    }
+  }
+}
+
+.showcase__ext {
+  font-size: 0.75em;
+  color: var(--text-muted);
+}
+
+.showcase__body > :first-child {
+  margin-top: 0;
+}
+
+.showcase__body > :last-child {
+  margin-bottom: 0;
+}
+
+// Below 640px the gutter is too narrow to be worth the squeeze: the media goes
+// full width above the write-up. (Earlier than the timeline's 480px breakpoint,
+// because a picture needs more room than a date does.)
+@media (max-width: 640px) {
+  .showcase__item {
+    display: block;
+  }
+
+  .showcase__media {
+    max-width: 20rem;
+    margin-bottom: var(--sp-2);
+  }
+}
+
 // --- cards ------------------------------------------------------------------
 //
 // Unused so far; here so that adding a Projects or Publications section is a
@@ -387,10 +487,9 @@
 
 .timeline__item {
   display: grid;
-  // The gutter holds a date range ("June 2026 - August 2026") and, in Skills, a
-  // group label ("Software Engineering"); 11.5rem fits both on one line. The gap
-  // is wide so the gutter reads as its own column.
-  grid-template-columns: 11.5rem 1fr;
+  // --gutter is shared with Skills and Projects so the three sections line up.
+  // The gap is wide so the gutter reads as its own column.
+  grid-template-columns: var(--gutter) 1fr;
   column-gap: var(--sp-6);
   margin-bottom: var(--sp-4);
 }
@@ -412,21 +511,22 @@
   margin-bottom: 0;
 }
 
-// Entry bullets. `points` in the data file renders as .timeline__points; a
-// markdown list inside a prose section gets the same marker, so Experience and
-// Leadership read as one system. The glyph is the --bullet token (tokens.scss).
+// Entry bullets. `points` in a data file renders as .bullets — Experience and
+// Projects both use it — and a markdown list inside a prose section gets the
+// same marker, so every list on the page reads as one system. The glyph is the
+// --bullet token (tokens.scss).
 //
 // The marker is an absolutely-positioned ::before rather than a ::marker or a
 // list-style-image, because ::marker only accepts a handful of properties in
 // Safari and cannot be given the mono family the rest of the design uses.
-.timeline__points,
+.bullets,
 .prose ul:not(.pills) {
   margin: 0 0 var(--sp-3);
   padding-left: 0;
   list-style: none;
 }
 
-.timeline__points > li,
+.bullets > li,
 .prose ul:not(.pills) > li {
   position: relative;
   // Room for the marker plus a space; the text stays flush when a line wraps.
@@ -435,7 +535,7 @@
   margin-bottom: var(--sp-1);
 }
 
-.timeline__points > li::before,
+.bullets > li::before,
 .prose ul:not(.pills) > li::before {
   content: var(--bullet);
   position: absolute;
@@ -578,7 +678,7 @@
 // Matches the timeline's gutter so labels and content line up across sections.
 .skills__group {
   display: grid;
-  grid-template-columns: 11.5rem 1fr;
+  grid-template-columns: var(--gutter) 1fr;
   column-gap: var(--sp-6);
   margin-bottom: var(--sp-3);
 }

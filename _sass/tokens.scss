@@ -70,6 +70,12 @@
   // matters, not the ceiling.
   --measure: clamp(46rem, 82vw, 127rem);
 
+  // The shared left column: Experience's dates, Skills' group labels, and
+  // Projects' media all sit in it, so the three sections line up down the page.
+  // Wide enough for "June 2026 - August 2026" and "Software Engineering" on one
+  // line. Changing it moves all three together — that is the point.
+  --gutter: 11.5rem;
+
   color-scheme: light;
 }
 

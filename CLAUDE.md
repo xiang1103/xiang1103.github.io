@@ -61,7 +61,7 @@ for the section architecture that replaced it.
 | `_data/nav.yml` | Nav items that are *not* sections (external links, downloads). Section links generate themselves. |
 | `_layouts/homepage.html` | The only layout: head, sidebar, hero, sections loop, closing lines. |
 | `_includes/section.html` | Renders one section from its front matter; dispatches on `variant`. |
-| `_includes/sections/timeline.html`, `cards.html` | Variant renderers. |
+| `_includes/sections/timeline.html`, `showcase.html`, `cards.html`, `skills.html` | Variant renderers. |
 | `_includes/markdownify.html` | Markdown → HTML with every link opened in a new tab. Every markdownified string on the site goes through it (§6.8). |
 | `_includes/figure.html` | Figure with optional caption and float side. |
 | `_includes/icons/*.svg` | Ten inline SVG icons, `currentColor`. |
@@ -443,7 +443,7 @@ for the h1 against a plain mono for the timeline labels — keep that contrast.
 | `_data/nav.yml` | Nav items that are **not** sections (external links, downloads). Section links generate themselves. |
 | `_layouts/homepage.html` | Head, sidebar, hero, sections loop, closing lines. |
 | `_includes/section.html` | Renders one section from its front matter; dispatches on `variant`. |
-| `_includes/sections/timeline.html`, `cards.html` | Variant renderers. |
+| `_includes/sections/timeline.html`, `showcase.html`, `cards.html`, `skills.html` | Variant renderers. |
 | `_includes/markdownify.html` | Markdown → HTML with every link opened in a new tab. Every markdownified string on the site goes through it (§6.8). |
 | `_includes/figure.html` | Figure with optional caption and float side. |
 | `_includes/icons/*.svg` | Inline SVG icons, `fill`/`stroke: currentColor`. |
@@ -505,7 +505,7 @@ someone's prose. Adding a "Projects" section is a `_data/projects.yml` plus a si
 | `nav` | Sidebar nav label. Omit to keep the section off the nav. |
 | `icon` | Nav icon; matches a file in `_includes/icons/`. |
 | `heading` | `false` renders the section with no visible `<h2>`. |
-| `variant` | `prose` (default) · `timeline` · `cards` · `skills`. |
+| `variant` | `prose` (default) · `timeline` · `showcase` · `cards` · `skills`. |
 | `data` | Name of a `_data/*.yml` file supplying entries to the variant. |
 | `include` | Path under `_includes/` rendered after the body — the escape hatch for a chart, diagram, or interactive component. |
 | `media` | `{ src, alt, caption, side }` floating figure. |
@@ -521,7 +521,7 @@ parse markdown *inside* a block-level HTML tag unless that tag carries `markdown
 |---|---|---|---|---|---|
 | 10 | `10-about.md` | About Me | prose | — | `user` |
 | 20 | `20-experience.md` | Experience | timeline | `experience.yml` | `experience` |
-| 30 | `30-projects.md` | Projects | cards | `projects.yml` | `projects` |
+| 30 | `30-projects.md` | Projects | showcase | `projects.yml` | `projects` |
 | 40 | `40-leadership.md` | Leadership | prose | — | `sparkle` |
 | 50 | `50-skills.md` | Skills | skills | `skills.yml` | `skills` |
 | — | `_data/nav.yml` | Resume (external) | — | — | `file` |
@@ -539,6 +539,10 @@ external items appended last.
 - **The `skills` variant**: labelled rows of pills from `_data/skills.yml`
   (`{label, items: [...]}` per group). An item is either a plain string or
   `{name, icon}`, where `icon` names a file in `assets/img/tech/` — see §6.5.1.
+- **The `showcase` variant**: media in the left gutter, write-up beside it, from
+  `_data/projects.yml` — see §6.4.2. Use it when each entry has a picture. The
+  `cards` variant (a responsive grid of stacked cards) is still there for a
+  section where entries are small and numerous rather than described at length.
 - **The `timeline` variant** also takes optional `role` and `org` per entry, rendering a
   bold "Role · Organisation" line above the body — the shape Experience entries want once
   they describe positions rather than announcements.
@@ -621,6 +625,44 @@ lines flush with the first.
 The same rule covers `.prose ul` (excluding `.pills`), so Leadership's markdown
 list and Experience's bullets match without either file knowing about the other.
 A markdown list anywhere on the site gets the chevron for free.
+
+### 6.4.2 Projects / the `showcase` variant  **[BUILT]**
+
+The mirror image of the timeline: **media in the left gutter, the write-up
+beside it.** Both sit in the same `--gutter` column, so Experience's dates,
+Projects' pictures, and Skills' group labels line up down the whole page — that
+alignment is most of what makes the layout read as one design, and it is why the
+media column is a modest 11.5rem rather than as wide as a picture might like.
+Change `--gutter` in `tokens.scss` and all three move together.
+
+```
+[  image  ]   URECA 2025                      <- tag
+[ or video]   Diffusion Models for Robots ↗   <- title, optional href
+              A paragraph, or chevron bullets.
+              (PyTorch) (Robotics)            <- pills
+              [ Poster ] [ Code ]             <- link buttons
+```
+
+Entry fields: `title` (required), `href`, `tag`, `body`, `points`, `image`/`alt`,
+`video`/`poster`, `skills`, `links`. `points` renders with the same `.bullets`
+chevrons as Experience, so the two sections describe work the same way.
+
+Two details worth keeping:
+
+- **The frame is `aspect-ratio: 4/3` with `object-fit: cover`.** The row's height
+  is therefore known before the image arrives, so the section does not jump as it
+  loads. The cost is that a picture is cropped to fit — put the subject near the
+  middle.
+- **Video is `preload="none"` with real controls.** Only the poster is fetched
+  until the reader presses play, so a clip costs the page nothing on load. No
+  autoplay: §0, and it would move text while it is being read. A `poster:` is
+  effectively required — without one the frame sits blank.
+
+**Missing media does not leave a hole.** If no entry in the section has a picture,
+every entry spans the full width and the section looks exactly as it did before
+pictures existed. As soon as *any* entry has one, the ones that don't keep the
+gutter empty instead, so all the titles stay in the same column. That is the
+`showcase--aligned` class, set by a pre-pass over the entries in the include.
 
 ### 6.4.1 Sass import order  ← bit me once
 
@@ -1059,3 +1101,22 @@ the user's explicit call, made deliberately.
   Verified by auditing every `<a>` in the built page: 8 markdown links converted,
   11 already-tabbed links unchanged, and exactly three left in-tab — the five nav
   anchors, the `#top` wordmark, and the `mailto:`.
+
+- **2026-09-07** — **Projects moved from `cards` to a new `showcase` variant**
+  (§6.4.2): media in the left gutter, title and prose beside it — the timeline's
+  layout with a picture where the date goes. New
+  `_includes/sections/showcase.html` and a `.showcase` block in `components.scss`.
+  Supports `image` or `video` (`preload="none"` + `poster`, so a clip is free
+  until played), an optional `href` that links both the title and the media, and
+  the same `points`/`skills`/`links` fields Experience uses.
+  Two supporting changes:
+  - **`--gutter: 11.5rem` is now a token.** Timeline, Skills and Showcase all read
+    it, so the three sections cannot drift out of alignment. It was duplicated as
+    a literal in two places before.
+  - **`.timeline__points` renamed `.bullets`**, since Projects renders the same
+    chevron list. Same CSS, shared name.
+  The `cards` variant was kept, not deleted: a grid of small cards is still the
+  right shape for a section with many short entries.
+  Verified in a browser with test images in two of the three entries — including
+  the mixed case, which is what `showcase--aligned` exists for — then reverted;
+  no project has real media yet.
