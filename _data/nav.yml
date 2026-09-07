@@ -7,6 +7,6 @@
 # other pages, downloads.
 extra:
   - label: Resume
-    href: "assets/files/Xiang%20Liu_Resume%20(4).pdf"
+    href: "assets/files/Xiang Liu_Resume (4).pdf"
     icon: file
     external: true
