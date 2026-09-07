@@ -39,6 +39,18 @@
 # open in the same tab. Say the word if they should open in a new one.
 
 main:
+  - date: August 2026 - Present
+    role: Honors Thesis Project 
+    org: SPEL Lab
+    org_url: https://paolacascante.com/lab/
+    points:
+      - Building a Vision Language Model to identify and geo-locate flooding events from images, videos and texts 
+      - Collaborating with Department of Civil Engineering on NSF-funded project
+      - Advised by Professor [Paola Cascante-Bonilla](https://paolacascante.com/) in Computer Science Department 
+    skills: 
+      - PyTorch
+      - Web Scraper 
+
   - date: June 2026 - August 2026
     role: Software Engineer Intern
     org: Capital One
@@ -60,8 +72,7 @@ main:
     org: Learning and Intelligence Lab, Stony Brook University
     org_url: https://jorge-a-mendez.github.io/
     points:
-      - Using image-generation models to generate action parameters accurately and efficiently for robots
-      - Robots could execute home-tasks like putting books onto shelves without human intervention
+      - Using image-generation models to generate action parameters accurately and efficiently for robots to execute home-tasks like putting books onto shelves without human intervention
       - Presented at the [April 2026 URECA Symposium](https://www.stonybrook.edu/ureca/present-your-work/summer-symposium.html), October 2025 [MIT Undergraduate Technology Conference](https://urtc.mit.edu/)
       - Advised by Professor Jorge-Mendez Mendez in the Electrical and Computer Engineering Department
     skills:
@@ -81,7 +92,7 @@ main:
     points:
       - Trained Deep Learning models like Fourier Neural Operators, U-Net and CNN for weather forecast in the United States 
       - Working towards fast and accurate weather forecasting without the computation from supercomputers 
-      - Advised by Professor [Yi Liu](https://jacoblau0513.github.io/) in the Applied Mathematics & Statistics Department at Stony Brook
+      - Advised by Professor [Yi Liu](https://jacoblau0513.github.io/) in the AI Research For Science Lab 
     skills:
       - PyTorch 
       - Neural Networks 
