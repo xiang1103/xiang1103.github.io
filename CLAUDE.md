@@ -633,8 +633,9 @@ The mirror image of the timeline: **media in the left gutter, the write-up
 beside it.** Both sit in the same `--gutter` column, so Experience's dates,
 Projects' pictures, and Skills' group labels line up down the whole page — that
 alignment is most of what makes the layout read as one design, and it is why the
-media column is a modest 11.5rem rather than as wide as a picture might like.
-Change `--gutter` in `tokens.scss` and all three move together.
+media column is a modest 13rem rather than as wide as a picture might like.
+Change `--gutter` in `tokens.scss` and all three move together; that token is
+the *only* way to resize a project image, by design.
 
 ```
 [  image  ]   URECA 2025                      <- tag
@@ -1161,3 +1162,21 @@ the user's explicit call, made deliberately.
   landscape, `.jpg` for photographic content, under 150 KB. All of it is written
   at the top of `_data/projects.yml`, including a one-line `magick` command that
   produces a conforming file.
+
+- **2026-09-07** — `--gutter` 11.5rem -> **13rem**, to make the project images
+  bigger: 184px -> 208px wide. Measured rather than guessed, in a browser with
+  the real page (each variant got an inline `--gutter` override so all four
+  shared one stylesheet — copying the HTML alone does not work, since every copy
+  loads the same `style.css`):
+  | gutter | image | empty column after the widest date |
+  |---|---|---|
+  | 11.5rem | 184px | 26px |
+  | **13rem** | **208px** | **50px** |
+  | 14rem | 224px | 66px |
+  | 16rem | 256px | 98px |
+  13rem was chosen as the largest step that does not start detaching Experience's
+  dates from their own text; the section was checked side by side at both values
+  and reads the same. Compensating with a narrower `column-gap` on the timeline
+  was considered and rejected: the content column would then start at a different
+  x in Experience than in Projects, which is exactly the alignment the shared
+  gutter exists to protect.

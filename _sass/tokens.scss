@@ -72,9 +72,14 @@
 
   // The shared left column: Experience's dates, Skills' group labels, and
   // Projects' media all sit in it, so the three sections line up down the page.
-  // Wide enough for "June 2026 - August 2026" and "Software Engineering" on one
-  // line. Changing it moves all three together — that is the point.
-  --gutter: 11.5rem;
+  // Changing it moves all three together — that is the point, and it is the only
+  // way to resize a project image.
+  // Measured at 13rem: a project picture renders 208px wide, and the widest date
+  // ("August 2026 - Present", 158px) leaves 50px of empty column before the 3rem
+  // gap. Reference points if it needs to move again: 11.5rem -> 184px image /
+  // 26px slack; 14rem -> 224px / 66px; 16rem -> 256px / 98px. Past about 14rem
+  // the Experience dates start to look detached from their own text.
+  --gutter: 13rem;
 
   color-scheme: light;
 }
