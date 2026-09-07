@@ -1004,3 +1004,12 @@ The planned `nav-active.js` (IntersectionObserver highlighting the in-view secti
   a line starting with `[` or containing `: ` has to be quoted, and a local file
   path needs `%20`/`%28`/`%29` inside a markdown link (but not in a `links:` href).
   Verified all three forms through a real build, including the bracket-first case.
+
+- **2026-09-07** — Link buttons (`links:` in a data file) now **always** open in a
+  new tab. They used to do so only when the href contained `://`, which meant the
+  external GitHub links opened in a tab but the local PDFs — Poster, Report —
+  navigated the page away, losing the reader's scroll position. A button is an
+  artifact, not a destination, so the rule is now unconditional in both
+  `timeline.html` and `cards.html`.
+  Markdown links inside `points`/`body` are deliberately left alone: those are
+  prose links and behave like prose links.

@@ -4,6 +4,7 @@
   section is a data file plus a five-line _sections/ file.
 
   Per entry: title, body (markdown), image, alt, tag, links: [{ label, href }]
+  Link buttons always open in a new tab, same as the timeline's.
 {% endcomment %}
 
 <div class="cards">
@@ -21,7 +22,7 @@
       {% if entry.links %}
       <p class="btn-row">
         {% for link in entry.links %}
-        <a class="btn" href="{{ link.href }}"{% if link.href contains "://" %} target="_blank" rel="noopener"{% endif %}>{{ link.label }}</a>
+        <a class="btn" href="{{ link.href }}" target="_blank" rel="noopener">{{ link.label }}</a>
         {% endfor %}
       </p>
       {% endif %}

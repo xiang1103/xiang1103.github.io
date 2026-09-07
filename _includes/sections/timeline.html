@@ -15,7 +15,11 @@
     body            markdown description (a paragraph)
     points          list of markdown strings, rendered as chevron bullets
     skills          list of strings, rendered as pills
-    links           list of { label, href }, rendered as small buttons
+    links           list of { label, href }, rendered as small buttons. These
+                    always open in a new tab: a button is an artifact (a PDF, a
+                    repo), so it should never navigate the page away. Markdown
+                    links inside `points`/`body` are NOT affected — they open in
+                    the same tab, like any prose link.
 {% endcomment %}
 
 <ol class="timeline">
@@ -69,7 +73,7 @@
       {% if entry.links %}
       <p class="btn-row">
         {% for link in entry.links %}
-        <a class="btn" href="{{ link.href }}"{% if link.href contains "://" %} target="_blank" rel="noopener"{% endif %}>{{ link.label }}</a>
+        <a class="btn" href="{{ link.href }}" target="_blank" rel="noopener">{{ link.label }}</a>
         {% endfor %}
       </p>
       {% endif %}
