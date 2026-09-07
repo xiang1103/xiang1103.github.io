@@ -57,7 +57,7 @@
   // The whole page follows this one value: sections, hero, timeline, cards.
   // Lower the 82vw factor to pull the column back in; that is the knob that
   // matters, not the ceiling.
-  --measure: clamp(46rem, 82vw, 132rem);
+  --measure: clamp(46rem, 82vw, 127rem);
 
   color-scheme: light;
 }

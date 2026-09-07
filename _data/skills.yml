@@ -71,15 +71,15 @@ main:
     items:
       - name: PyTorch
         icon: pytorch
-      - name: Hugging Face
-        icon: huggingface
-      - name: NumPy
-        icon: numpy
-      - name: pandas
-        icon: pandas
       - name: scikit-learn
         icon: scikitlearn
       - name: OpenCV
         icon: opencv
+      - name: NumPy
+        icon: numpy
+      - name: pandas
+        icon: pandas
+      - name: Hugging Face
+        icon: huggingface
       - name: Jupyter
         icon: jupyter
