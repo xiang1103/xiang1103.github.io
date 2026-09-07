@@ -64,7 +64,7 @@ for the section architecture that replaced it.
 | `_includes/sections/timeline.html`, `cards.html` | Variant renderers. |
 | `_includes/figure.html` | Figure with optional caption and float side. |
 | `_includes/icons/*.svg` | Ten inline SVG icons, `currentColor`. |
-| `_sass/tokens.scss` | Every color, type, spacing, and layout token. Nothing else declares a hex. |
+| `_sass/tokens.scss` | Every color, type, spacing, and layout token. Nothing else declares a hex. `--measure` is the fluid content width and the whole page follows it. |
 | `_sass/base.scss` | Reset and element defaults; styles markdown output. |
 | `_sass/layout.scss` | Page shell only: `.page`, `.sidebar`, `.main`. |
 | `_sass/components.scss` | Every component **and its own breakpoints** (§6.4.1). |
@@ -834,4 +834,14 @@ The planned `nav-active.js` (IntersectionObserver highlighting the in-view secti
   **Coupled to being a single page:** if the site ever gains a second page, this must go back
   to `href="/"`, or the wordmark will strand visitors on whatever page they are on. Noted in
   a comment on the link itself.
+- **2026-09-06** — Content width is fluid: `--measure` went from a fixed `46rem` to
+  `clamp(46rem, 58vw, 58rem)`, so a wide window is used instead of sitting empty. Everything
+  follows that one token — hero, sections, timeline, cards, motto — so the layout is
+  identical at every size, only wider.
+  Chosen from four options after showing the user the tradeoff in characters per line: at
+  1440px the column is ~835px (~97 chars), capping at 928px (~108 chars) from 1920px up.
+  A cap exists on purpose. Line length past roughly 100 characters is measurably harder to
+  read, and the alternative (no cap) reaches ~255 characters on a 2560px display. Raise the
+  58rem ceiling to fill more; delete it to fill the window entirely. The comment on the
+  token records these numbers.
 

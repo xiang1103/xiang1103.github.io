@@ -45,7 +45,15 @@
   // Min is 260, not 240: the footer row (email | Source) needs ~205px of content
   // width to stay on one line, and 240 - 48 of padding left it 12px short.
   --sidebar-w: clamp(260px, 24vw, 300px);
-  --measure: 46rem;
+  // Content width. Fluid rather than fixed, so a wide window gets used instead
+  // of sitting empty — but capped, because line length past roughly 100
+  // characters is measurably harder to read.
+  //   1440px viewport -> ~835px  (~97 chars per line)
+  //   1920px and up   -> 928px   (~108 chars, the cap)
+  // The whole page follows this one value: sections, hero, timeline, cards.
+  // Raise the 58rem ceiling to fill more of a large screen, at the cost of
+  // longer lines; remove it entirely to fill the window completely.
+  --measure: clamp(46rem, 58vw, 58rem);
 
   color-scheme: light;
 }
