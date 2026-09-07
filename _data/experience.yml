@@ -33,57 +33,56 @@ main:
     org: Capital One
     org_url: https://www.capitalonecareers.com/students
     points:
-      - Joining Capital One's Technology Internship Program (TIP) in summer 2026.
-      - Hoping to meet more people there.
+      - Built a data lineage scoring system from scratch for Capital One's Card Tech Data Team
+      - Automatically traced how data moves between datasets, mapping upstream and downstream dependencies without manual input
+      - Scored each dataset on lineage accuracy, giving teams a clear signal of which datasets they could trust, saving manual Analysts' review time
+    skills: 
+      - Python 
+      - TypeScript
+      - FastAPI 
+      - React 
+      - AWS 
+      - Databricks 
 
-  - date: Summer 2025
-    role: Undergraduate Researcher
-    org: URECA, Stony Brook University
-    org_url: https://www.stonybrook.edu/ureca/
+  - date: May 2025 - August 2025
+    role: Research Intern
+    org: Learning and Intelligence Lab, Stony Brook University
+    org_url: https://jorge-a-mendez.github.io/
     points:
-      - Accepted into the URECA Summer Research Program, with funding for my project.
-      - >-
-        Using Diffusion Models to assist plan execution of robots in simulator
-        environments.
-      - Presenting at the April 2026 Symposium.
+      - Using image-generation models to generate action parameters accurately and efficiently for robots
+      - Robots could execute home-tasks like putting books onto shelves 
+      - Presented at the April 2026 URECA Symposium, Fall 2026 MIT Undergraduate Technology Conference
     skills:
+      - PyTorch 
       - Diffusion Models
+      - Flow Matching Models
       - Robotics
-      - Simulation
+      - PyBullet Simulation 
+    links: 
+      - label: Poster
+        href: "assets/files/Xiang Liu Spring 2026 URECA Poster (2).pdf"
 
-  - date: Spring 2025
-    role: Undergraduate Researcher
-    org: CSE 487, Stony Brook University
+  - date: May 2024 - August 2024
+    role: REU Research Intern
+    org: SUNY Research Foundation 
+    org_url: https://www.stonybrook.edu/commcms/cie/suny-soar/
     points:
-      - Research class with Prof. Yi Liu and Prof. Mendez.
-      - >-
-        Combining Genetic Algorithms with Large Language Models for molecule
-        optimization tasks.
+      - Trained Deep Learning models like Fourier Neural Operators, U-Net and CNN for weather forecast in the United States 
+      - Working towards fast efficient weather forecasting without the computation from supercomputers 
     skills:
-      - Large Language Models
-      - Genetic Algorithms
-    links:
-      - label: Report
-        href: "assets/files/CSE_487_Report__Improved_Molecule_Generation_Using_Large_Language_Models_In_Genetic_Algorithms%20(1).pdf"
-
-  - date: Apr. 2025
-    role: Student Presenter
-    org: 2nd Annual SUNY AI Symposium
-    org_url: https://www.buffalo.edu/research/landing-pages/suny-ai-symposium.html
-    points:
-      - Invited to present my summer research poster at the University at Buffalo.
-      - Met many professors and PhD students there.
-
-  - date: Summer 2024
-    role: Undergraduate Researcher
-    org: SUNY SOAR, Stony Brook University
-    org_url: https://www.stonybrook.edu/commcms/cie/suny-soar/index.php
-    points:
-      - My first summer research program, funded by SUNY.
-      - The project used Neural Operators for weather forecasting in the United States.
-    skills:
-      - Neural Operators
-      - Deep Learning
+      - PyTorch 
+      - Neural Networks 
+      - Pands 
+      - Xarray 
     links:
       - label: Poster
-        href: https://github.com/xiang1103/Climate-Forecasting-with-Deep-Learning_SOAR-Research/blob/main/Xiang%20Liu%20SOAR%20Poster.pdf
+        href: "assets/files/Xiang Liu SOAR Poster.pdf"
+
+  - date: December 2024 - Present 
+    role: Lead Undergraduate Teaching Assistant
+    org: Department of Computer Science
+    org_url: https://sites.google.com/cs.stonybrook.edu/cse475
+    points:
+      - "TA for CSE 214: Data Structures & Algorithms, and CSE 353: Machine Learning" 
+      - Teaching recitations, hosting office hours, making homework labs, and exam questions 
+      - Enjoyed helping students and improving their grades to get admitted to the CS major 
