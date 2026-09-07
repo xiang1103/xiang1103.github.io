@@ -64,7 +64,13 @@
           {% if site.avatar_small %}
           <img class="brand__avatar" src="{{ site.avatar_small | relative_url }}" width="34" height="34" alt="">
           {% endif %}
-          <a class="brand__name" href="{{ '/' | relative_url }}">{{ site.wordmark | default: site.title }}</a>
+          {%- comment -%}
+            "#top" is a special fragment in the HTML spec: with no element of that
+            id, it means the top of the document. So this scrolls up instead of
+            re-navigating, and the smooth scroll comes from base.scss for free.
+            If the site ever grows past one page, this goes back to "/".
+          {%- endcomment -%}
+          <a class="brand__name" href="#top">{{ site.wordmark | default: site.title }}</a>
           <button class="theme-toggle" type="button" aria-label="Switch color theme">
             {% include icons/sun.svg %}
             {% include icons/moon.svg %}

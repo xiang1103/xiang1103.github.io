@@ -20,10 +20,10 @@
 # your actual titles and dates before relying on them.
 
 main:
-  - date: Summer 2026
-    role: Technology Intern
+  - date: June 2026 - August 2026
+    role: Software Engineer Intern
     org: Capital One
-    org_url: https://www.capitalone.com/
+    org_url: https://www.capitalonecareers.com/students
     body: >-
       Joining Capital One's Technology Internship Program (TIP) in summer 2026.
       Hoping to meet more people there.
@@ -31,7 +31,7 @@ main:
   - date: Summer 2025
     role: Undergraduate Researcher
     org: URECA, Stony Brook University
-    org_url: https://www.stonybrook.edu/commcms/ureca/summer/on-campusopportunities.php
+    org_url: https://www.stonybrook.edu/ureca/
     body: >-
       Accepted into the URECA Summer Research Program with funding for my project on
       using Diffusion Models to assist plan execution of robots in simulator

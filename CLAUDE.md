@@ -820,4 +820,18 @@ The planned `nav-active.js` (IntersectionObserver highlighting the in-view secti
   was redundant. The layout keeps the pair path — set `favicon_dark` again to restore it.
   (Checked first: the artwork has only 8px of transparent margin on a 512px canvas, so the
   visible gap really was the CSS gap, not padding baked into the image.)
+- **2026-09-06** — The wordmark link now scrolls to the top instead of re-navigating:
+  `href="/"` -> `href="#top"`. **"top" is a special fragment in the HTML spec** — with no
+  element of that id, it means the top of the document — so this needs no JS and no
+  `id="top"` anywhere, and the smooth scroll comes from `base.scss`'s existing
+  `scroll-behavior` (already inside a `prefers-reduced-motion` guard).
+  Verified in a browser, not assumed: from `scrollTop: 1500` a click lands at `0` with the
+  document never re-created (a marker set on `window` survived the click).
+  Cost avoided per click: a ~100-130ms round trip for 19 KB of HTML plus revalidation of the
+  stylesheet, script, and two images, then a full parse/style/layout/paint and a re-run of
+  the inline theme script. Small in absolute terms, but it is the difference between an
+  instant scroll and a page blink.
+  **Coupled to being a single page:** if the site ever gains a second page, this must go back
+  to `href="/"`, or the wordmark will strand visitors on whatever page they are on. Noted in
+  a comment on the link itself.
 
