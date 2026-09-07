@@ -13,6 +13,7 @@ step, no framework, no JavaScript beyond a theme toggle.
 | Edit a section's text | the matching file in `_sections/` |
 | Add a news entry | `_data/news.yml` |
 | Add a whole new section | a new file in `_sections/` (nav updates itself) |
+| Edit skills, or add a tech logo | `_data/skills.yml` (logos live in `assets/img/tech/`) |
 | Add a nav link that isn't a section | `_data/nav.yml` |
 | Change colors, type, or spacing | `_sass/tokens.scss` |
 
@@ -31,4 +32,6 @@ bundle install
 bundle exec jekyll serve      # http://127.0.0.1:4000
 ```
 ## Credits 
-The website is inspired by https://www.taniarascia.com/ 
+The website is inspired by https://www.taniarascia.com/
+
+Technology logos in the Skills section come from [Devicon](https://devicon.dev) (MIT).

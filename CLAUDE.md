@@ -72,6 +72,7 @@ for the section architecture that replaced it.
 | `assets/js/theme-toggle.js` | The only JavaScript on the site. |
 | `assets/img/xiang-hero.jpg` | 480x640, the full uncropped photo shown beside the h1. |
 | `assets/img/mars-mark.png` | 96px copy of `mars_icon.png`, the 34px mark next to the wordmark. |
+| `assets/img/tech/*.svg` | Vendor logos for Skills pills, from [Devicon](https://devicon.dev) (MIT). Referenced as `<img>`, never inlined — see §6.5.1. |
 | `assets/img/mars_icon.png` | Full-size source for the mark. |
 | `assets/img/IMG_4275.jpeg` | 1.2 MB original. Kept as the source for re-cropping, **excluded from the build** so it is never published. |
 | `assets/img/favicon.png` | The Mars mark at 64px. One icon for both themes — the layout only emits a light/dark pair if `favicon_dark` is set. |
@@ -529,7 +530,8 @@ external items appended last.
 - **A repeating component** (projects, talks, publications): a `_data/*.yml` plus
   `variant: cards`, or a new variant include if the shape is different.
 - **The `skills` variant**: labelled rows of pills from `_data/skills.yml`
-  (`{label, items: [...]}` per group). Good for anything that is a categorised list.
+  (`{label, items: [...]}` per group). An item is either a plain string or
+  `{name, icon}`, where `icon` names a file in `assets/img/tech/` — see §6.5.1.
 - **The `timeline` variant** also takes optional `role` and `org` per entry, rendering a
   bold "Role · Organisation" line above the body — the shape Experience entries want once
   they describe positions rather than announcements.
@@ -615,6 +617,42 @@ originally written in `layout.scss` and silently did nothing.
 - `assets/js/theme-toggle.js` (deferred) wires the button: cycles the value, writes
   `localStorage`, updates `aria-label`/icon.
 - Wrap every `localStorage` access in `try/catch` (private mode / blocked storage throws).
+
+### 6.5.1 Vendor logos in Skills pills  **[BUILT]**
+
+Skills pills can carry a technology logo:
+
+```yaml
+- label: Software Engineering
+  items:
+    - name: Python
+      icon: python      # -> assets/img/tech/python.svg
+    - Computer Vision   # a plain string is a text-only pill
+```
+
+Logos come from **[Devicon](https://devicon.dev)** (MIT), fetched straight into the repo:
+
+```bash
+curl -sf https://raw.githubusercontent.com/devicons/devicon/master/icons/<name>/<name>-original.svg \
+  -o assets/img/tech/<name>.svg
+```
+
+Twenty-four are already vendored. Any other name from devicon.dev can be added the same way.
+[Simple Icons](https://simpleicons.org) (CC0) is the alternative when a monochrome mark that
+inherits `currentColor` is wanted instead of a brand-colored one.
+
+**They are `<img>`, not inlined SVG — deliberately, and against the pattern used by every
+other icon on the site:**
+
+1. **Size.** Devicon's Linux logo is **192 KB** of path data for a 14px badge. Inlining a
+   handful of these would dwarf the 19 KB page. As `<img>` they are separate, cacheable
+   requests, and only the ones actually used are ever downloaded.
+2. **Id collisions.** Several vendor SVGs carry `id=` attributes and `<style>` blocks
+   (`python`, `nodejs`, `github`). Inlining two of those into one document risks duplicate
+   ids and leaking styles; `<img>` isolates them.
+3. They are brand-colored by design, so they gain nothing from `currentColor`.
+
+That last point is also the one place the design deliberately ignores the palette.
 
 ### 6.6 Motion policy  **[BUILT]**
 
@@ -871,4 +909,15 @@ The planned `nav-active.js` (IntersectionObserver highlighting the in-view secti
   the site in iframes at six viewport widths and reports `getBoundingClientRect`) rather than
   reasoning about the clamp. That is what caught both the "no visible change" cause and the
   hero problem.
+- **2026-09-06** — Skills gained **Software Engineering** and **Machine Learning** rows with
+  vendor logos, on top of the existing text-only Research areas row. `_includes/sections/
+  skills.html` now accepts either a plain string or `{name, icon}` per item, so both styles
+  mix in one section. New `.tag--logo` / `.tag__logo` styles; 24 Devicon SVGs vendored into
+  `assets/img/tech/` (Linux dropped — 192 KB for a 14px badge).
+  Shared gutter widened `9rem` -> `11.5rem` so "Software Engineering" and "June 2026 -
+  August 2026" both fit on one line; Experience and Skills share the value so their columns
+  stay aligned.
+  **The two new lists are placeholders**, a plausible stack for a CS undergrad doing AI
+  research rather than a record of what Xiang uses. The data file says so in a warning
+  comment. This is the one thing the user has to supply.
 

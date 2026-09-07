@@ -1,17 +1,59 @@
 # Skills, rendered as labelled rows of pills by _includes/sections/skills.html.
 #
 # Per group:
-#   label  required. The row heading, e.g. "Languages".
-#   items  required. A list of strings.
+#   label  the row heading
+#   items  a list; each item is either a plain string, or a map:
+#            - name: Python        the pill text
+#              icon: python        a file in assets/img/tech/ (without .svg)
 #
-# Order here is the order on the page. Keep each group short — a wall of pills
-# reads as noise. Six to ten items per group is plenty.
+# Logos available right now (assets/img/tech/):
+#   bash  c  cplusplus  css3  docker  flask  git  github  html5  java
+#   javascript  jupyter  mysql  nodejs  numpy  opencv  pandas  postgresql
+#   python  pytorch  react  scikitlearn  tensorflow  typescript
 #
-# NOTE: only the research areas below are seeded, because they are the only ones
-# already evidenced elsewhere on the site. The remaining groups are commented out
-# rather than guessed at — fill them in and uncomment.
+# Need one that isn't listed? Any name from https://devicon.dev works — ask and
+# it gets fetched into assets/img/tech/. An item with no `icon:` is just text.
+#
+# ⚠️  THE LISTS BELOW ARE PLACEHOLDERS. They are a plausible stack for a CS
+# undergrad doing AI research, NOT a record of what Xiang actually uses.
+# Replace them with the real thing before this section means anything.
 
 main:
+  - label: Software Engineering
+    items:
+      - name: Python
+        icon: python
+      - name: Java
+        icon: java
+      - name: C++
+        icon: cplusplus
+      - name: JavaScript
+        icon: javascript
+      - name: React
+        icon: react
+      - name: Git
+        icon: git
+      - name: Docker
+        icon: docker
+      - name: PostgreSQL
+        icon: postgresql
+
+  - label: Machine Learning
+    items:
+      - name: PyTorch
+        icon: pytorch
+      - name: NumPy
+        icon: numpy
+      - name: pandas
+        icon: pandas
+      - name: scikit-learn
+        icon: scikitlearn
+      - name: OpenCV
+        icon: opencv
+      - name: Jupyter
+        icon: jupyter
+
+  # Text-only pills still work — no icon needed.
   - label: Research areas
     items:
       - Computer Vision
@@ -19,25 +61,3 @@ main:
       - Diffusion Models
       - Neural Operators
       - Genetic Algorithms
-
-  # - label: Languages
-  #   items:
-  #     - Python
-  #     - C++
-  #     - Java
-  #     - JavaScript
-  #     - SQL
-
-  # - label: Frameworks & tools
-  #   items:
-  #     - PyTorch
-  #     - NumPy
-  #     - Git
-  #     - Linux
-  #     - Docker
-
-  # - label: Coursework
-  #   items:
-  #     - Machine Learning
-  #     - Data Structures
-  #     - Operating Systems

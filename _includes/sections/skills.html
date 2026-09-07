@@ -1,6 +1,16 @@
 {% comment %}
   Skills: one labelled row of pills per group, from a _data file.
-  Per group: { label, items: [string, ...] }. See _data/skills.yml.
+
+  Per group: { label, items: [...] }
+  An item is either a plain string, or a map with an optional logo:
+
+      - Computer Vision                 # text only
+      - name: Python                    # text + logo
+        icon: python                    #   -> assets/img/tech/python.svg
+
+  Logos are <img> rather than inlined SVG on purpose: some vendor logos are
+  enormous as markup (Devicon's Linux is 192 KB), and <img> keeps them out of
+  the HTML, cached separately, with no risk of colliding element ids.
 {% endcomment %}
 
 <div class="skills">
@@ -9,7 +19,16 @@
     <div class="skills__label">{{ group.label }}</div>
     <ul class="skills__items">
       {% for item in group.items %}
-      <li class="tag">{{ item }}</li>
+      {% assign name = item.name | default: item %}
+      {% if item.icon %}
+      <li class="tag tag--logo">
+        <img class="tag__logo" src="{{ '/assets/img/tech/' | append: item.icon | append: '.svg' | relative_url }}"
+             alt="" width="14" height="14" loading="lazy">
+        <span>{{ name }}</span>
+      </li>
+      {% else %}
+      <li class="tag">{{ name }}</li>
+      {% endif %}
       {% endfor %}
     </ul>
   </div>

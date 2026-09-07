@@ -387,9 +387,10 @@
 
 .timeline__item {
   display: grid;
-  // The gutter holds a date range, and the gap is wide so the date reads as a
-  // separate column rather than as part of the entry.
-  grid-template-columns: 9rem 1fr;
+  // The gutter holds a date range ("June 2026 - August 2026") and, in Skills, a
+  // group label ("Software Engineering"); 11.5rem fits both on one line. The gap
+  // is wide so the gutter reads as its own column.
+  grid-template-columns: 11.5rem 1fr;
   column-gap: var(--sp-6);
   margin-bottom: var(--sp-4);
 }
@@ -544,7 +545,7 @@
 // Matches the timeline's gutter so labels and content line up across sections.
 .skills__group {
   display: grid;
-  grid-template-columns: 9rem 1fr;
+  grid-template-columns: 11.5rem 1fr;
   column-gap: var(--sp-6);
   margin-bottom: var(--sp-3);
 }
@@ -568,6 +569,20 @@
 
 .skills__items .tag {
   margin-bottom: 0;
+}
+
+// A pill carrying a vendor logo. The logo keeps its own brand colors, so it is
+// the one thing on the page that ignores the palette.
+.tag--logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.tag__logo {
+  width: 14px;
+  height: 14px;
+  flex: none;
 }
 
 // An experience entry leads with "Role · Organisation", the organisation
