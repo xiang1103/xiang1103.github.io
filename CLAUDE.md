@@ -71,7 +71,8 @@ for the section architecture that replaced it.
 | `assets/css/style.scss` | Front-matter stub importing the four partials in order. |
 | `assets/js/theme-toggle.js` | The only JavaScript on the site. |
 | `assets/img/xiang-hero.jpg` | 480x640, the full uncropped photo shown beside the h1. |
-| `assets/img/avatar-xiang.jpg` | 96px square crop, the 34px sidebar mark. |
+| `assets/img/mars-mark.png` | 96px copy of `mars_icon.png`, the 34px mark next to the wordmark. |
+| `assets/img/mars_icon.png` | Full-size source for the mark. |
 | `assets/img/IMG_4275.jpeg` | 1.2 MB original. Kept as the source for re-cropping, **excluded from the build** so it is never published. |
 | `assets/img/favicon.png`, `favicon-dark.png` | Teal "x" mark, light and dark. |
 | `assets/files/*.pdf` | Resume and the CSE 487 report. **Filenames with spaces/parens are live URLs** — see §3.6. |
@@ -444,7 +445,8 @@ for the h1 against a plain mono for the timeline labels — keep that contrast.
 | `_sass/components.scss` | Every component **and its own breakpoints** (§6.4.1). |
 | `assets/css/style.scss` | Front-matter stub that imports the four partials in order. |
 | `assets/js/theme-toggle.js` | The only JavaScript file. |
-| `assets/img/xiang-hero.jpg` | 400px square hero photo. `avatar-xiang.jpg` is the 96px sidebar mark. Both cropped from `IMG_4275.jpeg`, which stays as the original. |
+| `assets/img/xiang-hero.jpg` | 480x640 hero photo, cropped from `IMG_4275.jpeg` (kept as the original). |
+| `assets/img/mars-mark.png` | 96px sidebar mark, resized from `mars_icon.png`. |
 
 ### 6.2 Sass entry point
 
@@ -800,4 +802,13 @@ The planned `nav-active.js` (IntersectionObserver highlighting the in-view secti
   became "Technology Intern · Capital One", and each entry's `skills` are the techniques its
   own description named. Titles and date ranges are restatements, not verified facts; the
   data file says so at the top.
+- **2026-09-06** — Sidebar brand row: the 34px photo mark became the Mars icon the user
+  supplied (`assets/img/mars_icon.png`, resized to `mars-mark.png` at 96px / 7 KB), and the
+  wordmark changed from "xiang liu" to **xiang.dev**. Used the artwork directly rather than
+  redrawing it as an inline SVG — the organic blob shapes would not survive a hand redraw,
+  and it is one small raster in an otherwise SVG icon set.
+  `avatar-xiang.jpg` deleted; the hero photo (`xiang-hero.jpg`) is unchanged, so the face is
+  still on the page, just not in the sidebar.
+  Note the icon's red sits against a teal accent. It reads as a deliberate brand mark rather
+  than a palette clash, but the favicon is still the teal "x" — those two marks now differ.
 
