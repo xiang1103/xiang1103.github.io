@@ -1,0 +1,43 @@
+# Skills, rendered as labelled rows of pills by _includes/sections/skills.html.
+#
+# Per group:
+#   label  required. The row heading, e.g. "Languages".
+#   items  required. A list of strings.
+#
+# Order here is the order on the page. Keep each group short — a wall of pills
+# reads as noise. Six to ten items per group is plenty.
+#
+# NOTE: only the research areas below are seeded, because they are the only ones
+# already evidenced elsewhere on the site. The remaining groups are commented out
+# rather than guessed at — fill them in and uncomment.
+
+main:
+  - label: Research areas
+    items:
+      - Computer Vision
+      - Large Language Models
+      - Diffusion Models
+      - Neural Operators
+      - Genetic Algorithms
+
+  # - label: Languages
+  #   items:
+  #     - Python
+  #     - C++
+  #     - Java
+  #     - JavaScript
+  #     - SQL
+
+  # - label: Frameworks & tools
+  #   items:
+  #     - PyTorch
+  #     - NumPy
+  #     - Git
+  #     - Linux
+  #     - Docker
+
+  # - label: Coursework
+  #   items:
+  #     - Machine Learning
+  #     - Data Structures
+  #     - Operating Systems

@@ -1,8 +1,8 @@
 {% comment %}
   Timeline: a date label in the left gutter, entry content beside it.
-  Entries come from a _data file — see _data/news.yml for the field contract.
-  Each entry can carry a thumbnail, a tag, and link buttons, so this is no
-  longer limited to a line of text.
+  Entries come from a _data file — see _data/experience.yml for the contract.
+  An entry can carry a role/org heading, a tag, a thumbnail, markdown body, and
+  link buttons, so this is not limited to a line of text.
 {% endcomment %}
 
 <ol class="timeline">
@@ -12,6 +12,10 @@
 
     <div class="timeline__body">
       {% if entry.tag %}<span class="tag">{{ entry.tag }}</span>{% endif %}
+
+      {% if entry.role %}
+      <div class="timeline__role">{{ entry.role }}{% if entry.org %} <span class="timeline__org">· {{ entry.org }}</span>{% endif %}</div>
+      {% endif %}
 
       {% if entry.image %}
       <img class="timeline__thumb" src="{{ entry.image | relative_url }}" alt="{{ entry.alt }}" loading="lazy">

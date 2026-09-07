@@ -12,7 +12,7 @@
     nav      string   nav label; omit to keep the section out of the sidebar nav
     icon     string   nav icon, matching a file in _includes/icons/
     heading  bool     set false to render the section without a visible <h2>
-    variant  string   prose (default) | timeline | cards
+    variant  string   prose (default) | timeline | cards | skills
     data     string   name of a file in _data/ supplying entries for the variant
     include  string   path under _includes/ rendered after the body — the escape
                       hatch for a custom graphic, chart, or interactive component
@@ -59,6 +59,8 @@
       {% include sections/timeline.html entries=entries %}
     {% when "cards" %}
       {% include sections/cards.html entries=entries %}
+    {% when "skills" %}
+      {% include sections/skills.html entries=entries %}
   {% endcase %}
 
   {% if include.section.include %}

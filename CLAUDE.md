@@ -491,7 +491,7 @@ someone's prose. Adding a "Projects" section is a `_data/projects.yml` plus a si
 | `nav` | Sidebar nav label. Omit to keep the section off the nav. |
 | `icon` | Nav icon; matches a file in `_includes/icons/`. |
 | `heading` | `false` renders the section with no visible `<h2>`. |
-| `variant` | `prose` (default) · `timeline` · `cards`. |
+| `variant` | `prose` (default) · `timeline` · `cards` · `skills`. |
 | `data` | Name of a `_data/*.yml` file supplying entries to the variant. |
 | `include` | Path under `_includes/` rendered after the body — the escape hatch for a chart, diagram, or interactive component. |
 | `media` | `{ src, alt, caption, side }` floating figure. |
@@ -501,12 +501,32 @@ someone's prose. Adding a "Projects" section is a `_data/projects.yml` plus a si
 The file body is markdown and **may contain raw HTML and inline SVG**. Kramdown does not
 parse markdown *inside* a block-level HTML tag unless that tag carries `markdown="1"`.
 
+#### Current page structure
+
+| Order | File | Section | Variant | Data | Icon |
+|---|---|---|---|---|---|
+| 10 | `10-about.md` | About Me | prose | — | `user` |
+| 20 | `20-experience.md` | Experience | timeline | `experience.yml` | `experience` |
+| 30 | `30-projects.md` | Projects | cards | `projects.yml` | `projects` |
+| 40 | `40-leadership.md` | Leadership | prose | — | `sparkle` |
+| 50 | `50-skills.md` | Skills | skills | `skills.yml` | `skills` |
+| — | `_data/nav.yml` | Resume (external) | — | — | `file` |
+
+Orders leave gaps of ten so a section can be slid in between two others without
+renumbering everything. The nav renders in this same order, with `_data/nav.yml`'s
+external items appended last.
+
 #### Adding things later
 
 - **A new section**: drop a file in `_sections/` with an `order`. Nav updates itself.
 - **A graphic in a section**: `media:` for a figure, or inline `<svg>` in the body.
 - **A repeating component** (projects, talks, publications): a `_data/*.yml` plus
   `variant: cards`, or a new variant include if the shape is different.
+- **The `skills` variant**: labelled rows of pills from `_data/skills.yml`
+  (`{label, items: [...]}` per group). Good for anything that is a categorised list.
+- **The `timeline` variant** also takes optional `role` and `org` per entry, rendering a
+  bold "Role · Organisation" line above the body — the shape Experience entries want once
+  they describe positions rather than announcements.
 - **Something bespoke** (chart, canvas, widget): write `_includes/whatever.html` and point
   `include:` at it. Jekyll 3.x cannot take a variable include name *with* parameters, so a
   custom include receives no params — read from `site.*` or `site.data.*` instead.
@@ -717,4 +737,22 @@ The planned `nav-active.js` (IntersectionObserver highlighting the in-view secti
   240px to **260px** (240 minus 48px of padding left the row ~12px short, so it wrapped and
   stranded a dangling "|"). The email carries `white-space: nowrap` so it can never break
   mid-address; the row still wraps as whole items if a longer address ever overflows.
+- **2026-09-06** — **Nav restructured for the portfolio the site is growing into:**
+  About · Experience · Projects · Leadership · Skills · Resume.
+  - `News` became **Experience** (`20-experience.md`, `_data/news.yml` -> `experience.yml`).
+    Its five entries moved across **verbatim** — but they are still worded as news
+    ("Accepted an offer...", "Completed my research class..."), not as positions. The
+    `timeline` variant gained optional `role`/`org` fields for when they get rewritten.
+  - **Projects** added (`cards` variant), seeded with the three pieces of work already
+    described elsewhere on the site (URECA diffusion-models, CSE 487 molecule generation,
+    SOAR climate forecasting) reusing their existing PDF and GitHub links. Nothing invented.
+  - **Skills** added with a new `skills` variant: labelled rows of pills from
+    `_data/skills.yml`. Only "Research areas" is populated, from terms already on the site;
+    Languages / Frameworks / Coursework groups are **commented out in the data file** rather
+    than guessed at, ready to uncomment.
+  - `30-miscellaneous.md` renamed `40-leadership.md` (the user had already retitled it).
+  - Three new icons drawn to the existing grid (24x24, `stroke-width: 1.75`, round caps):
+    `experience` (briefcase), `projects` (layers), `skills` (sliders). `news.svg` deleted.
+  Anchors and nav labels all derive from `title:`, so the five sections and their nav links
+  regenerated themselves; nothing needed hand-syncing.
 

@@ -512,3 +512,56 @@
     transform: none;
   }
 }
+
+// --- skills -----------------------------------------------------------------
+//
+// Labelled rows of pills, from _data/skills.yml via sections/skills.html.
+
+.skills__group {
+  display: grid;
+  grid-template-columns: 7.5rem 1fr;
+  column-gap: var(--sp-4);
+  margin-bottom: var(--sp-3);
+}
+
+.skills__label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: 1.9;
+  color: var(--text-muted);
+  letter-spacing: -0.03em;
+}
+
+.skills__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skills__items .tag {
+  margin-bottom: 0;
+}
+
+// An experience entry can lead with a role and organisation.
+.timeline__role {
+  font-weight: 700;
+}
+
+.timeline__org {
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+@media (max-width: 480px) {
+  .skills__group {
+    display: block;
+  }
+
+  .skills__label {
+    margin-bottom: 0.25rem;
+    line-height: 1.6;
+  }
+}

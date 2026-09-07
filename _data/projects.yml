@@ -1,0 +1,40 @@
+# Projects, rendered as cards by _includes/sections/cards.html.
+#
+# Per entry:
+#   title  required.
+#   body   required. Markdown.
+#   tag    optional. Small label above the title, e.g. "URECA 2025".
+#   image  optional. Path to a thumbnail (any aspect; it scales to the card width).
+#   alt    optional. Alt text for that image.
+#   links  optional. List of { label, href } rendered as small buttons.
+#
+# Seeded from work already described elsewhere on the site — expand these with
+# real descriptions, screenshots, and repo links.
+
+main:
+  - title: Diffusion Models for Robot Plan Execution
+    tag: URECA 2025
+    body: >-
+      Using Diffusion Models to assist plan execution of robots in simulator
+      environments. Funded by the URECA Summer Research Program; presenting at the
+      April 2026 Symposium.
+
+  - title: Molecule Optimization with LLMs and Genetic Algorithms
+    tag: CSE 487
+    body: >-
+      Combining Genetic Algorithms with Large Language Models for molecule
+      optimization tasks, with Prof. Yi Liu and Prof. Mendez.
+    links:
+      - label: Report
+        href: "assets/files/CSE_487_Report__Improved_Molecule_Generation_Using_Large_Language_Models_In_Genetic_Algorithms%20(1).pdf"
+
+  - title: Climate Forecasting with Neural Operators
+    tag: SOAR 2024
+    body: >-
+      Neural Operators applied to weather forecasting across the United States.
+      My first summer research program, funded by SUNY.
+    links:
+      - label: Poster
+        href: https://github.com/xiang1103/Climate-Forecasting-with-Deep-Learning_SOAR-Research/blob/main/Xiang%20Liu%20SOAR%20Poster.pdf
+      - label: Code
+        href: https://github.com/xiang1103/Climate-Forecasting-with-Deep-Learning_SOAR-Research

@@ -1,0 +1,17 @@
+{% comment %}
+  Skills: one labelled row of pills per group, from a _data file.
+  Per group: { label, items: [string, ...] }. See _data/skills.yml.
+{% endcomment %}
+
+<div class="skills">
+  {% for group in include.entries %}
+  <div class="skills__group">
+    <div class="skills__label">{{ group.label }}</div>
+    <ul class="skills__items">
+      {% for item in group.items %}
+      <li class="tag">{{ item }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endfor %}
+</div>
