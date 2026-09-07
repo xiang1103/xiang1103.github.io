@@ -43,7 +43,7 @@
 
   {% if include.section.content and include.section.content != "" %}
   <div class="prose">
-    {{ include.section.content | markdownify }}
+    {% include markdownify.html text=include.section.content %}
   </div>
   {% endif %}
 

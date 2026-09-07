@@ -1,0 +1,30 @@
+{% comment %}
+  Markdown -> HTML, with every link set to open in a new tab.
+
+  Params:
+    text    the markdown source (required)
+    inline  true strips the wrapping <p>, for a one-line string such as a
+            timeline bullet
+
+  Why a build-time string replace and not JavaScript: it costs nothing at
+  runtime, works with JS disabled, and the attribute is present in View Source
+  rather than appearing a tick after load. The site's whole JS budget is the
+  theme toggle (see CLAUDE.md section 0).
+
+  Two kinds of link are put back the way they were, because a new tab would be
+  wrong for both:
+    #anchor   an on-page jump — a new tab would reload the site to scroll
+    mailto:   several browsers open a blank tab alongside the mail client
+
+  This relies on kramdown emitting `<a href="` with the href first, which it
+  always does. If a link ever needs to stay in the same tab, write it as raw
+  HTML in the markdown — this only matches the exact kramdown output.
+{% endcomment %}
+{%- assign html = include.text | markdownify -%}
+{%- if include.inline -%}
+  {%- assign html = html | remove: "<p>" | remove: "</p>" | strip -%}
+{%- endif -%}
+{%- assign html = html | replace: '<a href="', '<a target="_blank" rel="noopener" href="' -%}
+{%- assign html = html | replace: '<a target="_blank" rel="noopener" href="#', '<a href="#' -%}
+{%- assign html = html | replace: '<a target="_blank" rel="noopener" href="mailto:', '<a href="mailto:' -%}
+{{- html -}}

@@ -62,6 +62,7 @@ for the section architecture that replaced it.
 | `_layouts/homepage.html` | The only layout: head, sidebar, hero, sections loop, closing lines. |
 | `_includes/section.html` | Renders one section from its front matter; dispatches on `variant`. |
 | `_includes/sections/timeline.html`, `cards.html` | Variant renderers. |
+| `_includes/markdownify.html` | Markdown → HTML with every link opened in a new tab. Every markdownified string on the site goes through it (§6.8). |
 | `_includes/figure.html` | Figure with optional caption and float side. |
 | `_includes/icons/*.svg` | Ten inline SVG icons, `currentColor`. |
 | `_sass/tokens.scss` | Every color, type, spacing, and layout token. Nothing else declares a hex. `--measure` is the fluid content width and the whole page follows it. |
@@ -327,7 +328,10 @@ are ours to choose**. Ships as a **single long page** (nav links are on-page anc
 - **Links** — accent color, `text-decoration: underline` with `text-underline-offset: 2px`
   and a thin `text-decoration-thickness`. Bold when the link is a "title" inside a timeline
   row (that's just how the markdown is authored). Hover: darker accent + thicker underline.
-  External links get `target="_blank" rel="noopener"` via a tiny JS pass, not by hand.
+  **Every link on the site opens in a new tab**, including the ones written as
+  markdown in a section body or a bullet. That is done at build time by
+  `_includes/markdownify.html`, not by JavaScript — see §6.8. The two exceptions
+  are the on-page `#anchor` links and `mailto:`, which stay in the tab.
 - **Decorative graphic** — the reference has a mascot illustration bottom-right of the main
   column. Ours is an **optional slot** at the end of `<main>`: could be the avatar photo, a
   simple SVG, or nothing. Must be `aria-hidden` and must not affect layout on mobile.
@@ -440,6 +444,7 @@ for the h1 against a plain mono for the timeline labels — keep that contrast.
 | `_layouts/homepage.html` | Head, sidebar, hero, sections loop, closing lines. |
 | `_includes/section.html` | Renders one section from its front matter; dispatches on `variant`. |
 | `_includes/sections/timeline.html`, `cards.html` | Variant renderers. |
+| `_includes/markdownify.html` | Markdown → HTML with every link opened in a new tab. Every markdownified string on the site goes through it (§6.8). |
 | `_includes/figure.html` | Figure with optional caption and float side. |
 | `_includes/icons/*.svg` | Inline SVG icons, `fill`/`stroke: currentColor`. |
 | `_sass/tokens.scss` | All color, type, spacing, and layout tokens. Nothing else declares a hex. |
@@ -721,6 +726,38 @@ The planned `nav-active.js` (IntersectionObserver highlighting the in-view secti
 - [ ] Avatar + favicons load (case-sensitive filenames!)
 - [ ] Keyboard-only pass: visible focus on every link, nav, and the toggle
 - [ ] View source: `<title>`, description, canonical, OG tags present
+
+### 6.8 Links open in a new tab  **[BUILT]**
+
+Every link on the site opens in a new tab. Three mechanisms, because links come
+from three places:
+
+- **Layout links** (socials, Source, the nav's Resume) carry
+  `target="_blank" rel="noopener"` in `_layouts/homepage.html` by hand.
+- **Data-driven links** (`org_url`, `links:` buttons) carry it in the variant
+  includes, unconditionally.
+- **Markdown links** — inside a section body, a `body:`, or a bullet — get it
+  from **`_includes/markdownify.html`**, which is now the only thing that calls
+  `markdownify`. It appends the attributes with a string `replace` on kramdown's
+  `<a href="` and then puts back the two cases where a new tab is wrong:
+  `#anchor` (an on-page jump; a new tab would reload the whole site to scroll)
+  and `mailto:` (several browsers open a blank tab next to the mail client).
+
+  Params: `text` (the markdown) and `inline` (strips the wrapping `<p>`, for a
+  one-line string such as a timeline bullet).
+
+Build time, not JavaScript: it costs nothing at runtime, works with JS disabled,
+and the attribute is in View Source rather than appearing a tick after load. §0
+allows one JS file and the theme toggle has it.
+
+**If a new place ever renders markdown, call this include instead of the
+`markdownify` filter**, or its links will quietly behave differently from the
+rest of the page. `index.html`'s own body is the one gap — it is HTML, not
+markdown, so a link hand-written there needs its own attributes.
+
+Worth knowing: opening links in a new tab without warning is an accessibility
+advisory (WCAG G201) — it takes the Back button away from the reader. That is
+the user's explicit call, made deliberately.
 
 ---
 
@@ -1013,3 +1050,12 @@ The planned `nav-active.js` (IntersectionObserver highlighting the in-view secti
   `timeline.html` and `cards.html`.
   Markdown links inside `points`/`body` are deliberately left alone: those are
   prose links and behave like prose links.
+
+- **2026-09-07** — **Every link on the site now opens in a new tab**, markdown
+  links included. New `_includes/markdownify.html` is the single place markdown
+  becomes HTML; it adds the attributes at build time and exempts `#anchor` and
+  `mailto:` links. `section.html`, `timeline.html` (body *and* bullets) and
+  `cards.html` all call it instead of the bare `markdownify` filter — see §6.8.
+  Verified by auditing every `<a>` in the built page: 8 markdown links converted,
+  11 already-tabbed links unchanged, and exactly three left in-tab — the five nav
+  anchors, the `#top` wordmark, and the `mailto:`.

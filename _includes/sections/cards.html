@@ -4,7 +4,8 @@
   section is a data file plus a five-line _sections/ file.
 
   Per entry: title, body (markdown), image, alt, tag, links: [{ label, href }]
-  Link buttons always open in a new tab, same as the timeline's.
+  Every link opens in a new tab — the buttons directly, the markdown ones in
+  `body` via _includes/markdownify.html.
 {% endcomment %}
 
 <div class="cards">
@@ -17,7 +18,7 @@
     <div class="card__body">
       {% if entry.tag %}<span class="tag">{{ entry.tag }}</span>{% endif %}
       {% if entry.title %}<h3 class="card__title">{{ entry.title }}</h3>{% endif %}
-      {{ entry.body | markdownify }}
+      {% include markdownify.html text=entry.body %}
 
       {% if entry.links %}
       <p class="btn-row">

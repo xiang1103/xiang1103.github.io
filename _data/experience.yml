@@ -35,8 +35,8 @@
 #      they are plain YAML strings, not markdown.
 #
 # A bare URL is not auto-linked; wrap it: [github.com/me](https://github.com/me).
-# External links get target="_blank" added by nothing at all right now — they
-# open in the same tab. Say the word if they should open in a new one.
+# Every link on the site opens in a new tab — the markdown ones included; that is
+# handled centrally by _includes/markdownify.html, so nothing is needed here.
 
 main:
   - date: August 2026 - Present

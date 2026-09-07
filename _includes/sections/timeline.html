@@ -15,11 +15,10 @@
     body            markdown description (a paragraph)
     points          list of markdown strings, rendered as chevron bullets
     skills          list of strings, rendered as pills
-    links           list of { label, href }, rendered as small buttons. These
-                    always open in a new tab: a button is an artifact (a PDF, a
-                    repo), so it should never navigate the page away. Markdown
-                    links inside `points`/`body` are NOT affected — they open in
-                    the same tab, like any prose link.
+    links           list of { label, href }, rendered as small buttons
+
+  Every link here opens in a new tab: the buttons by hand, and the markdown
+  links inside `points`/`body` via _includes/markdownify.html.
 {% endcomment %}
 
 <ol class="timeline">
@@ -52,12 +51,12 @@
       <img class="timeline__thumb" src="{{ entry.image | relative_url }}" alt="{{ entry.alt }}" loading="lazy">
       {% endif %}
 
-      {{ entry.body | markdownify }}
+      {% include markdownify.html text=entry.body %}
 
       {% if entry.points %}
       <ul class="timeline__points">
         {% for point in entry.points %}
-        <li>{{ point | markdownify | remove: "<p>" | remove: "</p>" | strip }}</li>
+        <li>{% include markdownify.html text=point inline=true %}</li>
         {% endfor %}
       </ul>
       {% endif %}
