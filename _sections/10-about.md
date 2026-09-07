@@ -7,5 +7,5 @@ icon: user
 # SVG, or an {% include %} for anything markdown can't express.
 ---
 
-Hi there! I'm a 4th year undergraduate student in the Computer Science Honors Program at [Stony Brook University](https://www.cs.stonybrook.edu/). Along my undergraduate time, I'm very fortunate to be advised by Professor [Paola Cascante-Bonilla](https://paolacascante.com/) at SPEL Lab, Professor [Jorge-Mendez Mendez](https://jorge-a-mendez.github.io/) in the Learning & Intelligence Lab, and Professor [Yi Liu](https://jacoblau0513.github.io/) in the AI Research for Science (AIRS) Lab.
+Hi there! I'm a 4th year undergraduate student in the Computer Science Honors Program at [Stony Brook University](https://www.cs.stonybrook.edu/). Along my undergraduate time, I'm very fortunate to be advised by different professors to mentor and do research with me. Through my jobs & projects, my motivation is building new technologies that could benefit people around me. I always look to contribute in my future work. 
 
