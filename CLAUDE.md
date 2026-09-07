@@ -637,9 +637,25 @@ curl -sf https://raw.githubusercontent.com/devicons/devicon/master/icons/<name>/
   -o assets/img/tech/<name>.svg
 ```
 
-Twenty-four are already vendored. Any other name from devicon.dev can be added the same way.
-[Simple Icons](https://simpleicons.org) (CC0) is the alternative when a monochrome mark that
-inherits `currentColor` is wanted instead of a brand-colored one.
+Thirty-two are vendored. Any other name from devicon.dev can be added the same way.
+
+When Devicon does not have a mark (Databricks, Hugging Face, Claude), fall back to
+[Simple Icons](https://simpleicons.org) (CC0). Those ship **unfilled**, so they default to
+black and vanish in dark mode — paint them their brand color on the way in:
+
+```bash
+curl -sf https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/<slug>.svg \
+  | sed 's|<svg |<svg fill="#<HEX>" |' > assets/img/tech/<name>.svg
+```
+
+The official hex for each brand is in simple-icons' own `data/simple-icons.json` — look it up
+there rather than eyeballing it.
+
+**Dark-mode legibility:** some marks are dark-on-transparent and disappear on the dark theme
+— AWS's navy wordmark reduces to a floating orange swoosh, Next.js is a black disc. Setting
+`chip: true` on the item gives the logo a small white backing **in dark mode only**. A CSS
+filter was rejected: `invert()` wrecks brand colors (AWS's orange turns blue), whereas a
+white chip keeps every logo exactly the color it should be.
 
 **They are `<img>`, not inlined SVG — deliberately, and against the pattern used by every
 other icon on the site:**
@@ -920,4 +936,16 @@ The planned `nav-active.js` (IntersectionObserver highlighting the in-view secti
   **The two new lists are placeholders**, a plausible stack for a CS undergrad doing AI
   research rather than a record of what Xiang uses. The data file says so in a warning
   comment. This is the one thing the user has to supply.
+- **2026-09-06** — Skills content curated by the user: C++ -> C, added R, HTML, CSS,
+  TypeScript, Next.js, FastAPI, AWS, Databricks, MongoDB, MySQL and Claude to Software
+  Engineering, Hugging Face to Machine Learning, and dropped the Research areas row.
+  Logos enlarged 14px -> 16px.
+  Eight new logos fetched: `r`, `nextjs`, `fastapi`, `mongodb`, `aws` from Devicon;
+  `databricks`, `huggingface`, `claude` from Simple Icons, each painted its official brand
+  hex (looked up in simple-icons' data file, not guessed) because Simple Icons ship unfilled
+  and would render black.
+  Added the `chip: true` per-item flag after previewing every new logo on both backgrounds:
+  AWS, Next.js and MySQL were illegible on the dark theme. 32 logos are now vendored.
+  Four entries (Docker, PostgreSQL, React, JavaScript) still come from the original
+  placeholder set and were never explicitly confirmed — flagged in the data file.
 

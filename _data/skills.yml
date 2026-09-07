@@ -5,18 +5,22 @@
 #   items  a list; each item is either a plain string, or a map:
 #            - name: Python        the pill text
 #              icon: python        a file in assets/img/tech/ (without .svg)
+#              chip: true          optional — white backing in dark mode, for
+#                                  logos that are dark-on-transparent
 #
-# Logos available right now (assets/img/tech/):
-#   bash  c  cplusplus  css3  docker  flask  git  github  html5  java
-#   javascript  jupyter  mysql  nodejs  numpy  opencv  pandas  postgresql
-#   python  pytorch  react  scikitlearn  tensorflow  typescript
+# Logos available in assets/img/tech/:
+#   aws  bash  c  claude  cplusplus  css3  databricks  docker  fastapi  flask
+#   git  github  html5  huggingface  java  javascript  jupyter  mongodb  mysql
+#   nextjs  nodejs  numpy  opencv  pandas  postgresql  python  pytorch  r
+#   react  scikitlearn  tensorflow  typescript
 #
-# Need one that isn't listed? Any name from https://devicon.dev works — ask and
-# it gets fetched into assets/img/tech/. An item with no `icon:` is just text.
+# Need one that isn't here? Most names on https://devicon.dev or
+# https://simpleicons.org can be fetched on request. An item with no `icon:`
+# renders as a text-only pill, which is the right fallback while waiting.
 #
-# ⚠️  THE LISTS BELOW ARE PLACEHOLDERS. They are a plausible stack for a CS
-# undergrad doing AI research, NOT a record of what Xiang actually uses.
-# Replace them with the real thing before this section means anything.
+# NOTE: Docker, PostgreSQL, React and JavaScript came from the original
+# placeholder set and were never explicitly confirmed — drop any that aren't
+# accurate.
 
 main:
   - label: Software Engineering
@@ -25,23 +29,50 @@ main:
         icon: python
       - name: Java
         icon: java
-      - name: C++
-        icon: cplusplus
+      - name: C
+        icon: c
+      - name: R
+        icon: r
       - name: JavaScript
         icon: javascript
+      - name: TypeScript
+        icon: typescript
+      - name: HTML
+        icon: html5
+      - name: CSS
+        icon: css3
       - name: React
         icon: react
+      - name: Next.js
+        icon: nextjs
+        chip: true          # black disc, invisible on the dark theme
+      - name: FastAPI
+        icon: fastapi
       - name: Git
         icon: git
       - name: Docker
         icon: docker
+      - name: AWS
+        icon: aws
+        chip: true          # navy wordmark, invisible on the dark theme
+      - name: Databricks
+        icon: databricks
+      - name: MongoDB
+        icon: mongodb
+      - name: MySQL
+        icon: mysql
+        chip: true          # dark dolphin, faint on the dark theme
       - name: PostgreSQL
         icon: postgresql
+      - name: Claude
+        icon: claude
 
   - label: Machine Learning
     items:
       - name: PyTorch
         icon: pytorch
+      - name: Hugging Face
+        icon: huggingface
       - name: NumPy
         icon: numpy
       - name: pandas
@@ -52,12 +83,3 @@ main:
         icon: opencv
       - name: Jupyter
         icon: jupyter
-
-  # Text-only pills still work — no icon needed.
-  - label: Research areas
-    items:
-      - Computer Vision
-      - Large Language Models
-      - Diffusion Models
-      - Neural Operators
-      - Genetic Algorithms

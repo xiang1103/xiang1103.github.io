@@ -7,6 +7,8 @@
       - Computer Vision                 # text only
       - name: Python                    # text + logo
         icon: python                    #   -> assets/img/tech/python.svg
+        chip: true                      #   optional: white backing in dark mode,
+                                        #   for marks that are dark-on-transparent
 
   Logos are <img> rather than inlined SVG on purpose: some vendor logos are
   enormous as markup (Devicon's Linux is 192 KB), and <img> keeps them out of
@@ -22,8 +24,9 @@
       {% assign name = item.name | default: item %}
       {% if item.icon %}
       <li class="tag tag--logo">
-        <img class="tag__logo" src="{{ '/assets/img/tech/' | append: item.icon | append: '.svg' | relative_url }}"
-             alt="" width="14" height="14" loading="lazy">
+        <img class="tag__logo{% if item.chip %} tag__logo--chip{% endif %}"
+             src="{{ '/assets/img/tech/' | append: item.icon | append: '.svg' | relative_url }}"
+             alt="" width="16" height="16" loading="lazy">
         <span>{{ name }}</span>
       </li>
       {% else %}

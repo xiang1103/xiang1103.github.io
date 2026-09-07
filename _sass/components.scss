@@ -580,9 +580,26 @@
 }
 
 .tag__logo {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   flex: none;
+}
+
+// Some vendor marks are dark-on-transparent (AWS's navy wordmark, Next.js's
+// black disc) and disappear against the dark theme. `chip: true` on the item
+// gives them a white backing there — the colors stay correct, unlike a filter.
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .tag__logo--chip {
+    background: #fff;
+    border-radius: 2px;
+    padding: 1px;
+  }
+}
+
+:root[data-theme="dark"] .tag__logo--chip {
+  background: #fff;
+  border-radius: 2px;
+  padding: 1px;
 }
 
 // An experience entry leads with "Role · Organisation", the organisation
