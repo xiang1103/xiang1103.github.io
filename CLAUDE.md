@@ -716,7 +716,7 @@ curl -sf https://raw.githubusercontent.com/devicons/devicon/master/icons/<name>/
   -o assets/img/tech/<name>.svg
 ```
 
-Thirty-two are vendored. Any other name from devicon.dev can be added the same way.
+Thirty-three are vendored. Any other name from devicon.dev can be added the same way.
 
 When Devicon does not have a mark (Databricks, Hugging Face, Claude), fall back to
 [Simple Icons](https://simpleicons.org) (CC0). Those ship **unfilled**, so they default to

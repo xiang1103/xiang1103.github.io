@@ -12,7 +12,7 @@
 #   aws  bash  c  claude  cplusplus  css3  databricks  docker  fastapi  flask
 #   git  github  html5  huggingface  java  javascript  jupyter  mongodb  mysql
 #   nextjs  nodejs  numpy  opencv  pandas  postgresql  python  pytorch  r
-#   react  scikitlearn  tensorflow  typescript
+#   react  scikitlearn  supabase  tensorflow  typescript
 #
 # Need one that isn't here? Most names on https://devicon.dev or
 # https://simpleicons.org can be fetched on request. An item with no `icon:`
@@ -64,6 +64,8 @@ main:
         chip: true          # dark dolphin, faint on the dark theme
       - name: PostgreSQL
         icon: postgresql
+      - name: Supabase
+        icon: supabase
       - name: Claude
         icon: claude
 
