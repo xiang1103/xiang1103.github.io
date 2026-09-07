@@ -557,8 +557,8 @@ the palette and type stay ours**:
 
 ```
 SUMMER 2025   Undergraduate Researcher · URECA, Stony Brook University ↗
-              Accepted into the URECA Summer Research Program with funding
-              for my project on using Diffusion Models ...
+              › Accepted into the URECA Summer Research Program ...
+              › Using Diffusion Models to assist plan execution of robots ...
               (Diffusion Models) (Robotics) (Simulation)     <- pills
               [ Report ]                                     <- link buttons
 ```
@@ -573,7 +573,8 @@ role listing:
 | `org` | appended after a `·` |
 | `org_url` | makes the org a link with an outbound arrow |
 | `previous_roles` | list of earlier titles at the same org, muted, under the heading |
-| `body` | markdown description |
+| `body` | markdown paragraph, for an entry that wants prose |
+| `points` | list of short markdown lines → chevron bullets (the normal case) |
 | `skills` | list of strings → a wrapping row of `.tag` pills |
 | `links` | list of `{label, href}` → small `.btn` buttons |
 | `tag`, `image`/`alt` | small label above the heading; thumbnail |
@@ -594,6 +595,25 @@ approaches were tried and both were bad:
 The data file removed the constraint instead of working around it, which is exactly what
 made the role/pill layout above a template change rather than a rewrite. **Do not
 reintroduce either hack.**
+
+#### Bullets
+
+Entries are **bullets, not paragraphs** — `points:` in the data file, one idea per
+line, so an entry can be scanned. The marker is a **mono chevron `›` in the accent
+color**, set once as `--bullet` in `tokens.scss`; changing that one token restyles
+every list on the site (`"\2192"`, `"//"`, and `"\2014"` all work with JetBrains
+Mono). It echoes the `↗` on outbound links and the `·` between a role and its org,
+so the punctuation of the page reads as one set.
+
+The marker is an absolutely-positioned `::before`, not `::marker` or a
+`list-style-image`: Safari only honors a handful of properties on `::marker` and
+will not take the monospace family, and a list-style-image cannot inherit the
+accent color across themes. `padding-left: 1.15rem` on the `<li>` keeps wrapped
+lines flush with the first.
+
+The same rule covers `.prose ul` (excluding `.pills`), so Leadership's markdown
+list and Experience's bullets match without either file knowing about the other.
+A markdown list anywhere on the site gets the chevron for free.
 
 ### 6.4.1 Sass import order  ← bit me once
 
@@ -956,3 +976,18 @@ The planned `nav-active.js` (IntersectionObserver highlighting the in-view secti
   of its own text. That reads fine as a badge, but if the balance ever looks off, the pill
   font size is the thing to raise — not the logo.
 
+- **2026-09-07** — **Experience entries became bullets.** Each entry was one
+  paragraph; they are now `points:` lists in `_data/experience.yml`, rendered by a
+  new `.timeline__points` list in the timeline include. `body:` still works and
+  renders above the points, so an entry can be prose, bullets, or both.
+  The marker is a mono `›` in the accent color, held in a new `--bullet` token —
+  chosen over a disc because it matches the site's other punctuation (`↗`, `·`)
+  and over `::marker` because Safari will not give `::marker` a font family.
+  The rule also covers `.prose ul:not(.pills)`, so **Leadership's markdown list
+  picked up the same bullet** — deliberate, so the two sections match; scope it to
+  `.timeline__points` alone if the discs are wanted back there.
+  **Content note:** the paragraphs were cut into bullets, and a few sentence seams
+  were re-cut so each line stands alone ("Accepted into the URECA Summer Research
+  Program with funding for my project on using Diffusion Models ..." became two
+  lines). No facts changed, but the wording is worth a read — flagged at the top of
+  the data file too.

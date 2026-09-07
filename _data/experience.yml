@@ -8,7 +8,11 @@
 #   org             organisation, shown after "·"
 #   org_url         makes the org a link with an outbound arrow
 #   previous_roles  list of earlier titles at the same org, shown under the heading
-#   body            markdown description
+#   points          list of short markdown lines, rendered as chevron bullets.
+#                   This is the normal way to describe a role — one idea per
+#                   line, so the entry can be scanned rather than read.
+#   body            markdown paragraph, for an entry that really wants prose.
+#                   Renders above `points` if both are given.
 #   skills          list of strings, rendered as pills
 #   links           list of { label, href }, rendered as small buttons
 #   tag             small label above the heading
@@ -18,24 +22,30 @@
 # (e.g. "Capital One's Technology Internship Program" -> "Technology Intern"), and
 # the skills are the techniques each description already named. Check them against
 # your actual titles and dates before relying on them.
+#
+# The bullets were split out of the original paragraphs, so a couple of sentences
+# were re-cut at the seam to stand alone. The facts are unchanged; the wording is
+# worth a read.
 
 main:
   - date: June 2026 - August 2026
     role: Software Engineer Intern
     org: Capital One
     org_url: https://www.capitalonecareers.com/students
-    body: >-
-      Joining Capital One's Technology Internship Program (TIP) in summer 2026.
-      Hoping to meet more people there.
+    points:
+      - Joining Capital One's Technology Internship Program (TIP) in summer 2026.
+      - Hoping to meet more people there.
 
   - date: Summer 2025
     role: Undergraduate Researcher
     org: URECA, Stony Brook University
     org_url: https://www.stonybrook.edu/ureca/
-    body: >-
-      Accepted into the URECA Summer Research Program with funding for my project on
-      using Diffusion Models to assist plan execution of robots in simulator
-      environments. Presenting at the April 2026 Symposium.
+    points:
+      - Accepted into the URECA Summer Research Program, with funding for my project.
+      - >-
+        Using Diffusion Models to assist plan execution of robots in simulator
+        environments.
+      - Presenting at the April 2026 Symposium.
     skills:
       - Diffusion Models
       - Robotics
@@ -44,9 +54,11 @@ main:
   - date: Spring 2025
     role: Undergraduate Researcher
     org: CSE 487, Stony Brook University
-    body: >-
-      Research class with Prof. Yi Liu and Prof. Mendez, combining Genetic Algorithms
-      with Large Language Models for molecule optimization tasks.
+    points:
+      - Research class with Prof. Yi Liu and Prof. Mendez.
+      - >-
+        Combining Genetic Algorithms with Large Language Models for molecule
+        optimization tasks.
     skills:
       - Large Language Models
       - Genetic Algorithms
@@ -58,17 +70,17 @@ main:
     role: Student Presenter
     org: 2nd Annual SUNY AI Symposium
     org_url: https://www.buffalo.edu/research/landing-pages/suny-ai-symposium.html
-    body: >-
-      Invited to present my summer research poster at the University at Buffalo, where
-      I met many professors and PhD students.
+    points:
+      - Invited to present my summer research poster at the University at Buffalo.
+      - Met many professors and PhD students there.
 
   - date: Summer 2024
     role: Undergraduate Researcher
     org: SUNY SOAR, Stony Brook University
     org_url: https://www.stonybrook.edu/commcms/cie/suny-soar/index.php
-    body: >-
-      My first summer research program, funded by SUNY. The project used Neural
-      Operators for weather forecasting in the United States.
+    points:
+      - My first summer research program, funded by SUNY.
+      - The project used Neural Operators for weather forecasting in the United States.
     skills:
       - Neural Operators
       - Deep Learning

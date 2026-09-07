@@ -412,6 +412,39 @@
   margin-bottom: 0;
 }
 
+// Entry bullets. `points` in the data file renders as .timeline__points; a
+// markdown list inside a prose section gets the same marker, so Experience and
+// Leadership read as one system. The glyph is the --bullet token (tokens.scss).
+//
+// The marker is an absolutely-positioned ::before rather than a ::marker or a
+// list-style-image, because ::marker only accepts a handful of properties in
+// Safari and cannot be given the mono family the rest of the design uses.
+.timeline__points,
+.prose ul:not(.pills) {
+  margin: 0 0 var(--sp-3);
+  padding-left: 0;
+  list-style: none;
+}
+
+.timeline__points > li,
+.prose ul:not(.pills) > li {
+  position: relative;
+  // Room for the marker plus a space; the text stays flush when a line wraps.
+  padding-left: 1.15rem;
+  // Tighter than the global li rhythm: bullets are meant to be scanned.
+  margin-bottom: var(--sp-1);
+}
+
+.timeline__points > li::before,
+.prose ul:not(.pills) > li::before {
+  content: var(--bullet);
+  position: absolute;
+  left: 0;
+  font-family: var(--font-mono);
+  font-size: 0.95em;
+  color: var(--accent);
+}
+
 .timeline__thumb {
   display: block;
   width: 100%;

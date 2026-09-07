@@ -12,7 +12,8 @@
     previous_roles  earlier titles at the same org, listed under the heading
     tag             small label above the heading
     image / alt     thumbnail
-    body            markdown description
+    body            markdown description (a paragraph)
+    points          list of markdown strings, rendered as chevron bullets
     skills          list of strings, rendered as pills
     links           list of { label, href }, rendered as small buttons
 {% endcomment %}
@@ -48,6 +49,14 @@
       {% endif %}
 
       {{ entry.body | markdownify }}
+
+      {% if entry.points %}
+      <ul class="timeline__points">
+        {% for point in entry.points %}
+        <li>{{ point | markdownify | remove: "<p>" | remove: "</p>" | strip }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %}
 
       {% if entry.skills %}
       <ul class="pills">
