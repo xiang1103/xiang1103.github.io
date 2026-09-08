@@ -40,7 +40,7 @@
 
 main:
   - date: August 2026 - Present
-    role: Honors Thesis Project 
+    role: Undergradute Research Assistant 
     org: SPEL Lab
     org_url: https://paolacascante.com/lab/
     points:
@@ -69,7 +69,7 @@ main:
 
   - date: May 2025 - August 2025
     role: Research Intern
-    org: Learning and Intelligence Lab, Stony Brook University
+    org: Learning and Intelligence Lab
     org_url: https://jorge-a-mendez.github.io/
     points:
       - Using image-generation models to generate action parameters accurately and efficiently for robots to execute home-tasks like putting books onto shelves without human intervention
