@@ -1,0 +1,50 @@
+# Leadership, rendered by _includes/sections/showcase.html — the same two-column
+# layout Projects uses: pictures in the left gutter, the write-up beside them.
+#
+# Per entry:
+#   title    the heading. Optional; drop it and the entry is just prose beside
+#            its pictures.
+#   body     markdown paragraph. The links inside it work as normal.
+#   image    one still, with `alt` and `size` ("640x480").
+#   images   several stills instead, stacked down the gutter. Each one is
+#            { src, alt, size }.
+#   href, tag, points, skills, links — all as in _data/projects.yml.
+#
+# Image conventions are the ones written at the top of _data/projects.yml:
+# 640px wide, .jpg for photographs, under 150 KB, `size:` filled in, always an
+# `alt`. These live in assets/img/leadership/; the originals they were made from
+# (mentor.JPG, werewolfie.JPG, lunar.JPG — 1.6 to 6.4 MB straight off a camera)
+# are kept in the same folder but excluded from the build in _config.yml.
+#
+# NOTE: the two `title:` lines are the only new words here — they name a role
+# the prose below already describes. The body text is unchanged from the bullets
+# this section used to be. Delete a title and the entry still renders.
+
+main:
+  - title: Peer Mentor
+    image: /assets/img/leadership/peer-mentors.jpg
+    alt: The peer mentoring cohort posing together with the Stony Brook Wolfie mascot
+    size: 640x480
+    body: >-
+      Outside of research, I'm quite involved on campus as a
+      [College of Engineering and Applied Sciences Peer Mentor](https://www.stonybrook.edu/ceas-undergrad/current-students/peer-mentoring-program/)
+      where I mentor 3 first-year students each year to help them adjust to
+      college life and "figure out what to do their college lives" along with
+      30 other mentors.
+
+  - title: Resident Assistant
+    images:
+      - src: /assets/img/leadership/werewolfie-halloween.jpg
+        alt: Residents in costume on stage at the Werewolfie Halloween celebration
+        size: 640x480
+      - src: /assets/img/leadership/lunar-new-year.jpg
+        alt: Residents gathered in front of a Lunar New Year backdrop
+        size: 640x480
+    body: >-
+      I am also a Resident Assistant(RA) at
+      [H Community](https://www.instagram.com/hcommunitysbu/) where 1,300+
+      first-year students live in. I hosted large-scale events like Halloween
+      Celebration called Werewolfie, Lunar New Year Celebration, Friendsgiving
+      ... that gained over 600 attendees with over $2k budget went into planning.
+      My goal is to make college dorms home to students, and it has been a truly
+      enjoyable and collaborative experience!

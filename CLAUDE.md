@@ -73,6 +73,7 @@ for the section architecture that replaced it.
 | `assets/js/theme-toggle.js` | The only JavaScript on the site. |
 | `assets/img/xiang-hero.jpg` | 480x640, the full uncropped photo shown beside the h1. |
 | `assets/img/mars-mark.png` | 96px copy of `mars_icon.png`, the 34px mark next to the wordmark. |
+| `assets/img/leadership/*` | Leadership photos. The published files are the 640px `*.jpg`; the camera originals beside them (`mentor.JPG`, `werewolfie.JPG`, `lunar.JPG`, 1.6-6.4 MB) are kept as sources and **excluded from the build**. |
 | `assets/img/projects/*` | Project media for the Projects showcase. Conventions — folder, format, width, weight, `shape:` — are documented at the top of `_data/projects.yml`; §6.4.2 has the short version. |
 | `assets/img/tech/*.svg` | Vendor logos for Skills pills, from [Devicon](https://devicon.dev) (MIT). Referenced as `<img>`, never inlined — see §6.5.1. |
 | `assets/img/mars_icon.png` | Full-size source for the mark. |
@@ -526,7 +527,7 @@ parse markdown *inside* a block-level HTML tag unless that tag carries `markdown
 | 10 | `10-about.md` | About Me | prose | — | `user` |
 | 20 | `20-experience.md` | Experience | timeline | `experience.yml` | `experience` |
 | 30 | `30-projects.md` | Projects | showcase | `projects.yml` | `projects` |
-| 40 | `40-leadership.md` | Leadership | prose | — | `sparkle` |
+| 40 | `40-leadership.md` | Leadership | showcase | `leadership.yml` | `sparkle` |
 | 50 | `50-skills.md` | Skills | skills | `skills.yml` | `skills` |
 | — | `_data/nav.yml` | Resume (external) | — | — | `file` |
 
@@ -648,9 +649,20 @@ the *only* way to resize a project image, by design.
               [ Poster ] [ Code ]             <- link buttons
 ```
 
-Entry fields: `title` (required), `href`, `tag`, `body`, `points`, `image`/`alt`,
-`video`/`poster`, `size`, `skills`, `links`. `points` renders with the same `.bullets`
-chevrons as Experience, so the two sections describe work the same way.
+Entry fields: `title`, `href`, `tag`, `body`, `points`, `image`/`alt`,
+`images`, `video`/`poster`, `size`, `skills`, `links`. `points` renders with the
+same `.bullets` chevrons as Experience, so the two sections describe work the
+same way.
+
+`title` is **optional** — an entry without one is prose beside its picture, which
+is what a section of plain paragraphs wants. `images` takes several stills
+instead of one (`{ src, alt, size }` each); they stack down the gutter, spaced by
+an `img + img` margin rather than a flex `gap`, because the pictures may be
+wrapped in the entry's link and that anchor would be the only flex child.
+
+**Two sections use this variant**: Projects and Leadership. Anything with a
+picture and a paragraph belongs here — the variant is not about projects, it is
+about that shape.
 
 Two details worth keeping:
 
@@ -792,7 +804,7 @@ The planned `nav-active.js` (IntersectionObserver highlighting the in-view secti
 
 ### 6.9 Entry hover  **[BUILT]**
 
-Hovering one Experience or Project entry lights that entry: a **wash behind both
+Hovering one Experience, Project, or Leadership entry lights that entry: a **wash behind both
 columns**, and the two *muted* parts — the date and the heading — come up to
 `--highlight`. **The body text does not change.**
 
@@ -1275,3 +1287,25 @@ the user's explicit call, made deliberately.
   §6.4.2 (0.5rem = level with the title's cap, 1.1rem = level with the body
   text). Shipped at 0.75rem, between the two; the user then chose **1.1rem**, so
   the picture's top edge and the paragraph's first line share a line.
+
+
+- **2026-09-08** — **Leadership became a `showcase` section** so it could carry
+  photographs, which also gave it the entry hover for free — the same wash and
+  vermilion heading as Experience and Projects, with no new CSS.
+  Two additions to the variant, both general rather than Leadership-specific:
+  - **`images:`** — several stills stacked down the gutter (`{src, alt, size}`
+    each), for the RA entry's two event photos. Spaced with `img + img` rather
+    than a flex `gap`, since the pictures can be inside the entry's link and that
+    anchor would be the only flex child.
+  - **`title:` is now optional.** Without it an entry is prose beside a picture.
+  Three photos processed to the convention: 5712x4284/6.4 MB, 4608x3456/1.8 MB
+  and 4000x3000/1.6 MB became 640x480 JPEGs at 87/55/73 KB. The camera originals
+  stay in `assets/img/leadership/` as sources and are listed in `exclude`, the
+  same treatment `IMG_4275.jpeg` and `stanford_cars.png` get. The published names
+  differ from the originals on purpose (`werewolfie-halloween.jpg`, not
+  `werewolfie.jpg`): macOS is case-insensitive, so `werewolfie.jpg` would have
+  collided with `werewolfie.JPG`.
+  **Content note:** the bullets moved into `_data/leadership.yml` **verbatim**.
+  The only new words are the two `title:` lines — "Peer Mentor" and "Resident
+  Assistant" — which name a role the prose already describes. Deleting either one
+  is safe now that titles are optional.

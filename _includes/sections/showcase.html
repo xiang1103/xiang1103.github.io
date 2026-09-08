@@ -5,12 +5,15 @@
 
   Entries come from a _data file — see _data/projects.yml for the contract.
 
-    title     required. The heading.
+    title     the heading. Optional — an entry with none is just prose beside
+              its picture, which is what a section of plain paragraphs wants.
     href      makes the title (and the media) a link, with an outbound arrow.
     tag       small label above the title
     body      markdown paragraph
     points    list of markdown lines, rendered as chevron bullets
     image     path to a still; `alt` describes it
+    images    several stills instead of one, stacked in the gutter. Each is
+              { src, alt, size } — see _data/leadership.yml
     video     path to a video file; `poster` is the still shown before play
     size      "WIDTHxHEIGHT" of that file, e.g. "640x363". Optional but worth
               filling in: it reserves the right box before the file arrives, so
@@ -33,13 +36,13 @@
 
 {%- assign any_media = false -%}
 {%- for entry in include.entries -%}
-  {%- if entry.image or entry.video -%}{%- assign any_media = true -%}{%- endif -%}
+  {%- if entry.image or entry.images or entry.video -%}{%- assign any_media = true -%}{%- endif -%}
 {%- endfor -%}
 
 <ul class="showcase{% if any_media %} showcase--aligned{% endif %}">
   {% for entry in include.entries %}
   {% assign has_media = false %}
-  {% if entry.image or entry.video %}{% assign has_media = true %}{% endif %}
+  {% if entry.image or entry.images or entry.video %}{% assign has_media = true %}{% endif %}
 
   <li class="showcase__item{% unless has_media %} showcase__item--nomedia{% endunless %}">
     {% if has_media %}
@@ -47,7 +50,14 @@
     <div class="showcase__media">
       {% if entry.href %}<a href="{{ entry.href }}" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">{% endif %}
 
-      {% if entry.video %}
+      {% if entry.images %}
+      {% for pic in entry.images %}
+      {%- assign pic_dims = pic.size | split: "x" -%}
+      <img src="{{ pic.src | relative_url }}" alt="{{ pic.alt }}"
+           {% if pic_dims.size == 2 %}width="{{ pic_dims[0] }}" height="{{ pic_dims[1] }}"{% endif %}
+           loading="lazy">
+      {% endfor %}
+      {% elsif entry.video %}
       <video controls preload="none" playsinline
              {% if dims.size == 2 %}width="{{ dims[0] }}" height="{{ dims[1] }}"{% endif %}
              {% if entry.poster %}poster="{{ entry.poster | relative_url }}"{% endif %}>
@@ -66,6 +76,7 @@
     <div class="showcase__body">
       {% if entry.tag %}<span class="tag">{{ entry.tag }}</span>{% endif %}
 
+      {% if entry.title %}
       <h3 class="showcase__title">
         {%- if entry.href -%}
         <a href="{{ entry.href }}" target="_blank" rel="noopener">{{ entry.title }} <span class="showcase__ext" aria-hidden="true">&#8599;</span></a>
@@ -73,6 +84,7 @@
         {{ entry.title }}
         {%- endif -%}
       </h3>
+      {% endif %}
 
       {% if entry.body %}{% include markdownify.html text=entry.body %}{% endif %}
 

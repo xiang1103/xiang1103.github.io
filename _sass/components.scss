@@ -401,6 +401,14 @@
     border-radius: 4px;
   }
 
+  // An entry can carry several stills (`images:` in the data file). They stack
+  // down the gutter. Adjacent-sibling rather than a flex `gap`, because the
+  // pictures may be wrapped in the entry's link, which would be the only flex
+  // child and swallow the gap.
+  img + img {
+    margin-top: var(--sp-2);
+  }
+
   a {
     display: block;
   }
