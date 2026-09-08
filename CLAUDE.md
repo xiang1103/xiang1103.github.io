@@ -654,13 +654,13 @@ chevrons as Experience, so the two sections describe work the same way.
 
 Two details worth keeping:
 
-- **The frame hangs 0.75rem below the top of the row.** Level with the title's
-  line box it reads as *higher* than the title, because the frame's top is a hard
-  edge while the title's cap starts about 0.5rem down inside its own leading.
-  0.75rem sits it between the title's cap (0.5rem) and the first line of body
-  text (~1.1rem) — those are the two landmarks if it ever needs to move. Zeroed
-  below 640px, where the media stacks above the write-up and has no title to hang
-  under.
+- **The frame hangs 1.1rem below the top of the row**, so its top edge lines up
+  with the **first line of body text**, not the title. Level with the row it
+  reads as *higher* than the title, because the frame's top is a hard edge while
+  the title's cap starts about 0.5rem down inside its own leading. The two
+  landmarks: `0.5rem` = level with the title's cap, `1.1rem` = level with the
+  body text. Zeroed below 640px, where the media stacks above the write-up and
+  has no title to hang under.
 - **Nothing is cropped.** A picture fills the column's width and keeps its own
   proportions, so rows vary in height — that is the intended behaviour, not a
   gap to close. Cropping was tried first (a fixed `aspect-ratio` with
@@ -1272,5 +1272,6 @@ the user's explicit call, made deliberately.
   were level with the title's line box, which reads as too high: the frame's top
   is a hard edge, the title's cap is not — it starts ~0.5rem down inside the
   leading, so equal `y` looks unequal. The two useful landmarks are recorded in
-  §6.4.2 (0.5rem = level with the title's cap, ~1.1rem = level with the body
-  text); 0.75rem sits between them.
+  §6.4.2 (0.5rem = level with the title's cap, 1.1rem = level with the body
+  text). Shipped at 0.75rem, between the two; the user then chose **1.1rem**, so
+  the picture's top edge and the paragraph's first line share a line.
