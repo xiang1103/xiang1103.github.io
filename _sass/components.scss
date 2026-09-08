@@ -360,7 +360,8 @@
   display: grid;
   grid-template-columns: var(--gutter) 1fr;
   column-gap: var(--sp-6);
-  margin-bottom: var(--sp-5);
+  // 8px + the 12px of hover padding at each end = the 32px this section had.
+  margin-bottom: var(--sp-1);
 }
 
 // A media-less entry uses the whole width, so a section with no pictures in it
@@ -469,6 +470,66 @@
   font-size: 1.0625rem;
 }
 
+// --- entry hover ------------------------------------------------------------
+//
+// Hovering an Experience or Project entry lights the whole entry: a wash behind
+// both columns, and the two muted parts — the date and the heading — come up to
+// the accent. The body text stays put. Turning a paragraph accent-colored would
+// "light up" the entry and make it harder to read at the same time, which is the
+// opposite of the point; moving the *muted* text up to full attention says the
+// same thing and costs no legibility.
+//
+// Mechanics worth keeping:
+//   - The padding is cancelled by an equal negative margin, so the wash bleeds
+//     past the text on both sides without moving a single character. Both
+//     sections keep their gutter alignment while hovered.
+//   - --hover-bg is its own token and must stay warm. It cannot be
+//     --accent-soft: that is the pill background exactly, so the skill bubbles
+//     inside a hovered entry would vanish. Against a warm wash the cool pills
+//     still separate by hue.
+//   - `hover: hover` keeps a touch screen from leaving an entry stuck lit after
+//     a tap; `:focus-within` gives keyboard users the same cue, unguarded.
+//   - Color only, 120ms, nothing moves or resizes (see section 0).
+
+.timeline__item,
+.showcase__item {
+  padding: var(--sp-2) var(--sp-3);
+  margin-left: calc(var(--sp-3) * -1);
+  margin-right: calc(var(--sp-3) * -1);
+  border-radius: 6px;
+  transition: background-color 120ms ease;
+}
+
+.timeline__date,
+.timeline__role,
+.showcase__title {
+  transition: color 120ms ease;
+}
+
+@media (hover: hover) {
+  .timeline__item:hover,
+  .showcase__item:hover {
+    background: var(--hover-bg);
+  }
+
+  .timeline__item:hover .timeline__date,
+  .timeline__item:hover .timeline__role,
+  .showcase__item:hover .showcase__title {
+    color: var(--accent);
+  }
+}
+
+.timeline__item:focus-within,
+.showcase__item:focus-within {
+  background: var(--hover-bg);
+}
+
+.timeline__item:focus-within .timeline__date,
+.timeline__item:focus-within .timeline__role,
+.showcase__item:focus-within .showcase__title {
+  color: var(--accent);
+}
+
 // --- timeline ---------------------------------------------------------------
 //
 // Rendered from _data/news.yml by _includes/sections/timeline.html, so every
@@ -488,7 +549,10 @@
   // The gap is wide so the gutter reads as its own column.
   grid-template-columns: var(--gutter) 1fr;
   column-gap: var(--sp-6);
-  margin-bottom: var(--sp-4);
+  // No bottom margin: the hover padding above supplies the gap between entries
+  // (12px + 12px, matching the old 24px), and it keeps the hover targets
+  // contiguous so the wash never flickers off between two rows.
+  margin-bottom: 0;
 }
 
 .timeline__date {

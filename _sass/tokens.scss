@@ -23,6 +23,12 @@
   // rather than just felt: the outline of a link button. ~1.8:1 against --bg,
   // where plain --border is ~1.15:1.
   --border-strong: #cdbb9f;
+  // The hover wash behind one Experience or Project entry (see section 6.9).
+  // Its own token, and it must stay WARM. It cannot be --accent-soft: that is
+  // exactly the pill background, so the skill bubbles inside a hovered entry
+  // would vanish. Against this warm wash the cool pills separate by hue rather
+  // than luminance, the same way they already do against the page.
+  --hover-bg: #f2ebdd;
   --focus: #0f6e63;
 
   // --- type ----------------------------------------------------------------
@@ -95,6 +101,7 @@
     --accent-soft: #1d2a23;
     --border: #2e2b24;
     --border-strong: #4a4339;
+    --hover-bg: #221f18;
     --focus: #4fc7b4;
 
     color-scheme: dark;
@@ -111,6 +118,7 @@
   --accent-soft: #1d2a23;
   --border: #2e2b24;
   --border-strong: #4a4339;
+  --hover-bg: #221f18;
   --focus: #4fc7b4;
 
   color-scheme: dark;

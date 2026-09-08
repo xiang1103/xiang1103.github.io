@@ -353,6 +353,7 @@ re-declares the token values. Never hardcode a hex outside the token block.
 --border        hairlines (sidebar rule, dividers)
 --border-strong a heavier, browner hairline for the one place an outline has to
                 be *found* rather than felt: the link buttons
+--hover-bg      the wash behind a hovered Experience/Project entry (§6.9)
 --focus         focus ring (can equal accent)
 ```
 
@@ -780,6 +781,45 @@ The planned `nav-active.js` (IntersectionObserver highlighting the in-view secti
 - [ ] Keyboard-only pass: visible focus on every link, nav, and the toggle
 - [ ] View source: `<title>`, description, canonical, OG tags present
 
+### 6.9 Entry hover  **[BUILT]**
+
+Hovering one Experience or Project entry lights that entry: a **wash behind both
+columns**, and the two *muted* parts — the date and the heading — come up to the
+accent. **The body text does not change.**
+
+That last part is the whole design. Turning a paragraph accent-colored would
+"light it up" and make it harder to read at the same time, which defeats the
+purpose; promoting the already-muted text to full attention says the same thing
+and costs no legibility. Measured on `--hover-bg`: accent 5.16:1 light / 7.96:1
+dark, body text 14.6:1 / 13.5:1. The wash itself is 1.11:1 against the page in
+both themes — enough to see, not enough to shout.
+
+Four mechanics worth not breaking:
+
+- **`--hover-bg` is its own token, and must stay warm.** It cannot be
+  `--accent-soft`: that is exactly the pill background, so a wash in it would
+  make the skill bubbles inside a hovered entry vanish completely. Even against
+  `--hover-bg` the pills are only 1.01:1 by luminance — they separate by *hue*,
+  cool green on warm cream, which is the same way they already read against the
+  page (1.12:1 there). Checked at 2x on a real render, not assumed. A cooler or
+  greener wash would break them; darkening the pills on hover to compensate was
+  measured and rejected, since it drops the pill label under 4.5:1.
+- **The padding is cancelled by an equal negative margin** (`var(--sp-3)` each
+  way), so the wash bleeds past the text without moving a character. Both
+  sections keep their `--gutter` alignment while hovered. The bleed is 16px
+  against 64px/32px of `.main` padding on desktop and 24px on mobile, so it never
+  reaches the edge.
+- **The inter-entry margins were rebalanced, not added to.** The timeline's
+  `margin-bottom` went `--sp-4` → `0` and the showcase's `--sp-5` → `--sp-1`,
+  because 12px of hover padding at each end now supplies that gap. Spacing on the
+  page is unchanged, and the hover targets are contiguous, so the wash cannot
+  flicker off in the gap between two rows.
+- **`@media (hover: hover)`** keeps a touch screen from leaving an entry stuck
+  lit after a tap. `:focus-within` gives the same cue to keyboard users and is
+  deliberately *outside* that guard.
+
+Color only, 120ms, nothing moves or resizes — §0's transition budget exactly.
+
 ### 6.8 Links open in a new tab  **[BUILT]**
 
 Every link on the site opens in a new tab. Three mechanisms, because links come
@@ -1180,3 +1220,19 @@ the user's explicit call, made deliberately.
   was considered and rejected: the content column would then start at a different
   x in Experience than in Projects, which is exactly the alignment the shared
   gutter exists to protect.
+
+- **2026-09-08** — **Entry hover added to Experience and Projects** (§6.9): a
+  `--hover-bg` wash behind the whole entry, with the date and the heading coming
+  up to the accent. Body text is deliberately left alone — the request was for
+  the entry to "light up" *and* stay easy to read, and recoloring a paragraph
+  cannot do both.
+  New `--hover-bg` token in all three theme blocks (`#f2ebdd` / `#221f18`). It
+  could not reuse `--accent-soft`: that is exactly the pill background, and a
+  hovered entry's skill bubbles would have vanished into the wash. Against
+  `--hover-bg` the pills separate by hue rather than luminance (1.01:1) — the
+  same way they already work against the page — which was checked at 2x on a
+  real render, and is why the wash has to stay warm.
+  The padding that gives the wash its bleed is cancelled by an equal negative
+  margin, and the old inter-entry margins were reduced by the same amount, so
+  neither the gutter alignment nor the vertical rhythm moved. Verified by
+  rendering a forced hover state in both themes rather than trusting the CSS.
