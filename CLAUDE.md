@@ -353,6 +353,8 @@ re-declares the token values. Never hardcode a hex outside the token block.
 --border        hairlines (sidebar rule, dividers)
 --border-strong a heavier, browner hairline for the one place an outline has to
                 be *found* rather than felt: the link buttons
+--highlight     the site's second color: a warm vermilion taken from the Mars
+                mark. Currently the hover state of an entry (§6.9)
 --hover-bg      the wash behind a hovered Experience/Project entry (§6.9)
 --focus         focus ring (can equal accent)
 ```
@@ -784,14 +786,25 @@ The planned `nav-active.js` (IntersectionObserver highlighting the in-view secti
 ### 6.9 Entry hover  **[BUILT]**
 
 Hovering one Experience or Project entry lights that entry: a **wash behind both
-columns**, and the two *muted* parts — the date and the heading — come up to the
-accent. **The body text does not change.**
+columns**, and the two *muted* parts — the date and the heading — come up to
+`--highlight`. **The body text does not change.**
+
+**The highlight is vermilion, not the teal accent** — `#b03d1b` light,
+`#ff8a68` dark. Links, pills and bullets inside these sections are already
+`--accent`, so a teal hover would have added no information: the entry would go
+from "some teal" to "more teal". The vermilion is sampled from the **Mars mark
+in the sidebar** (core `#f94d30`, highlights `#fe8e79`), darkened until it
+carries text, so the site's one existing non-teal color earns a second job
+instead of a new hue being invented. It is also teal's complement, which is why
+a lit entry reads as a *different state* rather than as emphasis of the same
+kind.
 
 That last part is the whole design. Turning a paragraph accent-colored would
 "light it up" and make it harder to read at the same time, which defeats the
 purpose; promoting the already-muted text to full attention says the same thing
-and costs no legibility. Measured on `--hover-bg`: accent 5.16:1 light / 7.96:1
-dark, body text 14.6:1 / 13.5:1. The wash itself is 1.11:1 against the page in
+and costs no legibility. Measured on `--hover-bg`: highlight 5.02:1 light /
+7.12:1 dark (near the teal's 5.16 / 7.96, so the hover carries the same weight),
+body text 14.6:1 / 13.5:1. The wash itself is 1.11:1 against the page in
 both themes — enough to see, not enough to shout.
 
 Four mechanics worth not breaking:
@@ -1236,3 +1249,14 @@ the user's explicit call, made deliberately.
   margin, and the old inter-entry margins were reduced by the same amount, so
   neither the gutter alignment nor the vertical rhythm moved. Verified by
   rendering a forced hover state in both themes rather than trusting the CSS.
+
+- **2026-09-08** — Hover highlight moved off the accent: new `--highlight` token,
+  a warm vermilion (`#b03d1b` light / `#ff8a68` dark) **sampled from the Mars
+  mark** rather than invented. The teal version was correct mechanically but said
+  nothing — links, pills and bullets in Experience and Projects are already
+  `--accent`, so a hovered entry went from some teal to more teal. Vermilion is
+  teal's complement and already on the page in the sidebar, so it reads as a
+  different *state* and still belongs to the palette.
+  Contrast on the wash: 5.02:1 light, 7.12:1 dark — deliberately matched to the
+  teal's 5.16 / 7.96 so the hover has the same visual weight it had before.
+  The wash itself stays warm cream and unchanged; only the two text colors moved.

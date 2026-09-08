@@ -474,7 +474,9 @@
 //
 // Hovering an Experience or Project entry lights the whole entry: a wash behind
 // both columns, and the two muted parts — the date and the heading — come up to
-// the accent. The body text stays put. Turning a paragraph accent-colored would
+// --highlight, the warm vermilion from the Mars mark. Not the accent: links,
+// pills and bullets in these sections are already teal, so a teal hover would
+// add no information. The body text stays put. Turning a paragraph colored would
 // "light up" the entry and make it harder to read at the same time, which is the
 // opposite of the point; moving the *muted* text up to full attention says the
 // same thing and costs no legibility.
@@ -515,7 +517,7 @@
   .timeline__item:hover .timeline__date,
   .timeline__item:hover .timeline__role,
   .showcase__item:hover .showcase__title {
-    color: var(--accent);
+    color: var(--highlight);
   }
 }
 
@@ -527,7 +529,7 @@
 .timeline__item:focus-within .timeline__date,
 .timeline__item:focus-within .timeline__role,
 .showcase__item:focus-within .showcase__title {
-  color: var(--accent);
+  color: var(--highlight);
 }
 
 // --- timeline ---------------------------------------------------------------

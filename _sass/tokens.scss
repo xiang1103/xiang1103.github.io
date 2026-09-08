@@ -23,6 +23,14 @@
   // rather than just felt: the outline of a link button. ~1.8:1 against --bg,
   // where plain --border is ~1.15:1.
   --border-strong: #cdbb9f;
+  // The hover highlight: the site's second color, a warm vermilion drawn from
+  // the Mars mark in the sidebar (its core is #f94d30, its highlights #fe8e79),
+  // darkened here until it carries text. It is NOT the accent, deliberately —
+  // links, pills and bullets are already teal, so a teal hover would say nothing
+  // new. Vermilion is teal's complement, so a lit entry reads as a different
+  // state rather than as more of the same.
+  --highlight: #b03d1b;
+
   // The hover wash behind one Experience or Project entry (see section 6.9).
   // Its own token, and it must stay WARM. It cannot be --accent-soft: that is
   // exactly the pill background, so the skill bubbles inside a hovered entry
@@ -101,6 +109,7 @@
     --accent-soft: #1d2a23;
     --border: #2e2b24;
     --border-strong: #4a4339;
+    --highlight: #ff8a68;
     --hover-bg: #221f18;
     --focus: #4fc7b4;
 
@@ -118,6 +127,7 @@
   --accent-soft: #1d2a23;
   --border: #2e2b24;
   --border-strong: #4a4339;
+  --highlight: #ff8a68;
   --hover-bg: #221f18;
   --focus: #4fc7b4;
 
