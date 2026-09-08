@@ -65,6 +65,9 @@ exclude:
   - assets/img/IMG_4275.jpeg   # 1.2 MB source photo; only its crops are published
   - assets/img/stanford_cars.png   # 410 KB original; published as the 69 KB
                                    # assets/img/projects/stanford-cars.jpg
+  - assets/img/WorkIt.png          # full-size sources; published as the 640px
+  - assets/img/advising_bot.png    # files in assets/img/projects/
+  - assets/img/molecule.png
   - Gemfile
   - Gemfile.lock
   - README.md
