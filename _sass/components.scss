@@ -385,6 +385,13 @@
 // `size:` in the data file and the width/height attributes below reserve the
 // right box before the file arrives, so nothing shifts as the section loads.
 .showcase__media {
+  // Drop the frame below the title's line box. Its top edge is a hard line, so
+  // sitting it level with the line box makes it read as *higher* than the title
+  // — the title's cap starts about 0.5rem down, inside the leading. 0.75rem puts
+  // the frame just under that, between the title's cap (0.5rem) and the first
+  // line of body text (~1.1rem); those are the two landmarks if it needs to move.
+  margin-top: 0.75rem;
+
   img,
   video {
     display: block;
@@ -438,6 +445,8 @@
 
   .showcase__media {
     max-width: 20rem;
+    // Stacked above the write-up here, so there is no title to hang below.
+    margin-top: 0;
     margin-bottom: var(--sp-2);
   }
 }

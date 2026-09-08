@@ -654,6 +654,13 @@ chevrons as Experience, so the two sections describe work the same way.
 
 Two details worth keeping:
 
+- **The frame hangs 0.75rem below the top of the row.** Level with the title's
+  line box it reads as *higher* than the title, because the frame's top is a hard
+  edge while the title's cap starts about 0.5rem down inside its own leading.
+  0.75rem sits it between the title's cap (0.5rem) and the first line of body
+  text (~1.1rem) — those are the two landmarks if it ever needs to move. Zeroed
+  below 640px, where the media stacks above the write-up and has no title to hang
+  under.
 - **Nothing is cropped.** A picture fills the column's width and keeps its own
   proportions, so rows vary in height — that is the intended behaviour, not a
   gap to close. Cropping was tried first (a fixed `aspect-ratio` with
@@ -1260,3 +1267,10 @@ the user's explicit call, made deliberately.
   Contrast on the wash: 5.02:1 light, 7.12:1 dark — deliberately matched to the
   teal's 5.16 / 7.96 so the hover has the same visual weight it had before.
   The wash itself stays warm cream and unchanged; only the two text colors moved.
+
+- **2026-09-08** — Project images hang `0.75rem` below the top of their row. They
+  were level with the title's line box, which reads as too high: the frame's top
+  is a hard edge, the title's cap is not — it starts ~0.5rem down inside the
+  leading, so equal `y` looks unequal. The two useful landmarks are recorded in
+  §6.4.2 (0.5rem = level with the title's cap, ~1.1rem = level with the body
+  text); 0.75rem sits between them.
